@@ -4,18 +4,19 @@
  * 
  * @authors: Elias
  */
+
+#include "Arduino.h"
 #include "controls.h"
 
 const uint8_t RANGE_OF_MOTION = 90;
 const uint8_t NUM_SERVOS = 4;
 const uint8_t SERVO_PINS[] = {0, 1, 2, 3};
 const Servo SERVOS[4];
-const uint8_t RANGE_OF_MOTION;
 
 double leftStrideCoefficient;
 double rightStrideCoefficient;
 int currentStrideAngle = 0;
-boolean stepping = true;
+bool stepping = true;
 
 void attachServos() {
   for(int i = 0; i < NUM_SERVOS; i++) {

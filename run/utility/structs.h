@@ -14,7 +14,7 @@ typedef struct vec3i {
             int x;
             int y;
             int z;
-        }
+        };
     };
 } vec3i;
 
