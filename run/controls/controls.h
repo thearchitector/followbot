@@ -12,10 +12,11 @@
 #define controls_h
 
 #include <stdint.h>
+#include <Arduino.h>
 #include <Servo.h>
 
 void attachServos();
-void calculateStrideCoefficients(uint16_t heading, uint8_t magnitude);
+void calculateStrideCoefficients(uint16_t heading);
 void moveAtHeading();
 
 #endif
