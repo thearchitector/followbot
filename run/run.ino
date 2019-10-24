@@ -23,7 +23,9 @@ const int sensorRefFrameThetaR [3] = {-45, -90, -135};  // angle (degrees) of th
 int attractiveForce = 300;
 int attractiveHeading = 90;
 const int minAnalogInCutoff = 100;
+const int repulsiveFloor = 0;
 const int maxAnalogInCutoff = 500;
+const int repulsiveCeiling = 10000;
 
 vec3i refFrames [numSensors];
 
@@ -31,11 +33,12 @@ void setup() {
     Serial.begin(9600);
     attachServos();
     calculateStrideCoefficients(45);
-//    initializeSensors(sensorPinArray, &numSensors);
-//    initializeReferenceFrames(refFrames, &numSensors, sensorRefFrameXR, sensorRefFrameYR, sensorRefFrameThetaR);
+    initializeSensors(sensorPinArray, &numSensors);
+    initializeReferenceFrames(refFrames, &numSensors, sensorRefFrameXR, sensorRefFrameYR, sensorRefFrameThetaR);
 }
 
 void loop() {
-//    int heading = getHeading(sensorPinArray, &numSensors, refFrames);
-//    Serial.println(heading);
+    int heading = getHeading(sensorPinArray, &numSensors, refFrames);
+    Serial.println(heading);
+
 }
