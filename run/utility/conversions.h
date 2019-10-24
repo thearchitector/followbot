@@ -12,6 +12,7 @@
 #include <math.h>
 
 extern const int minAnalogInCutoff;
+extern const int maxAnalogInCutoff;
 
 int rad2Deg(double rad) {
     return (int)(180. * rad / PI);
@@ -22,7 +23,7 @@ double deg2Rad(int deg) {
 }
 
 int analogInToRepulsive(int analogIn) {
-    return analogIn < minAnalogInCutoff ? 0 : analogIn;    
+    return analogIn < minAnalogInCutoff ? 0 : analogIn > maxAnalogInCutoff ? 1023 : analogIn;    
 }
 
 

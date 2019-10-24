@@ -20,9 +20,10 @@ const int sensorRefFrameYR [3] = {3, 3, 3};  // Y coordinates (cm) of the sensor
 const int sensorRefFrameThetaR [3] = {-45, -90, -135};  // angle (degrees) of the sensor reference frames in the robot reference frame R,
 // pointing inwards towards the robot (in the opposite direction of the sensor)
 
-int attractiveForce = 20;
+int attractiveForce = 300;
 int attractiveHeading = 90;
 const int minAnalogInCutoff = 100;
+const int maxAnalogInCutoff = 500;
 
 vec3i refFrames [numSensors];
 
