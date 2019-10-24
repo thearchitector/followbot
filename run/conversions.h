@@ -8,6 +8,8 @@
 #ifndef conversions_h
 #define conversions_h
 
+#include "structs.h"
+
 int analogInToSensorDistance(int analogIn) {
     int sensorDistance = 0;
     return sensorDistance;
@@ -25,6 +27,10 @@ int robotFrameDistanceToRepulsive(int robotFrameDistance) {
 
 int analogInToRepulsive(int analogIn) {
     return robotFrameDistanceToRepulsive(sensorDistanceToRobotFrameDistance(analogInToSensorDistance(analogIn)));
+}
+
+int getVec3iAngle(vec3i vec) {
+    return;
 }
 
 #endif

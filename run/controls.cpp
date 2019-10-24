@@ -35,10 +35,10 @@ void calculateStrideCoefficients(uint16_t heading, uint8_t magnitude) {
 }
 
 void moveAtHeading() {
-  SERVOS[0].write(floor(leftStrideCoefficient * i));
-  SERVOS[1].write(floor(rightStrideCoefficient * (RANGE_OF_MOTION - i)));
+  SERVOS[0].write(floor(leftStrideCoefficient * currentStrideAngle));
+  SERVOS[1].write(floor(rightStrideCoefficient * (RANGE_OF_MOTION - currentStrideAngle)));
   SERVOS[2].write(i);
-  SERVOS[3].write(RANGE_OF_MOTION - i);
+  SERVOS[3].write(RANGE_OF_MOTION - currentStrideAngle);
   
   currentStrideAngle = currentStrideAngle + (stepping ? 1 : -1);
   if(currentStrideAngle == RANGE_OF_MOTION || currentStrideAngle == 0) stepping = !stepping;

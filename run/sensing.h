@@ -9,29 +9,17 @@
 #define sensing_h
 
 #include "conversions.h"
+#include "structs.h"
 
-// TODO: Verify
-typedef struct sensorRefFrame {
-    union {
-        int vals [3];
-        struct {
-            int xR; 
-            int yR; 
-            int thetaR;
-        };
-    };
-} sensorRefFrame;
-
-
-void initializeReferenceFrames(sensorRefFrame *refFrames, const int *numSensors, const int sensorRefFrameXR[], 
-               const int sensorRefFrameYR[], const int sensorRefFrameThetaR[]) {
+void initializeReferenceFrames(vec3i *refFrames, const int *numSensors, const int vec3iXR[], 
+               const int vec3iYR[], const int vec3iThetaR[]) {
     /*
      * Initializes all sensor reference frames
      */
     for (int s=0; s < *numSensors; s++) {
-        refFrames[s].xR = sensorRefFrameXR[s];
-        refFrames[s].yR = sensorRefFrameYR[s];
-        refFrames[s].thetaR = sensorRefFrameThetaR[s];
+        refFrames[s].xR = vec3iXR[s];
+        refFrames[s].yR = vec3iYR[s];
+        refFrames[s].thetaR = vec3iThetaR[s];
     }
 }
 
@@ -45,17 +33,20 @@ void initializeSensors(const uint8_t sensorPinArray[], const int *numSensors) {
 }
 
 
-int getHeading(const uint8_t sensorPinArray[], const int *numSensors, const int sensorRefFrameXR[], 
-               const int sensorRefFrameYR[], const int sensorRefFrameThetaR[]) {
+int getHeading(const uint8_t sensorPinArray[], const int *numSensors, const int vec3iXR[], 
+               const int vec3iYR[], const int vec3iThetaR[]) {
     /*
      * Computes the desired heading of the robot relative to its reference frame. This heading is in degrees
      */
 
     // calculate repulsive forces
-    int repulsiveForces [*numSensors];
+    int smallestAnalogIn = 0;
+    
     for (int s=0; s < *numSensors; s++) {
-        repulsiveForces[s] = analogInToRepulsive(analogRead(sensorPinArray[s]));
+        
     }
+    int repulsiveForce = analogInToRepulsive(smallestAnalogIn));
+    
     
 
 }
