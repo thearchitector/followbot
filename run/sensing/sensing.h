@@ -52,7 +52,7 @@ int getHeading(const uint8_t sensorPinArray[], const int *numSensors, vec3i refF
      */
 
     // calculate repulsive force and heading
-    int largestSensorRead = 0;
+    int largestSensorRead = minAnalogInCutoff;
     int indexOfLargestSensorRead;
     
     for (int s=0; s < *numSensors; s++) {
@@ -62,10 +62,15 @@ int getHeading(const uint8_t sensorPinArray[], const int *numSensors, vec3i refF
             indexOfLargestSensorRead = s;
         }
     }
-    int repulsiveForce = analogInToRepulsive(largestSensorRead);
-    int repulsiveHeading = refFrames[indexOfLargestSensorRead].thetaR;
 
-    return getVectorSumHeading(&repulsiveForce, &repulsiveHeading, &attractiveForce, &attractiveHeading);
+    if (largestSensorRead <= minAnalogInCutoff) {
+        return 90;
+    } else {
+        int repulsiveForce = analogInToRepulsive(largestSensorRead);
+        int repulsiveHeading = refFrames[indexOfLargestSensorRead].thetaR;
+
+        return getVectorSumHeading(&repulsiveForce, &repulsiveHeading, &attractiveForce, &attractiveHeading);
+    }
 }
 
 
