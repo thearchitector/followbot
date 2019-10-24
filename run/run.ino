@@ -24,7 +24,7 @@ vec3i refFrames [numSensors];
 void setup() {
     Serial.begin(9600);
     attachServos();
-    calculateStrideCoefficients(45);
+    calculateStrideCoefficients(90);
 //    initializeSensors(sensorPinArray, &numSensors);
 //    initializeReferenceFrames(refFrames, &numSensors, sensorRefFrameXR, sensorRefFrameYR, sensorRefFrameThetaR);
 }
@@ -32,4 +32,5 @@ void setup() {
 void loop() {
 //    int heading = getHeading(sensorPinArray, &numSensors, refFrames);
 //    Serial.println(heading);
+    moveAtHeading();
 }
