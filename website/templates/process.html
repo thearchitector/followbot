@@ -14,8 +14,9 @@
         position: relative;
       }
       .body {
-        padding: 10px;
-        padding-bottom: 200px;
+        padding-left: 20%;
+        padding-right: 20%
+        padding-bottom: 0;
       }
         .header {
           background-color:#009bdf;
@@ -50,15 +51,31 @@
   </head>
   <body>
     <div class="container">
+    <div class="header">
+      <h1 style="text-align: center;">FollowBot</h1>
+    </div>
     <div class="topnav">
       <a href="{{ url_for('homepage') }}">Overview</a>
-      <a href="#">Process</a>
-      <a href="#">Mechanical</a>
-      <a href="#">Electrical</a>
-      <a href="#">Software</a>
-      <a href="{{ url_for('about') }}" class="active">About Team</a>
+      <a href="{{ url_for('process') }}" class="active">Process</a>
+      <a href="{{ url_for('mechanical') }}">Mechanical</a>
+      <a href="{{ url_for('electrical') }}">Electrical</a>
+      <a href="{{ url_for('software') }}">Software</a>
+      <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
+      <h1>Process</h1>
+      <h2>Sprint 1</h2>
+      <h4>Goal:</h4>
+      <p>brief description</p>
+      <h2>Sprint 2</h2>
+      <h4>Goal:</h4>
+      <p>brief description</p>
+      <h2>Sprint 3</h2>
+      <h4>Goal:</h4>
+      <p>brief description</p>
+      <h2>Final Sprint</h2>
+      <h4>Goal:</h4>
+      <p>brief description</p>
     </div>
     </div>
 
