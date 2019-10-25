@@ -10,5 +10,21 @@ def homepage():
 def about():
     return render_template('aboutus.html')
 
+@app.route('/mechanical')
+def mechanical():
+    return render_template('mechanical.html')
+
+@app.route('/electrical')
+def electrical():
+    return render_template('electrical.html')
+
+@app.route('/software')
+def software():
+    return render_template('software.html')
+
+@app.route('/process')
+def process():
+    return render_template('process.html')
+
 if __name__ == '__main__':
     app.run()
