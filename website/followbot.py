@@ -6,5 +6,9 @@ app = Flask(__name__)
 def homepage():
     return render_template('homepage.html')
 
+@app.route('/about-team')
+def about():
+    return render_template('aboutus.html')
+
 if __name__ == '__main__':
     app.run()
