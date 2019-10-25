@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .container {
+        min-height: 100%;
+        position: relative;
+      }
+      .body {
+        padding: 10px;
+        padding-bottom: 200px;
+      }
+        .header {
+          background-color:#009bdf;
+          color: white;
+          padding: 20px;
+          text-align: left;
+        }
+        .topnav {
+          overflow: hidden;
+          background-color: #009bdf;
+          font-family: DINOT-Light;
+          font-weight: bold;
+        }
+        .topnav a {
+          float: left;
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        .topnav a:hover.not(.active) {
+          background-color: #ddd;
+          color: white;
+        }
+        .active {
+          background-color: #00458c;
+        }
+      </style>
+      <link rel="stylesheet" href="https://raw.githubusercontent.com/thearchitector/followbot/master/website.css?token=AKH5NIUS7JZI3Q3MQBL7P4C5XRLG6">
+    <title>FollowBot</title>
   </head>
   <body>
+    <div class="container">
+    <div class="topnav">
+      <a href="{{ url_for('homepage') }}" class="active">Overview</a>
+      <a href="#">Process</a>
+      <a href="#">Mechanical</a>
+      <a href="#">Electrical</a>
+      <a href="#">Software</a>
+      <a href="{{ url_for('about') }}">About Team</a>
+    </div>
+    <div class="body">
+    <h1>FollowBot</h1>
+      <h3>Project Description</h3>
+      <p>Our project is a robot that will follow you. The minimal viable product
+        is a robot that will follow you on flat ground. To create this robot
+      </p>
+    </div>
+    </div>
 
   </body>
 </html>
