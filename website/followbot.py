@@ -22,6 +22,10 @@ def sprint1():
 def sprint1():
     return render_template('sprint3.html')
 
+@app.route('process/final-sprint')
+def finalsprint():
+    return render_template('finalsprint.html')
+
 @app.route('/systems')
 def systems():
     return render_template('systems.html')
