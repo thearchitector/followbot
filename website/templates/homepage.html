@@ -9,6 +9,7 @@
         margin: 0;
         padding: 0;
         height: 100%;
+        background-color: #cafafe
       }
       .container {
         min-height: 100%;
@@ -20,16 +21,15 @@
         padding-bottom: 0;
       }
         .header {
-          background-color:#009bdf;
-          color: white;
+          margin: 5%;
           text-align: center;
+          font-size: 30pt
         }
         .topnav {
           overflow: hidden;
-          background-color: #009bdf;
+          background-color: #fc4445;
           font-family: DINOT-Light;
           font-weight: bold;
-          text-align: center;
 
         }
         .topnav a {
@@ -57,11 +57,10 @@
       <h1>FollowBot</h1>
     </div>
     <div class="topnav">
-      <a href="{{ url_for('homepage') }}" class="active">Overview</a>
+      <a href="{{ url_for('homepage') }}" class="active">Home</a>
       <a href="{{ url_for('process') }}">Process</a>
-      <a href="{{ url_for('mechanical') }}">Mechanical</a>
-      <a href="{{ url_for('electrical') }}">Electrical</a>
-      <a href="{{ url_for('software') }}">Software</a>
+      <a href="{{ url_for('systems') }}">Systems</a>
+      <a href="{{ url_for('budget') }}">Budget</a>
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
