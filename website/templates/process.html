@@ -55,26 +55,25 @@
       <h1>FollowBot</h1>
     </div>
     <div class="topnav">
-      <a href="{{ url_for('homepage') }}">Overview</a>
-      <a href="{{ url_for('process') }}" class="active">Process</a>
-      <a href="{{ url_for('mechanical') }}">Mechanical</a>
-      <a href="{{ url_for('electrical') }}">Electrical</a>
-      <a href="{{ url_for('software') }}">Software</a>
+      <a href="{{ url_for('homepage') }}">Home</a>
+      <a href="{{ url_for('process') }}"  class="active">Process</a>
+      <a href="{{ url_for('systems') }}">Systems</a>
+      <a href="{{ url_for('budget') }}">Budget</a>
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
       <h1>Process</h1>
-      <h2>Sprint 1</h2>
-      <h4>Goal:</h4>
+      <h2><a href="{{ url_for('sprint1') }}">Sprint 1</a></h2>
+      <h4>October 25, 2019</h4>
       <p>brief description</p>
-      <h2>Sprint 2</h2>
-      <h4>Goal:</h4>
+      <h2><a href="{{ url_for('sprint2') }}">Sprint 2</a></h2>
+      <h4>November 8, 2019</h4>
       <p>brief description</p>
-      <h2>Sprint 3</h2>
-      <h4>Goal:</h4>
+      <h2><a href="{{ url_for('sprint3') }}">Sprint 3</a></h2>
+      <h4>November 22, 2019</h4>
       <p>brief description</p>
-      <h2>Final Sprint</h2>
-      <h4>Goal:</h4>
+      <h2><a href="{{ url_for('finalsprint') }}">Final Sprint </a></h2>
+      <h4>December 10,2019</h4>
       <p>brief description</p>
     </div>
     </div>
