@@ -22,7 +22,8 @@
       }
         .header {
           margin: 5%;
-          text-align: center;;
+          text-align: center;
+          font-size: 30pt;
         }
         .topnav {
           overflow: hidden;
@@ -55,11 +56,10 @@
         <h1>FollowBot</h1>
       </div>
     <div class="topnav">
-      <a href="{{ url_for('homepage') }}">Overview</a>
+      <a href="{{ url_for('homepage') }}">Home</a>
       <a href="{{ url_for('process') }}">Process</a>
-      <a href="{{ url_for('mechanical') }}">Mechanical</a>
-      <a href="{{ url_for('electrical') }}" class="active">Electrical</a>
-      <a href="{{ url_for('software') }}">Software</a>
+      <a href="{{ url_for('systems') }}" class="active">Systems</a>
+      <a href="{{ url_for('budget') }}">Budget</a>
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
