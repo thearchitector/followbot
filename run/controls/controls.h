@@ -24,8 +24,7 @@ const uint8_t NUM_SERVOS = 4;
 const uint8_t SERVO_PINS[] = {11, 10, 9, 8};
 const Servo SERVOS[4];
 
-double leftStrideCoefficient;
-double rightStrideCoefficient;
+double coefficients [2];
 int currentStrideAngle = 45;
 uint8_t dir = 1;
 bool stepping = true;
@@ -37,21 +36,25 @@ void attachServos() {
   }
 }
 
-void calculateStrideCoefficients(uint16_t heading) {
+double * calculateStrideCoefficients(int *heading) {
   dir = 1;
 
-  if(heading > 180) {
-    heading -= 180;
+  // TODO: make more efficient
+  if(*heading > 180) {
+    *heading -= 180;
     dir = -1;
   }
 
-  rightStrideCoefficient = heading / 180.0;
-  leftStrideCoefficient = 1 - rightStrideCoefficient;
+  coefficients[1] = (double)*heading / 180.0;
+  coefficients[0] = (1 - coefficients[1]);
+  return coefficients;
 }
 
-void moveAtHeading() {
-  SERVOS[0].write(floor(leftStrideCoefficient * currentStrideAngle));
-  SERVOS[1].write(floor(rightStrideCoefficient * (RANGE_OF_MOTION - currentStrideAngle)));
+void moveAtHeading(int *heading) {
+  calculateStrideCoefficients(heading);
+
+  SERVOS[0].write(floor(coefficients[0] * currentStrideAngle));
+  SERVOS[1].write(floor(coefficients[1] * (RANGE_OF_MOTION - currentStrideAngle)));
   SERVOS[2].write(RANGE_OF_MOTION - currentStrideAngle);
   SERVOS[3].write(currentStrideAngle);
   

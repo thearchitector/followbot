@@ -36,15 +36,23 @@ void initializeSensors(const uint8_t sensorPinArray[], const int *numSensors) {
     }
 }
 
-
 int getVectorSumHeading(int *repulsiveForce, int *repulsiveHeading, int *attractiveForce, int *attractiveHeading) {
     double repulsiveXY [2] = {*repulsiveForce * cos(deg2Rad(*repulsiveHeading)),
                               *repulsiveForce * sin(deg2Rad(*repulsiveHeading))};
     double attractiveXY [2] = {*attractiveForce * cos(deg2Rad(*attractiveHeading)), 
                                *attractiveForce * sin(deg2Rad(*attractiveHeading))};
-    return rad2Deg(atan((repulsiveXY[1] + attractiveXY[1]) / (repulsiveXY[0] + attractiveXY[0])));
+    Serial.print("repulsivexy:");
+    Serial.print(repulsiveXY[0]);
+    Serial.print(" ");
+    Serial.print(repulsiveXY[1]);
+    Serial.print(" ");
+    Serial.print("attractivexy:");
+    Serial.print(attractiveXY[0]);
+    Serial.print(" ");
+    Serial.print(attractiveXY[1]);
+    Serial.print(" ");
+    return rad2Deg(atan2(repulsiveXY[1] + attractiveXY[1], repulsiveXY[0] + attractiveXY[0]));
 }
-
 
 int getHeading(const uint8_t sensorPinArray[], const int *numSensors, vec3i refFrames[]) {
     /*
@@ -62,6 +70,12 @@ int getHeading(const uint8_t sensorPinArray[], const int *numSensors, vec3i refF
             indexOfLargestSensorRead = s;
         }
     }
+    Serial.print("sensor:");
+    Serial.print(indexOfLargestSensorRead);
+    Serial.print(" ");
+    Serial.print("largestSensorRead:");
+    Serial.print(largestSensorRead);
+    Serial.print(" ");
 
     if (largestSensorRead <= minAnalogInCutoff) {
         return 90;
@@ -69,9 +83,9 @@ int getHeading(const uint8_t sensorPinArray[], const int *numSensors, vec3i refF
         int repulsiveForce = analogInToRepulsive(largestSensorRead);
         int repulsiveHeading = refFrames[indexOfLargestSensorRead].thetaR;
 
-        return getVectorSumHeading(&repulsiveForce, &repulsiveHeading, &attractiveForce, &attractiveHeading);
+        int heading = getVectorSumHeading(&repulsiveForce, &repulsiveHeading, &attractiveForce, &attractiveHeading);
+        return heading < 0 ? 360 + heading : heading;
     }
 }
-
 
 #endif

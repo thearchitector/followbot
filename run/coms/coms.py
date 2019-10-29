@@ -8,8 +8,14 @@ Followbot POE Projects
 
 import serial
 
-def main():
+def main(ser):
+    while ser.isOpen():
+        line = ser.readline().decode()
+        
+
     pass
 
 if __name__ == "__main__":
-    main()
+    ser = serial.Serial('/dev/ttyACM0')  # open serial port
+    main(ser)
+    

@@ -25,7 +25,13 @@ double deg2Rad(int deg) {
 }
 
 int analogInToRepulsive(int analogIn) {
-    return analogIn < minAnalogInCutoff ? repulsiveFloor : analogIn > maxAnalogInCutoff ? repulsiveCeiling : analogIn;    
+    if (analogIn < minAnalogInCutoff) {
+        return minAnalogInCutoff;
+    } else if (analogIn > maxAnalogInCutoff) {
+        return maxAnalogInCutoff;
+    } else {
+        return analogIn;
+    }
 }
 
 
