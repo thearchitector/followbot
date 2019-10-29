@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   html, body {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     height: 100%;
     background-color: #cafafe
     }
@@ -17,7 +17,7 @@
     .body {
       padding-left: 20%;
       padding-right: 20%;
-      padding-bottom: 0;
+      padding-bottom: 10%;
     }
     .header {
       margin: 5%;
@@ -29,6 +29,7 @@
       background-color: #fc4445;
       font-family: DINOT-Light;
       font-weight: bold;
+      width: 100%;
     }
     .topnav a {
       float: left;
@@ -51,6 +52,29 @@
     }
     .row {
       display: flex;
+    }
+    .footer {
+      padding: 5px;
+      text-align: center;
+      background: #fc4445;
+      margin-top: 20px;
+      width: 100%;
+      position: relative;
+      left: 0;
+      bottom: 0;
+    }
+    .fa {
+      padding: 5px;
+      font-size: 40px;
+      width: 40px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+      border-radius: 50%;
+    }
+    .fa-github {
+      color: white;
+      background-color: #333333;
     }
     img {
       margin-left: auto;
@@ -120,8 +144,24 @@
         legs connected by a bar. Thus the robot was unable to walk. As a result
         we were not able to fully reach our sprint goal.
       </p>
-      <p>During this sprint we learned
+      <p>During this sprint we learned about all the components that we need to
+        focus on for Sprint 2. Our goals for Sprint 2 are as follows:
+        <ul>
+          <li>Upgrade sensors from IR to cameras &/or LIDAR
+            <li>Create a data pipeline between laptop and robot computer to
+              accelerate path planning algorithm development</li>
+          </li>
+          <li>Redesign and fabricate new body of robot</li>
+          <li>Work on traction for legs to propel forward</li>
+          <li>Iterate on design of the legs so that there is a better range of
+             motion, no unintended collision between parts, faster linear
+             motion, and improved weight bearing</li>
+        </ul>
       </p>
+    </div>
+    <div class="footer">
+      <h4><a href="http://www.olin.edu/" target="_blank">Olin College of Engineering</a></h4>
+      <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a>
     </div>
     </div>
 
