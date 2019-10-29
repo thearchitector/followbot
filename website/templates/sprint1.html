@@ -8,7 +8,7 @@
     margin: 0px;
     padding: 0px;
     height: 100%;
-    background-color: #cafafe
+    /*background-color: #cafafe*/
     }
     .container {
       min-height: 100%;
@@ -26,8 +26,7 @@
     }
     .topnav {
       overflow: hidden;
-      background-color: #fc4445;
-      font-family: DINOT-Light;
+      background-color: #00458c;
       font-weight: bold;
       width: 100%;
     }
@@ -44,7 +43,8 @@
       color: white;
     }
     .active {
-      background-color: #00458c;
+      background-color: white;
+      color: black;
     }
     .column {
       width: 50%;
@@ -53,15 +53,16 @@
     .row {
       display: flex;
     }
-    .footer {
-      padding: 5px;
+    footer {
+      padding: 5%;
       text-align: center;
-      background: #fc4445;
-      margin-top: 20px;
+      background: #00458c;
       width: 100%;
       position: relative;
       left: 0;
       bottom: 0;
+      color: white;
+      box-sizing: border-box;
     }
     .fa {
       padding: 5px;
@@ -86,27 +87,33 @@
       margin-right: auto;
       display: block;
     }
+    p{
+      font-size: 16pt;
+    }
+    ul {
+      font-size: 16pt;
+    }
   </style>
   <head>
     <title>FollowBot</title>
   </head>
-  <body>
+  <body vlink ="#ffffff">
     <div class="container">
     <div class="header">
       <h1>FollowBot</h1>
     </div>
     <div class="topnav">
       <a href="{{ url_for('homepage') }}">Home</a>
-      <a href="{{ url_for('process') }}"  class="active">Process</a>
+      <a href="{{ url_for('process') }}"  class="active" style="color: black;">Process</a>
       <a href="{{ url_for('systems') }}">Systems</a>
       <a href="{{ url_for('budget') }}">Budget</a>
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
-      <h1>Sprint 1</h1>
+      <h1 style="font-size: 20pt;">Sprint 1</h1>
       <p>For Sprint 1 our goal was to have a robot that had
         functional legs and walk in a straight line. We did succeed in
-        building functional legs. Before we settled on this design (reference image above, we were
+        building functional legs. Before we settled on one design we were
         deciding between a simple four bar linkage leg or l-shaped legs
         connected by a bar.
       </p>
@@ -159,10 +166,13 @@
         </ul>
       </p>
     </div>
-    <div class="footer">
-      <h4><a href="http://poe.olin.edu/" target="_blank">Olin College of Engineering - Principles of Engineering</a></h4>
-      <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a>
-    </div>
+    <footer>
+
+      <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a><br>
+      Copyright &copy; FollowBot 2019 |
+      <a href="http://poe.olin.edu/" target="_blank">Principles of Engineering</a>
+      | Designed by Kristin Aoki
+    </footer>
     </div>
 
   </body>
