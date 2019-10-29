@@ -3,12 +3,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
 <style>
   html, body {
     margin: 0px;
     padding: 0px;
     height: 100%;
+    font-family: 'Barlow', sans-serif;
     }
     .container {
       min-height: 100%;
@@ -29,6 +31,7 @@
       overflow: hidden;
       background-color: #00458c;
       width: 100%;
+      font-weight: 700;
     }
     .topnav a {
       float: left;
@@ -42,7 +45,7 @@
       background-color: #ddd;
       color: white;
     }
-    .active {
+    .topnav a.active {
       background-color: white;
       color: black;
     }
@@ -103,11 +106,11 @@
       <h1>FollowBot</h1>
     </div>
     <div class="topnav">
-      <a href="{{ url_for('homepage') }}">Home</a>
-      <a href="{{ url_for('process') }}"  class="active" style="color: black;">Process</a>
-      <a href="{{ url_for('systems') }}">Systems</a>
-      <a href="{{ url_for('budget') }}">Budget</a>
-      <a href="{{ url_for('about') }}">About Team</a>
+      <a href="{{ url_for('homepage') }}">HOME</a>
+      <a href="{{ url_for('process') }}"  class="active"">PROCESS</a>
+      <a href="{{ url_for('systems') }}">SYSTEMS</a>
+      <a href="{{ url_for('budget') }}">BUDGET</a>
+      <a href="{{ url_for('about') }}">ABOUT TEAM</a>
     </div>
     <div class="body">
       <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt;">Sprint 1</h1>
