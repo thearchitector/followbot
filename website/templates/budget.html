@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #cafafe
+  }
+  .container {
+    min-height: 100%;
+    position: relative;
+  }
+  .body {
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 0;
+  }
+    .header {
+      margin: 5%;
+      text-align: center;
+      font-size: 30pt;
+    }
+    .topnav {
+      overflow: hidden;
+      background-color: #fc4445;
+      font-family: DINOT-Light;
+      font-weight: bold;
+    }
+    .topnav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    .topnav a:hover {
+      background-color: #ddd;
+      color: white;
+    }
+    .active {
+      background-color: #00458c;
+    }
+    table {
+      border-collapse: collapse;
+      font-family: Dutch801+Rm+BT;
+      width: 80%;
+      background-color: #f8e9a1
+    }
+    th {
+      font-size: 20px;
+      border: 1px solid black;
+      text-align: left;
+      padding: 8px;
+    }
+    td {
+      font-size: 15px;
+      border: 1px solid black;
+      text-align: right;
+      padding: 8px;
+    }
+    table.center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+  <head>
+    <title>FollowBot</title>
+  </head>
+  <body>
+    <div class="container">
+    <div class="header">
+      <h1>FollowBot</h1>
+    </div>
+    <div class="topnav">
+      <a href="{{ url_for('homepage') }}">Home</a>
+      <a href="{{ url_for('process') }}">Process</a>
+      <a href="{{ url_for('systems') }}">Systems</a>
+      <a href="{{ url_for('budget') }}" class="active">Budget</a>
+      <a href="{{ url_for('about') }}">About Team</a>
+    </div>
+    <div class="body">
+      <h1>Budget</h1>
+      <table class="center">
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price per Item</th>
+          <th>Total Price</th>
+        </tr>
+        <tr>
+          <td style="text-align: left;">Arduino Uno</td>
+          <td>1</td>
+          <td>$17.87</td>
+          <td>$17.87</td>
+        </tr>
+        <tr>
+          <td style="text-align: left;">Breadboard</td>
+          <td>1</td>
+          <td>$5.19</td>
+          <td>$5.19</td>
+        </tr>
+        <tr>
+          <td style="text-align: left;"> Hobby Servo</td>
+          <td>4</td>
+          <td>$</td>
+          <td>$</td>
+        </tr>
+      </table>
+    </div>
+    </div>
+
+  </body>
+</html>

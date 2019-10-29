@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #cafafe
+    }
+    .container {
+      min-height: 100%;
+      position: relative;
+    }
+    .body {
+      padding-left: 20%;
+      padding-right: 20%;
+      padding-bottom: 0;
+    }
+    .header {
+      margin: 5%;
+      text-align: center;
+      font-size: 30pt;
+    }
+    .topnav {
+      overflow: hidden;
+      background-color: #fc4445;
+      font-family: DINOT-Light;
+      font-weight: bold;
+    }
+    .topnav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    .topnav a:hover {
+      background-color: #ddd;
+      color: white;
+    }
+    .active {
+      background-color: #00458c;
+    }
+    .column {
+      width: 50%;
+      padding: 5px;
+    }
+    .row {
+      display: flex;
+    }
+  </style>
+  <head>
+    <title>FollowBot</title>
+  </head>
+  <body>
+    <div class="container">
+    <div class="header">
+      <h1>FollowBot</h1>
+    </div>
+    <div class="topnav">
+      <a href="{{ url_for('homepage') }}">Home</a>
+      <a href="{{ url_for('process') }}"  class="active">Process</a>
+      <a href="{{ url_for('systems') }}">Systems</a>
+      <a href="{{ url_for('budget') }}">Budget</a>
+      <a href="{{ url_for('about') }}">About Team</a>
+    </div>
+    <div class="body">
+      <h1>Sprint 1</h1>
+      <p>For Sprint 1 our goal was to have a robot that had
+        functional legs and walk in a straight line. We did succeed in
+        building functional legs. Before we settled on this design (reference image above, we were
+        deciding between a simple four bar linkage leg or l-shaped legs
+        connected by a bar.
+      </p>
+      <div class="row">
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/4barrender.JPG?token=AKH5NIQJ3PEFELVYYXPOQSS5YF4TA"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/Legs_half_assembly.JPG?token=AKH5NIT2SSBR7UC3MFY2CIS5YF4JC"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+      </div>
+      <p>
+        After working with both legs we settled on the l-shaped legs connected
+        by a bar. In our first iteration we lazer cut the legs, but they did
+        not have enough support to bear the weight of the robot. As a result,
+        we switched to 3-D printed legs.
+      </p>
+      <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/mainlegsrender.JPG?token=AKH5NIQCP6E6M2IAJZDP4KC5YF4UI"
+          alt="cad of final leg" style="width: 50%;">
+      <p>To get the legs to move we connected four servos to an Arduino Uno.
+        The two servos attached towards the front of the robot were attached to
+        the l-shaped legs connected by a bar. These two sets of legs would
+        move in opposite directions, similar to how a four legged animal
+        walks.
+      </p>
+      <iframe width="420" height="315" src="https://drive.google.com/file/d/1gKgNDBJuWCCDt2TSPiwe6N3stedLjGYO/view?usp=sharing">
+      </iframe>
+      <p>
+        At the center of the robot there was another set of servos, one
+        on each side. Each servo had an l-shaped leg that helps lift the robot,
+        so it can propel itself forward. However there was a flaw in our leg
+        design, so the legs in the center of the robot were colliding with the
+        legs connected by a bar. Thus the robot was unable to walk. As a result
+        we were not able to fully reach our sprint goal.
+      </p>
+      <p>During this sprint we learned
+      </p>
+    </div>
+    </div>
+
+  </body>
+</html>
