@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
     <style>
       html, body {
         margin: 0px;
         padding: 0px;
         height: 100%;
+        font-family: 'Barlow', sans-serif;
       }
       .container {
         min-height: 100%;
@@ -23,6 +26,7 @@
           margin: 5%;
           text-align: center;
           font-size: 30pt;
+          font-family: 'Fjalla One', sans-serif;
         }
         .topnav {
           overflow: hidden;
@@ -87,12 +91,15 @@
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
-      <h1>Systems</h1>
-      <h2><a href="{{ url_for('mechanical') }}">Mechanical</a></h2>
+      <h1 style="font-family: 'Fjalla One', sans-serif;">Systems</h1>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('mechanical') }}">Mechanical</a></h2>
       <img src="" alt="image of final mechanical system">
-      <h2><a href="{{ url_for('electrical') }}">Electrical</a></h2>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('electrical') }}">Electrical</a></h2>
       <img src="" alt="image of final electrical system">
-      <h2><a href="{{ url_for('software') }}">Software</a></h2>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('software') }}">Software</a></h2>
       <img src="" alt="image of code">
     </div>
     <footer vlink="#ffffff">
