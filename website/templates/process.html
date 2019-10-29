@@ -46,6 +46,13 @@
         .active {
           background-color: #00458c;
         }
+        .row {
+          display: flex;
+        }
+        .column {
+          width: 50%;
+          padding: 5px;
+        }
       </style>
     <title>FollowBot</title>
   </head>
@@ -63,20 +70,50 @@
     </div>
     <div class="body">
       <h1>Process</h1>
-      <h2><a href="{{ url_for('sprint1') }}">Sprint 1</a></h2>
-      <h4>October 25, 2019</h4>
-      <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/prototype1.JPG?token=AKH5NIWMCHWUCFZ4WQF26MC5YDNB2"
-          alt="robot presented at review" style="width: 50%">
-      <p>brief description</p>
-      <h2><a href="{{ url_for('sprint2') }}">Sprint 2</a></h2>
-      <h4>November 8, 2019</h4>
-      <p>brief description</p>
-      <h2><a href="{{ url_for('sprint3') }}">Sprint 3</a></h2>
-      <h4>November 22, 2019</h4>
-      <p>brief description</p>
-      <h2><a href="{{ url_for('finalsprint') }}">Final Sprint </a></h2>
-      <h4>December 10,2019</h4>
-      <p>brief description</p>
+      <div class="row">
+        <div class="column">
+          <h2><a href="{{ url_for('sprint1') }}">Sprint 1</a></h2>
+          <h4>October 25, 2019</h4>
+          <p>brief description</p>
+        </div>
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/prototype1.JPG?token=AKH5NIWMCHWUCFZ4WQF26MC5YDNB2"
+              alt="robot presented at review" style="width: 60%">
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h2><a href="{{ url_for('sprint2') }}">Sprint 2</a></h2>
+          <h4>November 8, 2019</h4>
+          <p>brief description</p>
+        </div>
+        <div class="column">
+          <img src=""
+              alt="robot presented at review" style="width: 60%">
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h2><a href="{{ url_for('sprint3') }}">Sprint 3</a></h2>
+          <h4>November 22, 2019</h4>
+          <p>brief description</p>
+        </div>
+        <div class="column">
+          <img src=""
+              alt="robot presented at review" style="width: 60%">
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h2><a href="{{ url_for('finalsprint') }}">Final Sprint </a></h2>
+          <h4>December 10,2019</h4>
+          <p>brief description</p>
+        </div>
+        <div class="column">
+          <img src=""
+              alt="robot presented at review" style="width: 60%">
+        </div>
+      </div>
     </div>
     </div>
 
