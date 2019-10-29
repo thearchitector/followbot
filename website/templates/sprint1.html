@@ -45,6 +45,13 @@
     .active {
       background-color: #00458c;
     }
+    .column {
+      width: 50%;
+      padding: 5px;
+    }
+    .row {
+      display: flex;
+    }
   </style>
   <head>
     <title>FollowBot</title>
@@ -65,22 +72,35 @@
       <h1>Sprint 1</h1>
       <p>For Sprint 1 our goal was to have a robot that had
         functional legs and walk in a straight line. We did succeed in
-        building functional legs.
-      </p>
-        <img src="" alt="cad of final leg">
-      <p>Before we settled on this design (reference image above), we were
+        building functional legs. Before we settled on this design (reference image above, we were
         deciding between a simple four bar linkage leg or l-shaped legs
-        connected by a bar. After working with both legs we settled on the
-        l-shaped legs connected by a bar. In our first iteration we lazer cut
-        the legs, but they did not have enough support to bear the weight of
-        the robot. As a result, we switched to 3-D printed legs.</p>
+        connected by a bar.
+      </p>
+      <div class="row">
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/4barrender.JPG?token=AKH5NISGYQCC4UHFB6NM42C5YDOAM"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/mainlegsrender.JPG?token=AKH5NIR7WDM7GXE4WQYBXN25YDM7G"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+      </div>
+      <p>
+        After working with both legs we settled on the l-shaped legs connected
+        by a bar. In our first iteration we lazer cut the legs, but they did
+        not have enough support to bear the weight of the robot. As a result,
+        we switched to 3-D printed legs.
+      </p>
+      <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/mainlegsrender.JPG?token=AKH5NIR7WDM7GXE4WQYBXN25YDM7G"
+          alt="cad of final leg" style="width: 50%;">
       <p>To get the legs to move we connected four servos to an Arduino Uno.
         The two servos attached towards the front of the robot were attached to
         the l-shaped legs connected by a bar. These two sets of legs would
         move in opposite directions, similar to how a four legged animal
         walks.
       </p>
-      <iframe width="420" height="315" src="" alt="video of legs in motion">
+      <iframe width="420" height="315" src="">
       </iframe>
       <p>
         At the center of the robot there was another set of servos, one
