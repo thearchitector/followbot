@@ -1,2 +1,7 @@
 # Running
-- Make sure that you have installed OpenCV and added it to your enviornment variables
+In this directory, run:
+
+```
+catkin_make
+roslaunch
+```
