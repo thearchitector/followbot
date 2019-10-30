@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
     <style>
       html, body {
-        margin: 0;
-        padding: 0;
+        margin: 0px;
+        padding: 0px;
         height: 100%;
-        background-color: #cafafe
+        font-family: 'Barlow', sans-serif;
       }
       .container {
         min-height: 100%;
@@ -18,19 +20,19 @@
       .body {
         padding-left: 20%;
         padding-right: 20%;
-        padding-bottom: 0;
+        padding-bottom: 10%;
       }
         .header {
           margin: 5%;
           text-align: center;
           font-size: 30pt;
+          font-family: 'Fjalla One', sans-serif;
         }
         .topnav {
           overflow: hidden;
-          background-color: #fc4445;
-          font-family: DINOT-Light;
-          font-weight: bold;
-
+          background-color: #00458c;
+          width: 100%;
+          font-weight: 700;
         }
         .topnav a {
           float: left;
@@ -44,8 +46,33 @@
           background-color: #ddd;
           color: white;
         }
-        .active {
-          background-color: #00458c;
+        .topnav a.active {
+          background-color: white;
+          color: black;
+        }
+        footer {
+          padding: 5%;
+          text-align: center;
+          background: #00458c;
+          width: 100%;
+          position: relative;
+          left: 0;
+          bottom: 0;
+          color: white;
+          box-sizing: border-box;
+        }
+        .fa {
+          padding: 5px;
+          font-size: 40px;
+          width: 40px;
+          text-align: center;
+          text-decoration: none;
+          margin: 5px 2px;
+          border-radius: 50%;
+        }
+        .fa-github {
+          color: white;
+          background-color: #333333;
         }
       </style>
       <link rel="stylesheet" href="https://raw.githubusercontent.com/thearchitector/followbot/master/website.css?token=AKH5NIUS7JZI3Q3MQBL7P4C5XRLG6">
@@ -64,14 +91,23 @@
       <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
-      <h1>Systems</h1>
-      <h2><a href="{{ url_for('mechanical') }}">Mechanical</a></h2>
+      <h1 style="font-family: 'Fjalla One', sans-serif;">Systems</h1>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('mechanical') }}">Mechanical</a></h2>
       <img src="" alt="image of final mechanical system">
-      <h2><a href="{{ url_for('electrical') }}">Electrical</a></h2>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('electrical') }}">Electrical</a></h2>
       <img src="" alt="image of final electrical system">
-      <h2><a href="{{ url_for('software') }}">Software</a></h2>
+      <h2 style="font-family: 'Fjalla One', sans-serif;">
+        <a href="{{ url_for('software') }}">Software</a></h2>
       <img src="" alt="image of code">
     </div>
+    <footer vlink="#ffffff">
+      <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a><br>
+      Copyright &copy; FollowBot 2019 |
+      <a href="http://poe.olin.edu/" target="_blank">Principles of Engineering</a>
+      | Designed by Kristin Aoki
+    </footer>
     </div>
 
   </body>

@@ -4,32 +4,35 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
     <style>
       html, body {
-        margin: 0;
-        padding: 0;
+        margin: 0px;
+        padding: 0px;
         height: 100%;
-        background-color: #cafafe
-      }
-      .container {
-        min-height: 100%;
-        position: relative;
-      }
-      .body {
-        padding-left: 20%;
-        padding-right: 20%;
-        padding-bottom: 0;
-      }
+        font-family: 'Barlow', sans-serif;
+        }
+        .container {
+          min-height: 100%;
+          position: relative;
+        }
+        .body {
+          padding-left: 20%;
+          padding-right: 20%;
+          padding-bottom: 10%;
+        }
         .header {
           margin: 5%;
           text-align: center;
           font-size: 30pt;
+          font-family: 'Fjalla One', sans-serif;
         }
         .topnav {
           overflow: hidden;
-          background-color: #fc4445;
-          font-family: DINOT-Light;
-          font-weight: bold;
+          background-color: #00458c;
+          width: 100%;
+          font-weight: 700;
         }
         .topnav a {
           float: left;
@@ -43,8 +46,9 @@
           background-color: #ddd;
           color: white;
         }
-        .active {
-          background-color: #00458c;
+        .topnav a.active {
+          background-color: white;
+          color: black;
         }
         .row {
           display: flex;
@@ -53,11 +57,35 @@
           width: 50%;
           padding: 5px;
         }
+        footer {
+          padding: 5%;
+          text-align: center;
+          background: #00458c;
+          width: 100%;
+          position: relative;
+          left: 0;
+          bottom: 0;
+          color: white;
+          box-sizing: border-box;
+        }
+        .fa {
+          padding: 5px;
+          font-size: 40px;
+          width: 40px;
+          text-align: center;
+          text-decoration: none;
+          margin: 5px 2px;
+          border-radius: 50%;
+        }
+        .fa-github {
+          color: white;
+          background-color: #333333;
+        }
       </style>
       <link rel="stylesheet" href="https://raw.githubusercontent.com/thearchitector/followbot/master/website.css?token=AKh4NIUS7JZI3Q3MQBL7P4C5XRLG6">
     <title>FollowBot</title>
   </head>
-  <body>
+  <body vlink="#ffffff">
     <div class="container">
       <div class="header">
         <h1>FollowBot</h1>
@@ -70,40 +98,46 @@
       <a href="{{ url_for('about') }}" class="active">About Team</a>
     </div>
     <div class="body">
-    <h1>About the Team</h1>
+    <h1 style="font-family: 'Fjalla One', sans-serif;">About the Team</h1>
     <!--include headshot of everyone and brief description of role for project-->
       <div class="row">
         <div class="column">
-          <h2>Kristin Aoki</h2>
+          <h2 style="font-family: 'Fjalla One', sans-serif;">Kristin Aoki</h2>
           <h4>Software and Electrical Engineer</h4>
           <p>role description and small background</p>
         </div>
         <div class="column">
-          <h2>Elias Gabriel</h2>
+          <h2 style="font-family: 'Fjalla One', sans-serif;">Elias Gabriel</h2>
           <h4>Software and Electrical Engineer</h4>
           <p>role description and small background</p>
         </div>
       </div>
       <div class="row">
         <div class="column">
-          <h2>Duncan Mazza</h2>
+          <h2 style="font-family: 'Fjalla One', sans-serif;">Duncan Mazza</h2>
           <h4>Software and Electrical Engineer</h4>
           <p>role description and small background</p>
         </div>
         <div class="column">
-          <h2>Meagan Rittmanic</h2>
+          <h2 style="font-family: 'Fjalla One', sans-serif;">Meagan Rittmanic</h2>
           <h4>Mechanical Engineer</h4>
           <p>role description and small background</p>
         </div>
       </div>
       <div class="row">
         <div class="column">
-          <h2>Olivia Seitelman</h2>
+          <h2 style="font-family: 'Fjalla One', sans-serif;">Olivia Seitelman</h2>
           <h4>Mechanical Engineer</h4>
           <p>role description and small background</p>
         </div>
       </div>
     </div>
+    <footer>
+      <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a><br>
+      Copyright &copy; FollowBot 2019 |
+      <a href="http://poe.olin.edu/" target="_blank">Principles of Engineering</a>
+      | Designed by Kristin Aoki
+    </footer>
     </div>
 
   </body>
