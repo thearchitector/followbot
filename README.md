@@ -5,10 +5,10 @@
 - An internet connection
 - Docker
 
-To install Docker on a RaspberryPi, simply run the `curl -sSL https://get.docker.com | sh`. Docker will download and install automatically through `apt`. Once installed, it can be removed via `apt remove docker-ce`.
+To install Docker on a RaspberryPi, simply run `curl -sSL https://get.docker.com | sh`. Docker will download and install automatically through `apt`. Once installed, it can be removed via `apt remove docker-ce`.
 
 ## Installation
-To run this Docker image, you need to be logged into a Docker Hub account that has collaboration access. Once logged in, you can run the Docker container like any other. The following commands will prompt you for your username and password, and then download (if not already cached) the image and launch into bash.
+To run this Docker image, you need to be logged into an authenticated Docker Hub account. Once logged in, you can run the Docker container like any other. The following commands will prompt you for your username and password, and will then download (if not already cached) the image and launch into bash.
 
 ```sh
     $ docker login
