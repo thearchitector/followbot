@@ -1,5 +1,5 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
-FROM ros:melodic-robot-bionic
+FROM arm32v7/ros:melodic-robot-bionic
 
 RUN apt-get update && \
     # Install a whole bunch of dependencies
