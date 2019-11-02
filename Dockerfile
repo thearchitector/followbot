@@ -8,13 +8,15 @@ RUN apt-get update && \
 
 # Install Visual Studio Code
 RUN curl -L "https://go.microsoft.com/fwlink/?LinkID=760868" -o /tmp/code.deb && \
-    apt-get -y --no-install-recommends install /tmp/code.deb
-
-# Install ROS Melodic
-RUN apt-get -y --no-install-recommends install ros-melodic-mavros* ros-melodic-joy \
-	python-rosinstall python-rosinstall-generator python-wstool && \
+    apt-get -y --no-install-recommends install /tmp/code.deb && \
     apt-get -y autoremove && \
     apt-get -y clean
+
+# Install ROS Melodic
+#RUN apt-get -y --no-install-recommends install ros-melodic-mavros* ros-melodic-joy \
+#	python-rosinstall python-rosinstall-generator python-wstool && \
+#    apt-get -y autoremove && \
+#    apt-get -y clean
     
 # Build and install OpenCV
 RUN rm -rf /tmp/* && \
