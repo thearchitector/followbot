@@ -4,8 +4,7 @@ FROM ros:melodic-robot-bionic
 RUN apt-get update && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git libgtk2.0-dev \
-    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
-    
+    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl
 
 # Install Visual Studio Code
 RUN curl -L "https://go.microsoft.com/fwlink/?LinkID=760868" -o /tmp/code.deb && \
