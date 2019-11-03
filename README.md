@@ -16,9 +16,9 @@ To run this Docker image, you need to be logged into an authenticated Docker Hub
 ```
 
 ## Rebuilding
-It is not recommened that this Docker image is rebuilt manually or edited in any way, as it has been carefully tailored for Followbot. A manual rebuild should not be necessary as Docker Hub is configured to automatically rebuild the image whenever the base ROS Melodic Ubunutu Bionic (`ros-melodic-bionic`) is changed or whenever a change is pushed to Git.
+It is not recommened that this Docker image is rebuilt or edited in any way, as it has been carefully tailored for Followbot. A manual rebuild should only be necessary when the base ROS Melodic Ubunutu Bionic (`ros-melodic-bionic`) image has made breaking changes.
 
-It should be noted that rebuilding the Docker image consumes around ~5 GiB of root partition space, and compilation takes between 5-10 minutes depending on the hardware avaliable. To minimize the build Docker image size, the command below assumes the Docker dameon is running with an experimental feature set. To enable experimental mode, follow the instructions [here](https://stackoverflow.com/a/44346323).
+It should be noted that rebuilding the Docker image consumes around ~5-6 GiB of root partition space, and compilation takes between 1-2 hours depending on the hardware and ambient temperature. To minimize the build Docker image size, the command below assumes the Docker dameon is running with an experimental feature set. To enable experimental mode, follow the instructions [here](https://stackoverflow.com/a/44346323).
 
 In the event that a manual rebuild is still needed, run the following commands. The image must be built on a machine with an ARMv7 32-bit processor, so it is highly recommended it be built directly on the RaspberryPi.
 
