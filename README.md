@@ -20,12 +20,12 @@ It is not recommened that this Docker image is rebuilt manually or edited in any
 
 It should be noted that rebuilding the Docker image consumes around ~5 GiB of root partition space, and compilation takes between 5-10 minutes depending on the hardware avaliable. To minimize the build Docker image size, the command below assumes the Docker dameon is running with an experimental feature set. To enable experimental mode, follow the instructions [here](https://stackoverflow.com/a/44346323).
 
-In the event that a manual rebuild is still needed, run the following commands:
+In the event that a manual rebuild is still needed, run the following commands. The image must be built on a machine with an ARMv7 32-bit processor, so it is highly recommended it be built directly on the RaspberryPi.
 
 ```sh
     $ git clone https://github.com/thearchitector/followbot.git ~/followbot
     $ cd ~/followbot
-    $ docker build --compress --squash --force-rm --no-cache -t thearchitector/followbot:master .
+    $ docker build --compress --squash --force-rm -t thearchitector/followbot:master .
 ```
 
 To repush the image to Docker Hub, run `docker push thearchitector/followbot:master` after rebuilding the image.
