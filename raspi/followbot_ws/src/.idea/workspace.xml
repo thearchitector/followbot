@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3248b2b0-eb7d-41f0-a687-fa77f769f840" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/coms/coms.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/coms/coms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/controls/controls.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/controls/controls.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/run.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/sensing/sensing.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/utility/conversions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino_run/utility/structs.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../calibrate/calibrate.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/sense.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/FILE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/run_all_tests.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/setup_opencv.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/setup_ros.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/src/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/package.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/src/cameras.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/tests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/followbot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/4barrender.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/Legs_half_assembly.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/mainlegsrender.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/prototype1.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1510.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1511.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1512.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1513.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1514.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/aboutus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/budget.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/electrical.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/finalsprint.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/homepage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/mechanical.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/process.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/software.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../website/templates/systems.html" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1T8UmfErm75oHsud7mYHfC7KGLR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3248b2b0-eb7d-41f0-a687-fa77f769f840" name="Default Changelist" comment="" />
+      <created>1572841377037</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572841377037</updated>
+      <workItem from="1572841379786" duration="156000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

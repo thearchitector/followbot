@@ -1,0 +1,4 @@
+{
+    "arduino.disableTestingOpen": true,
+    "C_Cpp.loggingLevel": "Information"
+}
