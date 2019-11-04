@@ -1,7 +1,4 @@
-# Running
-In this directory, run:
+# Followbot&trade; Sensor and Processing RPi Controller
 
-```
-catkin_make
-roslaunch
-```
+## Development
+When developing, it is highly recommended you use the pre-built Docker image. Assuming Docker is already installed, it can be launched by running `./dockin.sh`.
