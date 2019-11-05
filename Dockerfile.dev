@@ -8,6 +8,13 @@ RUN apt-get update && \
     apt-get -y autoremove && \
     apt-get -y clean
 
+# Download and install CLion
+RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.2.5.tar.gz" -o /etc/clion.tar.gz && \
+    tar -xzf /etc/clion.tar.gz --directory /etc && \
+    ln -s /etc/clion-2019.2.5/bin/clion.sh /etc/clion-2019.2.5/bin/clion && \
+    rm -rf /etc/clion.tar.gz
+ENV PATH="/etc/clion-2019.2.5/bin:${PATH}"
+
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
     git clone https://github.com/opencv/opencv.git /tmp/opencv/core && \
@@ -28,19 +35,18 @@ RUN mkdir /tmp/opencv && \
     rm -rf /tmp/*
 
 # Setup bash entry point
-COPY ./ros_entrypoint.sh /ros_entrypoint.sh
+COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
-# Setup perimissions
-RUN (echo "root:password" | chpasswd) && \
-    groupadd followers && \
-    # Setup usergroup and user with home directory
-    useradd -g followers -ms /bin/bash bot
-USER bot
-WORKDIR /home/bot
+# Setup permissions
+RUN (echo "root:followbot" | chpasswd) && \
+    useradd -ms /bin/bash developer && \
+    (echo "developer:password" | chpasswd)
+USER developer
+WORKDIR /home/developer
 
 # Git clone the repo and update ROS dependencies
-RUN cd /home/bot && \
+RUN cd /home/developer && \
     git clone https://github.com/thearchitector/followbot.git && \
     rosdep update
 
