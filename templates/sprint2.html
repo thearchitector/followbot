@@ -1,97 +1,148 @@
 <!DOCTYPE html>
 <html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    font-family: 'Barlow', sans-serif;
+    }
+    .container {
+      min-height: 100%;
+      position: relative;
+    }
+    .body {
+      padding-left: 20%;
+      padding-right: 20%;
+      padding-bottom: 10%;
+    }
+    .header {
+      margin: 5%;
+      text-align: center;
+      font-size: 30pt;
+      font-family: 'Fjalla One', sans-serif;
+    }
+    .topnav {
+      overflow: hidden;
+      background-color: #00458c;
+      width: 100%;
+      font-weight: 700;
+    }
+    .topnav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    .topnav a:hover {
+      background-color: #ddd;
+      color: white;
+    }
+    .topnav a.active {
+      background-color: white;
+      color: black;
+    }
+    .column {
+      width: 50%;
+      padding: 5px;
+    }
+    .row {
+      display: flex;
+    }
+    footer {
+      padding: 5%;
+      text-align: center;
+      background: #00458c;
+      width: 100%;
+      position: relative;
+      left: 0;
+      bottom: 0;
+      color: white;
+      box-sizing: border-box;
+    }
+    .fa {
+      padding: 5px;
+      font-size: 40px;
+      width: 40px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+      border-radius: 50%;
+    }
+    .fa-github {
+      color: white;
+      background-color: #333333;
+    }
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    iframe {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    p{
+      font-size: 16pt;
+    }
+    ul {
+      font-size: 16pt;
+    }
+  </style>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap" rel="stylesheet">
-    <style>
-      html, body {
-        margin: 0px;
-        padding: 0px;
-        height: 100%;
-        font-family: 'Barlow', sans-serif;
-      }
-      .container {
-        min-height: 100%;
-        position: relative;
-      }
-      .body {
-        padding-left: 20%;
-        padding-right: 20%;
-        padding-bottom: 10%;
-      }
-        .header {
-          margin: 5%;
-          text-align: center;
-          font-size: 30pt
-          font-family: 'Fjalla One', sans-serif;
-        }
-        .topnav {
-          overflow: hidden;
-          background-color: #00458c;
-          width: 100%;
-          font-weight: 700;
-        }
-        .topnav a {
-          float: left;
-          display: block;
-          color: white;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-        }
-        .topnav a:hover {
-          background-color: #ddd;
-          color: white;
-        }
-        .topnav a.active {
-          background-color: white;
-          color: black;
-        }
-        footer {
-          padding: 5%;
-          text-align: center;
-          background: #00458c;
-          width: 100%;
-          position: relative;
-          left: 0;
-          bottom: 0;
-          color: white;
-          box-sizing: border-box;
-        }
-        .fa {
-          padding: 5px;
-          font-size: 40px;
-          width: 40px;
-          text-align: center;
-          text-decoration: none;
-          margin: 5px 2px;
-          border-radius: 50%;
-        }
-        .fa-github {
-          color: white;
-          background-color: #333333;
-        }
-      </style>
-      <link rel="stylesheet" href="https://raw.githubusercontent.com/thearchitector/followbot/master/website.css?token=AKH5NIUS7JZI3Q3MQBL7P4C5XRLG6">
     <title>FollowBot</title>
   </head>
-  <body vlink="#ffffff">
+  <body vlink ="#ffffff">
     <div class="container">
     <div class="header">
       <h1>FollowBot</h1>
     </div>
     <div class="topnav">
-      <a href="{{ url_for('homepage') }}">Home</a>
-      <a href="{{ url_for('process') }}"  class="active">Process</a>
-      <a href="{{ url_for('systems') }}">Systems</a>
-      <a href="{{ url_for('budget') }}">Budget</a>
-      <a href="{{ url_for('about') }}">About Team</a>
+      <a href="{{ url_for('homepage') }}">HOME</a>
+      <a href="{{ url_for('process') }}"  class="active">PROCESS</a>
+      <a href="{{ url_for('systems') }}">SYSTEMS</a>
+      <a href="{{ url_for('budget') }}">BUDGET</a>
+      <a href="{{ url_for('about') }}">ABOUT TEAM</a>
     </div>
     <div class="body">
-      <h1 style="font-family: 'Fjalla One', sans-serif;">Sprint 2</h1>
+      <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt;">Sprint 1</h1>
+      <p>
+      </p>
+      <div class="row">
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/4barrender.JPG?token=AKH5NIQJ3PEFELVYYXPOQSS5YF4TA"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+        <div class="column">
+          <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/Legs_half_assembly.JPG?token=AKH5NIT2SSBR7UC3MFY2CIS5YF4JC"
+              alt="cad of four bar linkage legs" style="width: 100%;">
+        </div>
+      </div>
+      <p>
+      </p>
+      <img src="https://raw.githubusercontent.com/thearchitector/followbot/master/website/images/sprint_1/mainlegsrender.JPG?token=AKH5NIQCP6E6M2IAJZDP4KC5YF4UI"
+          alt="cad of final leg" style="width: 50%;">
+      <p>
+      </p>
+      <iframe src="https://drive.google.com/file/d/1h4OpD9kvh8DGfMvcL9A7NS6Y3_0QdDbC/preview"
+          width="420" height="315"></iframe>
+      <p>
+      </p>
+      <p>During this sprint we learned about all the components that we need to
+        focus on for Sprint 3. Our goals for Sprint 3 are as follows:
+        <ul>
+          <li>
+          </li>
+        </ul>
+      </p>
     </div>
     <footer>
       <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a><br>
