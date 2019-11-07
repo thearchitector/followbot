@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(followbot_pkg)
+project(followbot)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -8,9 +8,10 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  geometry_msgs
-  std_msgs
+		roscpp
+		geometry_msgs
+		std_msgs
+		message_generation
 )
 
 
@@ -40,14 +41,14 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## Generate messages in the 'msg' folder
 add_message_files(
-  FILES
+		FILES
 )
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-  DEPENDENCIES
-  std_msgs
-  geometry_msgs
+		DEPENDENCIES
+		std_msgs
+		geometry_msgs
 )
 
 
@@ -61,8 +62,8 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp std_msgs geometry_msgs
+		INCLUDE_DIRS include
+		CATKIN_DEPENDS roscpp std_msgs geometry_msgs
 )
 
 
@@ -73,8 +74,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+		include
+		${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ executable
@@ -86,7 +87,7 @@ include_directories(
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+#set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME node PREFIX "")
 
 
 #############
