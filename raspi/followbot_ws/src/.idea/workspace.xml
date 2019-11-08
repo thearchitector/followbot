@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
+    <generated>
+      <config projectName="followbot" targetName="roscpp_generate_messages_py" />
+      <config projectName="followbot" targetName="gmock_main" />
+      <config projectName="followbot" targetName="run_tests" />
+      <config projectName="followbot" targetName="followbot_generate_messages_lisp" />
+      <config projectName="followbot" targetName="followbot_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="download_extra_data" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="followbot_geneus" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="clean_test_results" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_cpp" />
+      <config projectName="followbot" targetName="gtest" />
+      <config projectName="followbot" targetName="followbot_generate_messages_cpp" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="followbot_generate_messages" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="followbot_generate_messages_py" />
+      <config projectName="followbot" targetName="gmock" />
+      <config projectName="followbot" targetName="followbot_gencpp" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="tests" />
+      <config projectName="followbot" targetName="doxygen" />
+      <config projectName="followbot" targetName="gtest_main" />
+      <config projectName="followbot" targetName="followbot_genlisp" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_lisp" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_eus" />
+      <config projectName="followbot" targetName="followbot_genpy" />
+      <config projectName="followbot" targetName="followbot_generate_messages_eus" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="followbot_gennodejs" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_nodejs" />
+    </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3248b2b0-eb7d-41f0-a687-fa77f769f840" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/coms/coms.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/coms/coms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/controls/controls.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/controls/controls.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/run.ino" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/sensing/sensing.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/utility/conversions.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../arduino_run/utility/structs.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../calibrate/calibrate.ino" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/sense.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/FILE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/run_all_tests.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/setup_opencv.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/setup_ros.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/src/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/package.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/src/sense_package/src/cameras.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../sense/tests.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/followbot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/4barrender.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/Legs_half_assembly.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/mainlegsrender.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/sprint_1/prototype1.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1510.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1511.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1512.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1513.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/images/team_members/IMG_1514.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/stylesheet.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/aboutus.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/budget.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/electrical.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/finalsprint.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/homepage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/mechanical.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/process.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/software.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/sprint3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../website/templates/systems.html" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/include/cameras.h" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/include/cameras.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/include/serial.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/src/coms/serial.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot_pkg/src/sensing/cameras.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/src/sensing/cameras.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,14 +71,23 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="ProjectId" id="1T8UmfErm75oHsud7mYHfC7KGLR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -87,6 +100,250 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="CMake Application.clean_test_results">
+    <configuration name="clean_test_results" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="clean_test_results" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="download_extra_data" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="download_extra_data" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="doxygen" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="doxygen" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_gencpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_gencpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_geneus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_geneus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_genlisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_genlisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_gennodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_gennodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="followbot_genpy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_genpy" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="geometry_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="geometry_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="geometry_msgs_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="geometry_msgs_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="geometry_msgs_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="geometry_msgs_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="geometry_msgs_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="geometry_msgs_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="geometry_msgs_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="geometry_msgs_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="roscpp_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="roscpp_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="roscpp_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="roscpp_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="roscpp_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="roscpp_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="roscpp_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="roscpp_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="roscpp_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="roscpp_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rosgraph_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="rosgraph_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rosgraph_msgs_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="rosgraph_msgs_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rosgraph_msgs_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="rosgraph_msgs_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rosgraph_msgs_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="rosgraph_msgs_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rosgraph_msgs_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="rosgraph_msgs_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run_tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="run_tests" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="std_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="std_msgs_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="std_msgs_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="std_msgs_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="std_msgs_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="tests" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.clean_test_results" />
+      <item itemvalue="CMake Application.download_extra_data" />
+      <item itemvalue="CMake Application.doxygen" />
+      <item itemvalue="CMake Application.run_tests" />
+      <item itemvalue="CMake Application.tests" />
+      <item itemvalue="CMake Application.followbot_gencpp" />
+      <item itemvalue="CMake Application.followbot_generate_messages" />
+      <item itemvalue="CMake Application.followbot_generate_messages_cpp" />
+      <item itemvalue="CMake Application.followbot_generate_messages_eus" />
+      <item itemvalue="CMake Application.followbot_generate_messages_lisp" />
+      <item itemvalue="CMake Application.followbot_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.followbot_generate_messages_py" />
+      <item itemvalue="CMake Application.followbot_geneus" />
+      <item itemvalue="CMake Application.followbot_genlisp" />
+      <item itemvalue="CMake Application.followbot_gennodejs" />
+      <item itemvalue="CMake Application.followbot_genpy" />
+      <item itemvalue="CMake Application.geometry_msgs_generate_messages_cpp" />
+      <item itemvalue="CMake Application.geometry_msgs_generate_messages_eus" />
+      <item itemvalue="CMake Application.geometry_msgs_generate_messages_lisp" />
+      <item itemvalue="CMake Application.geometry_msgs_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.geometry_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.roscpp_generate_messages_cpp" />
+      <item itemvalue="CMake Application.roscpp_generate_messages_eus" />
+      <item itemvalue="CMake Application.roscpp_generate_messages_lisp" />
+      <item itemvalue="CMake Application.roscpp_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.roscpp_generate_messages_py" />
+      <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_cpp" />
+      <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_eus" />
+      <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_lisp" />
+      <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.std_msgs_generate_messages_cpp" />
+      <item itemvalue="CMake Application.std_msgs_generate_messages_eus" />
+      <item itemvalue="CMake Application.std_msgs_generate_messages_lisp" />
+      <item itemvalue="CMake Application.std_msgs_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.std_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.gmock" />
+      <item itemvalue="CMake Application.gmock_main" />
+      <item itemvalue="CMake Application.gtest" />
+      <item itemvalue="CMake Application.gtest_main" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -110,7 +367,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
