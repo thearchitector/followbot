@@ -15,25 +15,27 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-const uint8_t MIN_STRIDE = 45;
-const uint8_t MAX_STRIDE = 135;
-const uint8_t STRIDE_ORIGIN = (MAX_STRIDE - MIN_STRIDE) / 2;
-const uint8_t MIN_STEP = 80;
-const uint8_t MAX_STEP = 110;
 const uint8_t NUM_SERVOS = 4;
 const uint8_t SERVO_PINS[] = {11, 10, 9, 8};
 const Servo SERVOS[NUM_SERVOS];
+const double MIN_STRIDE = 45;
+const double MAX_STRIDE = 135;
+const double STRIDE_RANGE = MAX_STRIDE - MIN_STRIDE;
+const uint8_t MIN_STEP = 70;
+const uint8_t MAX_STEP = 110;
+
+double currentStrideAngle;
+double currentStepAngle;
 
 double leftStrideCoefficient;
 double rightStrideCoefficient;
-uint8_t currentStrideAngle = 90;
-uint8_t currentStepAngle = 90;
-uint8_t dir = 1;
+
 bool strideDirection = true;
 bool stepDirection = true;
+int8_t strideCount = 0;
 
-void attachServos(uint8_t angle0, uint8_t angle1) {
-    uint8_t pos[] = {angle0, angle0, angle1, angle1};
+void attachServos(double angle0, double angle1) {
+    double pos[] = {angle0, angle0, angle1, angle1};
     currentStrideAngle = angle0;
     currentStepAngle = angle1;
 
@@ -43,12 +45,23 @@ void attachServos(uint8_t angle0, uint8_t angle1) {
     }
 }
 
-void calculateStrideCoefficients(uint16_t heading) {
-    dir = 1;
+bool isReverse = false;
+double dir = 1;
 
+void calculateStrideCoefficients(double heading) {
     if(heading > 180) {
         heading -= 180;
-        dir = -1;
+        // if(heading > 270) heading = 0;
+        // else heading = 180;
+
+        if(!isReverse) {
+            dir = -1;
+            isReverse = true;
+        }
+    }
+    else if(isReverse) {
+        dir = 1;
+        isReverse = false;
     }
 
     rightStrideCoefficient = heading / 180.0;
@@ -56,10 +69,16 @@ void calculateStrideCoefficients(uint16_t heading) {
 }
 
 void moveAtHeading() {
-    SERVOS[0].write((currentStrideAngle * leftStrideCoefficient) + STRIDE_ORIGIN);
-    SERVOS[1].write((currentStrideAngle * rightStrideCoefficient) + STRIDE_ORIGIN);
+    bool flag = false;
+    double lMin = 90 - (STRIDE_RANGE / (2 / leftStrideCoefficient));
+    double lMax = 90 + (STRIDE_RANGE / (2 / leftStrideCoefficient));
+    double rMin = 90 - (STRIDE_RANGE / (2 / rightStrideCoefficient));
+    double rMax = 90 + (STRIDE_RANGE / (2 / rightStrideCoefficient));
 
-    currentStrideAngle = currentStrideAngle + (strideDirection ? dir : -dir);
+    SERVOS[0].write(max(min(currentStrideAngle, lMax), lMin));
+    SERVOS[1].write(max(min(currentStrideAngle, rMax), rMin));
+
+    currentStrideAngle = currentStrideAngle + (strideDirection ? 1 : -1);
 
     if(currentStrideAngle == MAX_STRIDE || currentStrideAngle == MIN_STRIDE) {
         strideDirection = !strideDirection;
@@ -68,7 +87,7 @@ void moveAtHeading() {
             SERVOS[2].write(currentStepAngle);
             SERVOS[3].write(currentStepAngle);
 
-            currentStepAngle = currentStepAngle + (stepDirection ? dir : -dir);
+            currentStepAngle = max(min(currentStepAngle + (stepDirection ? dir : -dir), MAX_STEP), MIN_STEP);
 
             if(currentStepAngle == MAX_STEP || currentStepAngle == MIN_STEP) {
                 stepDirection = !stepDirection;
