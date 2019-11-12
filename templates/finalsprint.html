@@ -116,30 +116,30 @@
   </head>
   <body vlink="#ffffff">
     <div class="container">
+      <div class="topnav">
+        <a href="{{ url_for('homepage') }}">HOME</a>
+        <div class="dropdown">
+          <button class="dropbtn"><a href="{{ url_for('process') }}">PROCESS</a></button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
+            <a href="{{ url_for('sprint2') }}">SPRINT 2</a>
+            <a href="{{ url_for('sprint3') }}">SPRINT 3</a>
+            <a href="{{ url_for('finalsprint') }}">FINAL SPRINT</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('mechanical') }}">MECHANICALl</a>
+            <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
+            <a href="{{ url_for('software') }}">SOFTWARE</a>
+          </div>
+        </div>
+        <a href="{{ url_for('budget') }}">BUDGET</a>
+        <a href="{{ url_for('about') }}" class="active">ABOUT TEAM</a>
+      </div>
     <div class="header">
       <h1>FollowBot</h1>
-    </div>
-    <div class="topnav">
-      <a href="{{ url_for('homepage') }}">Home</a>
-      <div class="dropdown">
-        <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">Process</a></button>
-        <div class="dropdown-content">
-          <a href="{{ url_for('sprint1') }}">Sprint 1</a>
-          <a href="{{ url_for('sprint2') }}">Sprint 2</a>
-          <a href="{{ url_for('sprint3') }}">Sprint 3</a>
-          <a href="{{ url_for('finalsprint') }}">Final Sprint</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn"><a href="{{ url_for('systems') }}">Systems</a></button>
-        <div class="dropdown-content">
-          <a href="{{ url_for('mechanical') }}">Mechanical</a>
-          <a href="{{ url_for('electrical') }}">Electrical</a>
-          <a href="{{ url_for('software') }}">Software</a>
-        </div>
-      </div>
-      <a href="{{ url_for('budget') }}">Budget</a>
-      <a href="{{ url_for('about') }}">About Team</a>
     </div>
     <div class="body">
       <h1 style="font-family: 'Fjalla One', sans-serif;">Final Sprint</h1>
