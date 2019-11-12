@@ -49,12 +49,6 @@
       background-color: white;
       color: black;
     }
-    table {
-      border-collapse: collapse;
-      font-family: Dutch801+Rm+BT;
-      width: 80%;
-      background-color: #f8e9a1
-    }
     footer {
       padding: 5%;
       text-align: center;
@@ -79,6 +73,15 @@
       color: white;
       background-color: #333333;
     }
+    table {
+      border-collapse: collapse;
+      font-family: Dutch801+Rm+BT;
+      width: 80%;
+    }
+    table.center {
+      margin-left: auto;
+      margin-right: auto;
+    }
     th {
       font-size: 20px;
       border: 1px solid black;
@@ -91,9 +94,8 @@
       text-align: right;
       padding: 8px;
     }
-    table.center {
-      margin-left: auto;
-      margin-right: auto;
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
     }
   </style>
   <head>
