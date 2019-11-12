@@ -15,11 +15,14 @@
     .container {
       min-height: 100%;
       position: relative;
+      background-image: url(https://github.com/thearchitector/followbot/blob/gh-pages/images/sprint_2/IMG_1562.jpg?raw=true);
+      background-position: bottom;
     }
     .body {
       padding-left: 20%;
       padding-right: 20%;
       padding-bottom: 10%;
+      background: white;
     }
     .header {
       margin: 5%;
@@ -38,7 +41,7 @@
       display: block;
       color: white;
       text-align: center;
-      padding: 14px 16px;
+      padding: 20px 16px;
       text-decoration: none;
     }
     .topnav a.active {
@@ -56,7 +59,7 @@
       background-color: inherit;
       font-weight: 700;
       font-size: 16px;
-      margin: 0;
+      padding: 0;
     }
     .topnav a:hover, .dropdown:hover .dropbtn {
       background-color: #ddd;
@@ -138,33 +141,33 @@
   </head>
   <body vlink ="#ffffff">
     <div class="container">
+      <div class="topnav">
+        <a href="{{ url_for('homepage') }}">HOME</a>
+        <div class="dropdown">
+          <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">PROCESS</a></button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
+            <a href="{{ url_for('sprint2') }}">SPRINT 2</a>
+            <a href="{{ url_for('sprint3') }}">SPRINT 3</a>
+            <a href="{{ url_for('finalsprint') }}">FINAL SPRINT</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('mechanical') }}">MECHANICAL</a>
+            <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
+            <a href="{{ url_for('software') }}">SOFTWARE</a>
+          </div>
+        </div>
+        <a href="{{ url_for('budget') }}">BUDGET</a>
+        <a href="{{ url_for('about') }}">ABOUT TEAM</a>
+      </div>
     <div class="header">
       <h1>FollowBot</h1>
     </div>
-    <div class="topnav">
-      <a href="{{ url_for('homepage') }}">HOME</a>
-      <div class="dropdown">
-        <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">Process</a></button>
-        <div class="dropdown-content">
-          <a href="{{ url_for('sprint1') }}">Sprint 1</a>
-          <a href="{{ url_for('sprint2') }}">Sprint 2</a>
-          <a href="{{ url_for('sprint3') }}">Sprint 3</a>
-          <a href="{{ url_for('finalsprint') }}">Final Sprint</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn"><a href="{{ url_for('systems') }}">Systems</a></button>
-        <div class="dropdown-content">
-          <a href="{{ url_for('mechanical') }}">Mechanical</a>
-          <a href="{{ url_for('electrical') }}">Electrical</a>
-          <a href="{{ url_for('software') }}">Software</a>
-        </div>
-      </div>
-      <a href="{{ url_for('budget') }}">BUDGET</a>
-      <a href="{{ url_for('about') }}">ABOUT TEAM</a>
-    </div>
     <div class="body">
-      <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt;">Sprint 2</h1>
+      <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt; padding-top: 50px">Sprint 2</h1>
       <p>For Sprint 2, our goal was to have a functional robot with a fully
         integrated system. A fully integrated system for this sprint meant
         having a robot that has IR sensors to avoid objects and a fully
@@ -173,7 +176,12 @@
       <p>The first system that we worked on was the mechanical system. During
         the last sprint we figured out the lateral motion of the legs, but due
         to clashing parts, our team could not test the self propulsion legs.
-        The first thing we did was redesign the legs and mounts.
+        The first thing we did was redesign the legs and mounts. In the
+        previous iteration of our robot, the servos were hot glued to a
+        cardboard box. As a result the legs were not precisely at the same
+        height. To remedy this problem, we built mounts that would constrained
+        the legs at the same height and were securely attached to the chassis
+        with screws and nuts.
       </p>
       <iframe src="https://drive.google.com/file/d/1ihun8wx6Wzi4kiBYlTZ32iVCba53LKj0/preview"
           width="420" height="315"></iframe>
