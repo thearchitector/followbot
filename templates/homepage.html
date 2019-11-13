@@ -43,9 +43,8 @@
           color: white;
           text-align: center;
           font-size: 16px;
-          padding: 14px 16px;
+          padding: 20px 16px;
           text-decoration: none;
-          padding: 0;
         }
         .topnav a.active {
           background-color: white;
@@ -129,7 +128,7 @@
   <body vlink="#ffffff">
     <div class="container">
       <div class="topnav">
-        <a href="{{ url_for('homepage') }}">HOME</a>
+        <a href="{{ url_for('homepage') }}" class="active">HOME</a>
         <div class="dropdown">
           <button class="dropbtn"><a href="{{ url_for('process') }}">PROCESS</a></button>
           <div class="dropdown-content">
@@ -148,7 +147,7 @@
           </div>
         </div>
         <a href="{{ url_for('budget') }}">BUDGET</a>
-        <a href="{{ url_for('about') }}" class="active">ABOUT TEAM</a>
+        <a href="{{ url_for('about') }}">ABOUT TEAM</a>
       </div>
     <div class="header">
       <h1>FollowBot</h1>
