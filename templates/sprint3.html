@@ -49,6 +49,9 @@
           background-color: white;
           color: black;
         }
+        .topnav-right{
+          float: right;
+        }
         .dropdown {
           float: left;
           overflow: hidden;
@@ -120,26 +123,28 @@
   <body vlink="#ffffff">
     <div class="container">
       <div class="topnav">
-        <a href="{{ url_for('homepage') }}">HOME</a>
-        <div class="dropdown">
-          <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">PROCESS</a></button>
-          <div class="dropdown-content">
-            <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
-            <a href="{{ url_for('sprint2') }}">SPRINT 2</a>
-            <a href="{{ url_for('sprint3') }}">SPRINT 3</a>
-            <a href="{{ url_for('finalsprint') }}">FINAL SPRINT</a>
+        <div class="topnav-right">
+          <a href="{{ url_for('homepage') }}">HOME</a>
+          <div class="dropdown">
+            <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">PROCESS</a></button>
+            <div class="dropdown-content">
+              <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
+              <a href="{{ url_for('sprint2') }}">SPRINT 2</a>
+              <a href="{{ url_for('sprint3') }}">SPRINT 3</a>
+              <a href="{{ url_for('finalsprint') }}">FINAL SPRINT</a>
+            </div>
           </div>
-        </div>
-        <div class="dropdown">
-          <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
-          <div class="dropdown-content">
-            <a href="{{ url_for('mechanical') }}">MECHANICAL</a>
-            <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
-            <a href="{{ url_for('software') }}">SOFTWARE</a>
+          <div class="dropdown">
+            <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
+            <div class="dropdown-content">
+              <a href="{{ url_for('mechanical') }}">MECHANICAL</a>
+              <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
+              <a href="{{ url_for('software') }}">SOFTWARE</a>
+            </div>
           </div>
+          <a href="{{ url_for('budget') }}">BUDGET</a>
+          <a href="{{ url_for('about') }}">ABOUT TEAM</a>
         </div>
-        <a href="{{ url_for('budget') }}">BUDGET</a>
-        <a href="{{ url_for('about') }}">ABOUT TEAM</a>
       </div>
     <div class="header">
       <h1>FollowBot</h1>
