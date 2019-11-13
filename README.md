@@ -12,7 +12,13 @@ To run this Docker image, you need to be logged into an authenticated Docker Hub
 
 ```sh
     $ docker login
-    $ docker run -it thearchitector/followbot:master
+    $ docker run -it thearchitector/followbot:raspi
+```
+
+**You should only have to run the above code once!** Afterwards, run:
+
+```sh
+    $ docker start -ai thearchitector/followbot:raspi
 ```
 
 ## Rebuilding
@@ -25,10 +31,10 @@ In the event that a manual rebuild is still needed, run the following commands. 
 ```sh
     $ git clone https://github.com/thearchitector/followbot.git ~/followbot
     $ cd ~/followbot
-    $ docker build --compress --squash --force-rm -t thearchitector/followbot:master .
+    $ docker build --compress --squash --force-rm -t thearchitector/followbot:{tag} -f Dockerfile.{tag}
 ```
 
-To repush the image to Docker Hub, run `docker push thearchitector/followbot:master` after rebuilding the image.
+To repush the image to Docker Hub, run `docker push thearchitector/followbot:{tag}` after rebuilding the image.
 
 ## License
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.

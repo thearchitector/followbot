@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo $'\e[1;30m'
+echo $'\e[1;30m Sourcing ROS and updating repository...'
 source /opt/ros/melodic/setup.bash
-cd ~/followbot && git checkout master -f && git pull
+{ cd ~/followbot; git checkout master -f; git pull } > /dev/null
 echo $'\e[0m'
 exec "$@"
