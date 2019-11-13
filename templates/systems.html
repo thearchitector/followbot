@@ -131,7 +131,7 @@
           </div>
         </div>
         <div class="dropdown">
-          <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
+          <button class="dropbtn"><a href="{{ url_for('systems') }}" class="active">SYSTEMS</a></button>
           <div class="dropdown-content">
             <a href="{{ url_for('mechanical') }}">MECHANICAL</a>
             <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
@@ -139,7 +139,7 @@
           </div>
         </div>
         <a href="{{ url_for('budget') }}">BUDGET</a>
-        <a href="{{ url_for('about') }}" class="active">ABOUT TEAM</a>
+        <a href="{{ url_for('about') }}">ABOUT TEAM</a>
       </div>
     <div class="header">
       <h1>FollowBot</h1>
