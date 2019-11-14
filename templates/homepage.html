@@ -133,9 +133,9 @@
     <div class="container">
       <div class="topnav">
         <div class="topnav-right">
-          <a href="{{ url_for('homepage') }}">HOME</a>
+          <a href="{{ url_for('homepage') }}" class="active">HOME</a>
           <div class="dropdown">
-            <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">PROCESS</a></button>
+            <button class="dropbtn"><a href="{{ url_for('process') }}">PROCESS</a></button>
             <div class="dropdown-content">
               <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
               <a href="{{ url_for('sprint2') }}">SPRINT 2</a>

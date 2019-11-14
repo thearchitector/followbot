@@ -127,7 +127,7 @@
         <div class="topnav-right">
           <a href="{{ url_for('homepage') }}">HOME</a>
           <div class="dropdown">
-            <button class="dropbtn"><a href="{{ url_for('process') }}" class="active">PROCESS</a></button>
+            <button class="dropbtn"><a href="{{ url_for('process') }}">PROCESS</a></button>
             <div class="dropdown-content">
               <a href="{{ url_for('sprint1') }}">SPRINT 1</a>
               <a href="{{ url_for('sprint2') }}">SPRINT 2</a>
@@ -136,7 +136,7 @@
             </div>
           </div>
           <div class="dropdown">
-            <button class="dropbtn"><a href="{{ url_for('systems') }}">SYSTEMS</a></button>
+            <button class="dropbtn"><a href="{{ url_for('systems') }}" class="active">SYSTEMS</a></button>
             <div class="dropdown-content">
               <a href="{{ url_for('mechanical') }}">MECHANICAL</a>
               <a href="{{ url_for('electrical') }}">ELECTRICAL</a>
