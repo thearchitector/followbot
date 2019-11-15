@@ -11,13 +11,12 @@
 #ifndef controls_h
 #define controls_h
 
-#include <stdint.h>
-#include <Arduino.h>
 #include <Servo.h>
+#include "communication.h"
 
 const uint8_t NUM_SERVOS = 4;
 const uint8_t SERVO_PINS[] = {11, 10, 9, 8};
-const Servo SERVOS[NUM_SERVOS];
+Servo SERVOS[NUM_SERVOS];
 const double MIN_STRIDE = 45;
 const double MAX_STRIDE = 135;
 const double STRIDE_RANGE = MAX_STRIDE - MIN_STRIDE;
@@ -32,14 +31,13 @@ double rightStrideCoefficient;
 
 bool strideDirection = true;
 bool stepDirection = true;
-int8_t strideCount = 0;
 
 void attachServos(double angle0, double angle1) {
     double pos[] = {angle0, angle0, angle1, angle1};
     currentStrideAngle = angle0;
     currentStepAngle = angle1;
 
-    for(int i = 0; i < NUM_SERVOS; i++) {
+    for(int i = 0; i < NUM_SERVOS; ++i) {
         SERVOS[i].attach(SERVO_PINS[i]);
         SERVOS[i].write(pos[i]);
     }
@@ -48,11 +46,11 @@ void attachServos(double angle0, double angle1) {
 bool isReverse = false;
 double dir = 1;
 
-void calculateStrideCoefficients(double heading) {
+void calculateStrideCoefficients(const std_msgs::UInt16& msg) {
+    double heading = (double)msg.data;
+
     if(heading > 180) {
         heading -= 180;
-        // if(heading > 270) heading = 0;
-        // else heading = 180;
 
         if(!isReverse) {
             dir = -1;
