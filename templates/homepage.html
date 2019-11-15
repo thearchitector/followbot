@@ -16,7 +16,7 @@
         .container {
           min-height: 100%;
           position: relative;
-          background-color: rgba(0,0,0, 0.4);
+          background-color: rgba(255,255,255, 0.4);
         }
         .body {
           padding-left: 20%;
@@ -25,11 +25,11 @@
           background: white;
         }
         .header {
-          margin: 5%;
+          margin: 8%;
           text-align: center;
           font-size: 30pt;
           font-family: 'Fjalla One', sans-serif;
-          color: white;
+          color: black;
         }
         .topnav {
           overflow: hidden;
@@ -46,10 +46,6 @@
           padding: 20px 16px;
           text-decoration: none;
           margin: inherit;
-        }
-        .topnav a.active {
-          background-color: white;
-          color: black;
         }
         .topnav-right{
           float: right;
@@ -69,8 +65,7 @@
           font-family: inherit;
         }
         .topnav a:hover, .dropdown:hover .dropbtn {
-          background-color: #ddd;
-          color: white;
+          color: #ddd;
         }
         .dropdown-content {
           display: none;
@@ -88,9 +83,6 @@
           text-decoration: none;
           display: block;
           text-align: left;
-        }
-        .dropdown-content a:hover {
-          background-color: #ddd;
         }
         .dropdown:hover .dropdown-content {
           display: block;
@@ -140,6 +132,7 @@
                               background-size: cover;">
     <div class="container">
       <div class="topnav">
+        <a href="{{ url_for('homepage') }}" style="font-size: 14pt;">FollowBot</a>
         <div class="topnav-right">
           <a href="{{ url_for('homepage') }}" class="active">HOME</a>
           <div class="dropdown">
