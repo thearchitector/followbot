@@ -1,14 +1,30 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
 FROM arm32v7/ros:melodic-robot-bionic
 
-RUN apt-get update && \
+ENV HOME /home/bot
+WORKDIR /home/bot
+
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/bot && \
+    mkdir -p /etc/sudoers.d && \
+    echo "bot:x:${uid}:${gid}:Bot,,,:/home/bot:/bin/bash" >> /etc/passwd && \
+    echo "bot:x:${uid}:" >> /etc/group && \
+    echo "bot ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/bot && \
+    chmod 0440 /etc/sudoers.d/bot && \
+    chown ${uid}:${gid} -R /home/bot && \
+    apt-get update && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev vim \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl && \
     apt-get -y autoremove && \
-    apt-get -y clean
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Build and install OpenCV
+# Add developer user to the dialout group to permiss writing to USB serial
+RUN sed "s/^dialout.*/&bot/" /etc/group -i && \
+    sed "s/^root.*/&bot/" /etc/group -i
+
+# Bmild and install OpenCV
 RUN mkdir /tmp/opencv && \
     git clone https://github.com/opencv/opencv.git /tmp/opencv/core && \
     git clone https://github.com/opencv/opencv_contrib.git /tmp/opencv/contrib && \
@@ -31,13 +47,7 @@ RUN mkdir /tmp/opencv && \
 # Setup bash entry point
 COPY ./entrypoint.raspi /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
-
-# Setup perimissions
-RUN (echo "root:password" | chpasswd) && \
-    useradd -ms /bin/bash bot && \
-    (echo "bot:password" | chpasswd)
 USER bot
-WORKDIR /home/bot
 
 # Git clone the repo and update ROS dependencies
 RUN cd /home/bot && \
