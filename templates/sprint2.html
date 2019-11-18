@@ -176,39 +176,40 @@
       </p>
       <p>The first system that we worked on was the mechanical system. During
         the last sprint we figured out the lateral motion of the legs, but due
-        to clashing parts, our team could not test the self propulsion legs.
-        The first thing we did was redesign the legs and mounts. In the
-        previous iteration of our robot, the servos were hot glued to a
-        cardboard box. As a result the legs were not precisely at the same
-        height. To remedy this problem, we built mounts that would constrained
-        the legs at the same height and were securely attached to the chassis
-        with screws and nuts. To fix the leg collisions, we made the legs
-        linked by the bar have longer arm out of the servos. Before printing
-        the legs and mounts, the mechanical team compiled the parts to check
-        for conflicts.
+        to mechanically interfering parts, our team could not accurately test
+        the functionality of the legs. In order to improve this, we started by
+        redesigning the legs and mounts. In the previous iteration of our robot,
+        the servos were hot glued to a cardboard box. As a result, the legs were
+        not precisely at the same height. To remedy this problem, we built
+        mounts that would constrain the legs at the same height and that were
+        securely bolted to the chassis. We also lengthened the distance between
+        the ends of the lateral legs and the chassis to prevent leg
+        interference. Before printing the legs and mounts, the mechanical team
+        created a SolidWorks assembly to check for interference.
       </p>
-      <p>Once everything was printed all the parted and contructed them, we
-        connected the servos to the Arduino. When the servos were first
-        connected to the Arduino only the barred legs would move. The mechanical
-        team and software team had to work together to translate the theoretical
-        motion of the legs to code.
+      <p>Once everything was printed and assembled, we connected the servos to
+        the Arduino. When the servos were first connected to the Arduino, only
+        the barred, or lateral, legs would move. The mechanical team and
+        software team had to work together to translate the theoretical motion
+        of the legs to code.
       </p>
       <iframe src="https://drive.google.com/file/d/1ihun8wx6Wzi4kiBYlTZ32iVCba53LKj0/preview"
           width="420" height="315"></iframe>
-      <p> After having a sucessfully walking robot, we shifted our focus to our
+      <p> After having a successfully walking robot, we shifted our focus to our
         robot's sensors. During Sprint 1 the software team wrote a script that
-        would convert the unprocessed signal from the Arduino to a vector that
-        tells the robot which direction to move. The IR sensors were a way to
-        test the script even though our final robot will not include IR sensors
-        as the main source for sensing. To secure the IR sensors to the chassis,
-        the mechanical team designed and fabricated l-shaped brackets. The
-        sensors screw into the brackets and the brackets are glued to the
-        chassis.
+        would convert the unprocessed signal from the Arduino to a heading
+        vector that tells the robot which direction to move. The IR sensors were
+        a way to test the script even though our final robot will not include IR
+        sensors as the main source of heading input. To secure the IR sensors to
+        the chassis, the mechanical team designed and fabricated L-shaped
+        brackets. The sensors bolt into the brackets, and the brackets are glued
+        to the chassis.
       </p>
       <img src="https://github.com/thearchitector/followbot/blob/gh-pages/images/sprint_2/Sprint2render.JPG?raw=true"
           alt="cad of final leg" style="width: 50%;">
-      <p>We successfully completed all of our goals for Sprint 2. Our robot
-        can functionally walk and avoid objects.
+      <img src="" alt="circuit diagram">
+      <p>We successfully completed all of our goals for Sprint 2. Our robot can
+        functionally walk and avoid objects.
       </p>
       <iframe src="https://drive.google.com/file/d/143zGb4Xx6aTCtPsvezf6vZuAFhrkXDhU/preview"
           width="420" height="315"></iframe>
@@ -217,8 +218,8 @@
       <p>During this sprint we learned about all the components that we need to
         focus on for Sprint 3. Our goals for Sprint 3 are as follows:
         <ul>
-          <li>Upgrade servos to have more torque in order to support additional
-            weight of computing hardware.</li>
+          <li>Upgrade servos on middle legs to have more torque in order to
+            support the additional weight of computing hardware.</li>
           <li>Switch from USB powered to battery powered.</li>
           <li>Redesign chassis to hold breadboard, Arduino, and Raspberry Pi.</li>
           <li>Integrate computer vision with IR sensors and functional legs.</li>
