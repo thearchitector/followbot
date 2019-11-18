@@ -169,11 +169,22 @@
     </div>
     <div class="body">
       <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt; padding-top: 50px">Sprint 1</h1>
-      <p>For Sprint 1 our goal was to have a robot that had
-        functional legs and walk in a straight line. We did succeed in
-        building functional legs. Before we settled on one design we were
-        deciding between a simple four bar linkage leg or l-shaped legs
-        connected by a bar.
+      <p>
+        Entering our first 2-week sprint, we aimed to have a robot that had
+        simplistic yet functional legs, as well as basic control software that
+        would allow it to walk in a straight line. Before we began designing
+        legs, we did research on various existing leg and walking designs. We
+        examined various quadrapods such as Boston Dynamics’ “Spot”, which have
+        at least two servos or motors per leg, and other, simpler designs that
+        used four-bar linkages to bend and lift the legs. We also looked at
+        quadrapods and hexapods that moved in a variety of ways, especially ones
+        that were able to walk upstairs. We considered these designs because we
+        are interested in having our robot have the ability to walk on rough
+        terrain. Originally, we thought that it would be relatively simple to
+        make a robot that could walk on four legs, but after talking to
+        professors and NINJAs, we found that a six-legged design might be
+        better, as it would allow our robot to be able to balance using only
+        mechanical systems.
       </p>
       <div class="row">
         <div class="column">
@@ -186,41 +197,61 @@
         </div>
       </div>
       <p>
-        After working with both legs we settled on the l-shaped legs connected
-        by a bar. In our first iteration we lazer cut the legs, but they did
-        not have enough support to bear the weight of the robot. As a result,
-        we switched to 3-D printed legs.
+        We then explored two different leg types: L-shaped bars and a four-bar
+        linkage for each leg. We eventually decided on the L-shaped bars, as it
+        allowed us to be able to more easily control the robot, since we would
+        be able to actuate the front and back legs with a single servo using
+        only a connecting bar instead of a gear train. Additionally, this design
+        made integration somewhat simpler both because the design was simpler
+        and also because the servo location to distance traveled conversion is
+        very simple.
+      </p>
+      <p>
+        Because we initially set out to achieve a significant amount of progress
+        in this sprint, we decided to simply prototype our robot rather than put
+        a significant amount of time and effort into its fabrication. For a
+        chassis, we found a relatively small cardboard box onto which we
+        attached our legs and sensors. We decided to laser cut the legs from
+        1/4” MDF fiberboard **I think** so we could relatively quickly get our
+        robot prototype assembled. However, we quickly realized that the
+        laser-cut legs and their mounts could not support the full weight of the
+        electronics, so we ended up re-CADing an attachment and 3D printing the
+        entire assembly.
       </p>
       <img src="https://github.com/thearchitector/followbot/blob/gh-pages/images/sprint_1/mainlegsrender.JPG?raw=true"
           alt="cad of final leg" style="width: 50%;">
-      <p>To get the legs to move we connected four servos to an Arduino Uno.
-        The two servos attached towards the front of the robot were attached to
-        the l-shaped legs connected by a bar. These two sets of legs would
-        move in opposite directions, similar to how a four legged animal
-        walks.
+      <p>
+        To get the legs to move we connected four servos to an Arduino Uno. The
+        two servos attached towards the front of the robot were attached to the
+        L-shaped legs connected by a bar. These two sets of legs would move in
+        opposite directions, similar to how a four-legged animal walks.
       </p>
+      <img src="" alt="circuit diagram">
       <iframe src="https://drive.google.com/file/d/1h4OpD9kvh8DGfMvcL9A7NS6Y3_0QdDbC/preview"
           width="420" height="315"></iframe>
       <p>
-        At the center of the robot there was another set of servos, one
-        on each side. Each servo had an l-shaped leg that helps lift the robot,
-        so it can propel itself forward. However there was a flaw in our leg
-        design, so the legs in the center of the robot were colliding with the
-        legs connected by a bar. Thus the robot was unable to walk. As a result
-        we were not able to fully reach our sprint goal.
+        At the center of the robot there was another set of servos, one on each
+        side. Each servo had an L-shaped leg that helps lift the robot, so it
+        can reset the lateral legs on each side. However, there was a flaw in
+        our leg design, so the center legs collided with the bar that connected
+        the other legs. Therefore, our robot was unable to walk. As a result, we
+        were not able to fully reach our sprint goal, though we did learn a
+        significant amount about our mechanical design and improvements that we
+        needed to make.
       </p>
       <p>During this sprint we learned about all the components that we need to
         focus on for Sprint 2. Our goals for Sprint 2 are as follows:
         <ul>
-          <li>Upgrade sensors from IR to cameras &/or LIDAR
-            <li>Create a data pipeline between laptop and robot computer to
-              accelerate path planning algorithm development</li>
+          <li>Create a data pipeline between laptop and robot computer to
+            accelerate path planning algorithm development.</li>
           </li>
-          <li>Redesign and fabricate new body of robot</li>
-          <li>Work on traction for legs to propel forward</li>
+          <li>Redesign and fabricate new body of robot.</li>
+          <li>Work on traction for legs to propel forward.</li>
           <li>Iterate on design of the legs so that there is a better range of
              motion, no unintended collision between parts, faster linear
-             motion, and improved weight bearing</li>
+             motion, and improved weight bearing.</li>
+          <li>Do a more complete integration between sensing and mechanical 
+             movement.</li>
         </ul>
       </p>
     </div>
