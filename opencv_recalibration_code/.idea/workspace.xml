@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="opencv_example_project" targetName="stereo_match" />
+      <config projectName="opencv_example_project" targetName="view_webcams" />
+      <config projectName="opencv_example_project" targetName="stereo_calib" />
+      <config projectName="opencv_example_project" targetName="opencv_cpp_test" />
+      <config projectName="opencv_example_project" targetName="live_stereo_match" />
+      <config projectName="opencv_example_project" targetName="fisheye_attempt" />
+      <config projectName="opencv_example_project" targetName="calibrate" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="03581cea-b6a4-4e3e-b877-88e32135ad7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/fisheye-stereo-calibration/calibrate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fisheye-stereo-calibration/calibrate.cpp" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/fisheye-stereo-calibration" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="NgjMbTbK" />
+  </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectId" id="1T1DIITVR76GACrsxkO1470VTOe" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/cmake-build-debug" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="CMake Application.live_stereo_match">
+    <configuration name="calibrate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="calibrate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="calibrate">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fisheye_attempt" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-w=9 -h=6 -s=0.023 test_images/test_images.xml" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="fisheye_attempt" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="fisheye_attempt">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="generate_3d" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="test_images/left0.jpg test_images/right0.jpg --blocksize=21 --max-disparity=16 -o=disparity_out.jpg -i=intrinsics.yml -e=extrinsics.yml --algorithm=sgbm" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="stereo_match" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="stereo_match">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="live_stereo_match" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--blocksize=21 --max-disparity=16 -o=disparity_out.jpg -i=intrinsics.yml -e=extrinsics.yml --algorithm=sgbm" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="live_stereo_match" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="live_stereo_match">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="stereo_calib" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-w=9 -h=6 -s=0.023 test_images/test_images.xml" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="stereo_calib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="stereo_calib">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="stereo_match" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="stereo_match" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="stereo_match">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="view_webcams" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="view_webcams" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="view_webcams">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Collect Data" type="PythonConfigurationType" factoryName="Python">
+      <module name="opencv_cpp_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.calibrate" />
+      <item itemvalue="CMake Application.fisheye_attempt" />
+      <item itemvalue="CMake Application.live_stereo_match" />
+      <item itemvalue="CMake Application.generate_3d" />
+      <item itemvalue="CMake Application.stereo_calib" />
+      <item itemvalue="CMake Application.stereo_match" />
+      <item itemvalue="CMake Application.view_webcams" />
+      <item itemvalue="Python.Collect Data" />
+    </list>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../.cargo/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="03581cea-b6a4-4e3e-b877-88e32135ad7e" name="Default Changelist" comment="" />
+      <created>1572618626374</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572618626374</updated>
+      <workItem from="1572618627735" duration="2346000" />
+      <workItem from="1572630537562" duration="1125000" />
+      <workItem from="1572636608078" duration="5359000" />
+      <workItem from="1572722366042" duration="21000" />
+      <workItem from="1572722402358" duration="1563000" />
+      <workItem from="1572724887370" duration="7259000" />
+      <workItem from="1572816493100" duration="4449000" />
+      <workItem from="1572833901193" duration="11588000" />
+      <workItem from="1572885718492" duration="599000" />
+      <workItem from="1572962593066" duration="1089000" />
+      <workItem from="1572965239111" duration="2378000" />
+      <workItem from="1572967627570" duration="6633000" />
+      <workItem from="1573005674883" duration="26000" />
+      <workItem from="1573134330415" duration="155000" />
+      <workItem from="1573155644649" duration="1075000" />
+      <workItem from="1573169792835" duration="7013000" />
+      <workItem from="1573181081321" duration="517000" />
+      <workItem from="1573221106442" duration="1938000" />
+      <workItem from="1573322582948" duration="1553000" />
+      <workItem from="1573331095740" duration="5198000" />
+      <workItem from="1573359041017" duration="7880000" />
+      <workItem from="1573567523663" duration="5873000" />
+      <workItem from="1573609130456" duration="856000" />
+      <workItem from="1573719833949" duration="1344000" />
+      <workItem from="1573777225755" duration="657000" />
+      <workItem from="1573783864972" duration="1569000" />
+      <workItem from="1573828401368" duration="2323000" />
+      <workItem from="1573840047644" duration="5208000" />
+      <workItem from="1573848675179" duration="1738000" />
+      <workItem from="1573947323425" duration="1000" />
+      <workItem from="1573965865643" duration="1495000" />
+      <workItem from="1574003651490" duration="5005000" />
+      <workItem from="1574019516710" duration="7023000" />
+      <workItem from="1574026793650" duration="2577000" />
+      <workItem from="1574035634272" duration="390000" />
+      <workItem from="1574048553821" duration="2244000" />
+      <workItem from="1574082879048" duration="1976000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/stereo_calib.cpp</url>
+          <line>292</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/fisheye_attempt.cpp</url>
+          <line>163</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

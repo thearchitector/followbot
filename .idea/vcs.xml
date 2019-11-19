@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/opencv_cpp_test/fisheye-stereo-calibration" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/opencv_recalibration_code/fisheye-stereo-calibration" vcs="Git" />
+  </component>
+</project>
