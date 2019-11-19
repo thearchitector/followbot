@@ -3,7 +3,8 @@ import time
 import os
 
 def collect_images():
-    output_path = os.path.join(os.getcwd(), "cmake-build-debug", "test_images")
+    output_path = os.path.join(os.getcwd(), "test_images")
+
     if os.path.exists(output_path):
         os.system("rm -rf " + output_path)
     os.makedirs(output_path, exist_ok=False)
@@ -14,6 +15,7 @@ def collect_images():
     capL = cv2.VideoCapture(2)
     capR = cv2.VideoCapture(1)
 
+    # uncomment if 720x1280 resolution is desired
     # capL.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     # capL.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     # capR.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)

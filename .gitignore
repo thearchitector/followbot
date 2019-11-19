@@ -171,3 +171,6 @@ CATKIN_IGNORE
 .history
 
 # End of https://www.gitignore.io/api/ros,cmake,clion,visualstudiocode
+
+# ignore test images
+opencv_calibration_code/test_images/
