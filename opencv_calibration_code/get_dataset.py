@@ -4,6 +4,7 @@ import os
 import glob
 
 CALIBRATE_IMGS_FOLDER = "test_folder"
+DELAY = 1
 
 # NOTE: double check these values every time the cameras are plugged back in
 LEFT_CAMERA_IDX = 2
@@ -54,6 +55,9 @@ def collect_images():
     # capR.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     # capR.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
+    print("Now collecting dataset. Press 'n' to take a picture; otherwise, a picture will automatically be taken every "
+          "{} second(s)".format(DELAY))
+
     capL.grab()
     capR.grab()
     _, imgL = capL.retrieve(-1)
@@ -72,7 +76,7 @@ def collect_images():
 
             if cv2.waitKey(1) & 0xFF == ord('n'):
                 break
-            if time.time() - t > 1:
+            elif time.time() - t > DELAY:
                 break
 
         print("grabbing {}".format(i))
