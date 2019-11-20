@@ -29,9 +29,11 @@ endif()
 # Declare the executable target built from your sources
 add_executable(view_webcams view_webcams.cpp)
 add_executable(stereo_calib stereo_calib.cpp)
-add_executable(live_stereo_match live_stereo_match.cpp live_stereo_match.cpp)
+add_executable(live_stereo_match live_stereo_match.cpp live_stereo_match.cpp person_detection/person_detect.cpp)
+add_executable(person_detection person_detection/person_detect.cpp)
 
 # Link your application with OpenCV libraries
 target_link_libraries(view_webcams ${OpenCV_LIBS})
 target_link_libraries(stereo_calib ${OpenCV_LIBS})
 target_link_libraries(live_stereo_match ${OpenCV_LIBS})
+target_link_libraries(person_detection ${OpenCV_LIBS})

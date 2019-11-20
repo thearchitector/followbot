@@ -174,3 +174,6 @@ CATKIN_IGNORE
 
 # ignore test images
 opencv_calibration_code/calibrate_imgs/
+
+# ignore .weights file
+*.weights
