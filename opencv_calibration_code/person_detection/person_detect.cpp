@@ -56,8 +56,6 @@ float nmsThreshold = 0.4;  // Non-maximum suppression threshold
 int inpWidth = 256;  // Width of network's input image
 int inpHeight = 256; // Height of network's input image
 // Give the configuration and weight files for the model
-String modelConfiguration = "yolov3.cfg";
-String modelWeights = "yolov3.weights";
 vector<string> classes;
 
 vector<String> getOutputsNames(const Net &net) {
@@ -103,34 +101,36 @@ void drawPred(int classId, float conf, int left, int top, int right, int bottom,
     putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
 }
 
-// Remove the bounding boxes with low confidence using non-maxima suppression
 void postprocess(Mat &frame, const vector<Mat> &outs) {
+    /*
+     * Remove the bounding boxes with low confidence using non-maxima suppression
+     */
     vector<int> classIds;
     vector<float> confidences;
     vector<Rect> boxes;
 
-    for (size_t i = 0; i < outs.size(); ++i) {
+    for (const auto & out : outs) {
         // Scan through all the bounding boxes output from the network and keep only the
         // ones with high confidence scores. Assign the box's class label as the class
         // with the highest score for the box.
-        float *data = (float *) outs[i].data;
-        for (int j = 0; j < outs[i].rows; ++j, data += outs[i].cols) {
-            Mat scores = outs[i].row(j).colRange(5, outs[i].cols);
+        auto *data = (float *) out.data;
+        for (int j = 0; j < out.rows; ++j, data += out.cols) {
+            Mat scores = out.row(j).colRange(5, out.cols);
             Point classIdPoint;
             double confidence;
             // Get the value and location of the maximum score
-            minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
+            minMaxLoc(scores, nullptr, &confidence, nullptr, &classIdPoint);
             if (confidence > confThreshold) {
-                int centerX = (int) (data[0] * frame.cols);
-                int centerY = (int) (data[1] * frame.rows);
-                int width = (int) (data[2] * frame.cols);
-                int height = (int) (data[3] * frame.rows);
+                int centerX = (int) (data[0] * (float)frame.cols);
+                int centerY = (int) (data[1] * (float)frame.rows);
+                int width = (int) (data[2] * (float)frame.cols);
+                int height = (int) (data[3] * (float)frame.rows);
                 int left = centerX - width / 2;
                 int top = centerY - height / 2;
 
                 classIds.push_back(classIdPoint.x);
                 confidences.push_back((float) confidence);
-                boxes.push_back(Rect(left, top, width, height));
+                boxes.emplace_back(left, top, width, height);
             }
         }
     }
@@ -139,16 +139,12 @@ void postprocess(Mat &frame, const vector<Mat> &outs) {
     // lower confidences
     vector<int> indices;
     NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
-    for (size_t i = 0; i < indices.size(); ++i) {
-        int idx = indices[i];
+    for (int idx : indices) {
         Rect box = boxes[idx];
         drawPred(classIds[idx], confidences[idx], box.x, box.y,
                  box.x + box.width, box.y + box.height, frame);
     }
 }
-
-// Get the names of the output layers
-vector<String> getOutputsNames(const Net &net);
 
 int main(int argc, char **argv) {
     // Load names of classes
@@ -157,21 +153,21 @@ int main(int argc, char **argv) {
     string line;
     while (getline(ifs, line)) classes.push_back(line);
 
+    String modelConfiguration = "yolov3.cfg";
+    String modelWeights = "yolov3.weights";
+
     // Load the network
     Net net = readNetFromDarknet(modelConfiguration, modelWeights);
     net.setPreferableBackend(DNN_BACKEND_OPENCV);
     net.setPreferableTarget(DNN_TARGET_CPU);
 
     // Open a video file or an image file or a camera stream.
-    string str, outputFile;
     VideoCapture cap = VideoCapture(0);
     Mat frame, blob;
 
-    // Create a window
-    static const string kWinName = "Deep learning object detection in OpenCV";
+    static const string kWinName = "viewfinder";
     namedWindow(kWinName, WINDOW_NORMAL);
 
-    // Process frames.
     while (waitKey(1) < 0) {
         // get frame from the video
         cap >> frame;
