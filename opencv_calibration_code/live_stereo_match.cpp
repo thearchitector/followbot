@@ -53,8 +53,8 @@ int main(int argc, char **argv) {
     std::string intrinsic_filename = "intrinsics.yml";
     std::string extrinsic_filename = "extrinsics.yml";
     // PARAMETERS
-    const int left_camera_idx = 2;
-    const int right_camera_idx = 1;
+    const int left_camera_idx = 1;
+    const int right_camera_idx = 2;
     Point2f y_range = Point2f(-0.1, 0.2);
     const float middle_prop = 0.4;
     int i_min, i_max;
@@ -258,35 +258,23 @@ int main(int argc, char **argv) {
 
         buffer.clear();
         color.clear();
-        float max_dist = 100.;
         for (int i = i_min; i < i_max; i++) {
             for (int j = 0; j < xyz.cols; j++) {
                 xyz_point = xyz.at<Point3f>(i, j);
-
-                // for depth filtering if that is needed
-                euc_dist = sqrt(xyz_point.x * xyz_point.x + xyz_point.y * xyz_point.y + xyz_point.z * xyz_point.z);
-
                 if (xyz_point.z < z_limit && xyz_point.y >= y_range.x && xyz_point.y <= y_range.y) {
                     buffer.emplace_back(xyz_point.x, 0, xyz_point.z);
                     color.push_back(imgL.at<uint8_t >(i, j));  // this is for visualization only
-                }
-                if (euc_dist < min_euc_dist) {
-                    min_euc_dist = xyz.at<Point3f>(i, j).z;
-                    min_dist_pt = xyz_point;
                 }
             }
         }
 
         t = getTickCount() - t;
         printf("Refresh Rate: %f Hz\n", 1 / (t / getTickFrequency()));
-        printf("Min euc_dist: %f\n", min_euc_dist);
 
         // Everything beyond this point is for visualization
         if (buffer.empty()) {
             continue;
         }
-
-        viz::WLine line_min_dist(O, min_dist_pt, viz::Color::blue());
         viz::WCloud cloud_widget = viz::WCloud(buffer, color);
         cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
         if (!myWindow.wasStopped()) {
@@ -294,7 +282,6 @@ int main(int argc, char **argv) {
             myWindow.showWidget("i", linei);
             myWindow.showWidget("j", linej);
             myWindow.showWidget("k", linek);
-            myWindow.showWidget("min_euc_dist", line_min_dist);
             myWindow.spinOnce(30, true);
         } else {
             break;
