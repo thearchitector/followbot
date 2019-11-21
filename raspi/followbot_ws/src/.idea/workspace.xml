@@ -5,41 +5,36 @@
       <config projectName="followbot" targetName="roscpp_generate_messages_py" />
       <config projectName="followbot" targetName="gmock_main" />
       <config projectName="followbot" targetName="run_tests" />
-      <config projectName="followbot" targetName="followbot_generate_messages_lisp" />
-      <config projectName="followbot" targetName="followbot_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_eus" />
       <config projectName="followbot" targetName="download_extra_data" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_cpp" />
-      <config projectName="followbot" targetName="followbot_geneus" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_py" />
       <config projectName="followbot" targetName="clean_test_results" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_lisp" />
       <config projectName="followbot" targetName="roscpp_generate_messages_cpp" />
       <config projectName="followbot" targetName="gtest" />
-      <config projectName="followbot" targetName="followbot_generate_messages_cpp" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_cpp" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_lisp" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_nodejs" />
-      <config projectName="followbot" targetName="followbot_generate_messages" />
+      <config projectName="followbot" targetName="followbot" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_py" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_lisp" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_py" />
       <config projectName="followbot" targetName="roscpp_generate_messages_nodejs" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_lisp" />
-      <config projectName="followbot" targetName="followbot_generate_messages_py" />
       <config projectName="followbot" targetName="gmock" />
-      <config projectName="followbot" targetName="followbot_gencpp" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_cpp" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_eus" />
       <config projectName="followbot" targetName="tests" />
       <config projectName="followbot" targetName="doxygen" />
       <config projectName="followbot" targetName="gtest_main" />
-      <config projectName="followbot" targetName="followbot_genlisp" />
       <config projectName="followbot" targetName="roscpp_generate_messages_lisp" />
       <config projectName="followbot" targetName="roscpp_generate_messages_eus" />
-      <config projectName="followbot" targetName="followbot_genpy" />
-      <config projectName="followbot" targetName="followbot_generate_messages_eus" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_eus" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_eus" />
-      <config projectName="followbot" targetName="followbot_gennodejs" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_py" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_nodejs" />
     </generated>
@@ -51,16 +46,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3248b2b0-eb7d-41f0-a687-fa77f769f840" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.idea/followbot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/followbot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/include/cameras.h" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/include/cameras.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/include/serial.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/src/coms/serial.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot_pkg/src/sensing/cameras.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/src/sensing/cameras.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot/include/cameras.h" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/include/cloud.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/followbot/src/sensing/cameras.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/src/cloud.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,7 +92,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.clean_test_results">
+  <component name="RunManager" selected="CMake Application.followbot">
     <configuration name="clean_test_results" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="clean_test_results" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -117,57 +108,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="followbot_gencpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_gencpp" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_cpp" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_eus" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_lisp" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_nodejs" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_generate_messages_py" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_geneus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_geneus" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_genlisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_genlisp" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_gennodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_gennodejs" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="followbot_genpy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot_genpy" CONFIG_NAME="Debug">
+    <configuration name="followbot" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="followbot" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="followbot" RUN_TARGET_NAME="followbot">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -272,6 +213,31 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="sensor_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="sensor_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sensor_msgs_generate_messages_eus" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="sensor_msgs_generate_messages_eus" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sensor_msgs_generate_messages_lisp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="sensor_msgs_generate_messages_lisp" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sensor_msgs_generate_messages_nodejs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="sensor_msgs_generate_messages_nodejs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sensor_msgs_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="sensor_msgs_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="std_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="std_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -308,17 +274,7 @@
       <item itemvalue="CMake Application.doxygen" />
       <item itemvalue="CMake Application.run_tests" />
       <item itemvalue="CMake Application.tests" />
-      <item itemvalue="CMake Application.followbot_gencpp" />
-      <item itemvalue="CMake Application.followbot_generate_messages" />
-      <item itemvalue="CMake Application.followbot_generate_messages_cpp" />
-      <item itemvalue="CMake Application.followbot_generate_messages_eus" />
-      <item itemvalue="CMake Application.followbot_generate_messages_lisp" />
-      <item itemvalue="CMake Application.followbot_generate_messages_nodejs" />
-      <item itemvalue="CMake Application.followbot_generate_messages_py" />
-      <item itemvalue="CMake Application.followbot_geneus" />
-      <item itemvalue="CMake Application.followbot_genlisp" />
-      <item itemvalue="CMake Application.followbot_gennodejs" />
-      <item itemvalue="CMake Application.followbot_genpy" />
+      <item itemvalue="CMake Application.followbot" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_eus" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_lisp" />
@@ -334,6 +290,11 @@
       <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_lisp" />
       <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_nodejs" />
       <item itemvalue="CMake Application.rosgraph_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.sensor_msgs_generate_messages_cpp" />
+      <item itemvalue="CMake Application.sensor_msgs_generate_messages_eus" />
+      <item itemvalue="CMake Application.sensor_msgs_generate_messages_lisp" />
+      <item itemvalue="CMake Application.sensor_msgs_generate_messages_nodejs" />
+      <item itemvalue="CMake Application.sensor_msgs_generate_messages_py" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_eus" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_lisp" />

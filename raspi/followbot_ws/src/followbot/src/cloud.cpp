@@ -1,0 +1,124 @@
+#include "../include/cloud.h"
+
+using namespace cv;
+
+int PointCloud::setupStereoCameras() {
+
+}
+
+Mat PointCloud::collectPointCloud() {
+    VideoCapture capL(LEFT_CAMERA_IDX);
+    VideoCapture capR(RIGHT_CAMERA_IDX);
+    if (!capL.isOpened() || !capR.isOpened()) {
+        std::cout << "Couldn't open one or both of the cameras" << std::endl;
+    }
+
+    capL.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
+    capL.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
+    capR.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
+    capR.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
+
+    Mat imgLc, imgRc, imgL_, imgR_, imgL, imgR;
+
+    capL.grab();
+    capR.grab();
+    capL.retrieve(imgLc);
+    capR.retrieve(imgRc);
+    cvtColor(imgLc, imgL_, COLOR_BGR2GRAY);
+    cvtColor(imgRc, imgR_, COLOR_BGR2GRAY);
+
+    Size img_size = imgL_.size();
+    if (img_size != imgR_.size()) {
+        std::cout << "Camera inputs are not of the same dimension" << std::endl;
+        exit(-1);
+    }
+
+    int middle = std::floor(img_size.height / 2);
+    int height_delta = std::floor(img_size.height * (MIDDLE_PROP / 2));
+    int i_min = middle - height_delta;
+    int i_max = middle + height_delta;
+
+    FileStorage fs(INTRINSIC_FILENAME, FileStorage::READ);
+    if (!fs.isOpened()) {
+        printf("Failed to open file %s\n", INTRINSIC_FILENAME.c_str());
+        return -1;
+    }
+
+    Rect roi1, roi2;
+    Mat Q, M1, D1, M2, D2;
+    fs["M1"] >> M1;
+    fs["D1"] >> D1;
+    fs["M2"] >> M2;
+    fs["D2"] >> D2;
+
+    fs.open(EXTRINSIC_FILENAME, FileStorage::READ);
+    if (!fs.isOpened()) {
+        printf("Failed to open file %s\n", EXTRINSIC_FILENAME.c_str());
+        return -1;
+    }
+
+    Mat R, T, R1, P1, R2, P2;
+    fs["R"] >> R;
+    fs["T"] >> T;
+
+    stereoRectify(M1, D1, M2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
+
+    Ptr<StereoBM> bm = StereoBM::create(16, 9);
+    bm->setROI1(roi1);
+    bm->setROI2(roi2);
+    bm->setPreFilterCap(PREFILTER_CAP);
+    bm->setBlockSize(BLOCK_SIZE);
+    bm->setMinDisparity(MIN_DISPARITY);
+    bm->setNumDisparities(NUMBER_OF_DISPARITIES);
+    bm->setTextureThreshold(TEXTURE_THRESHOLD);
+    bm->setUniquenessRatio(UNIQUENESS_THRESHOLD);
+    bm->setSpeckleWindowSize(SPECKLE_WINDOW_SIZE);
+    bm->setSpeckleRange(SPECKLE_RANGE);
+    bm->setDisp12MaxDiff(DISP12_MAX_DEPTH);
+
+    Ptr<ximgproc::DisparityWLSFilter> wls_filter = ximgproc::createDisparityWLSFilter(bm);
+    wls_filter->setLambda(LAMBDA);
+    wls_filter->setSigmaColor(SIGMA);
+
+    Mat mapL1, mapL2, mapR1, mapR2;
+    initUndistortRectifyMap(M1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
+    initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
+
+    Mat xyz, floatDisp, disp;
+    float disparity_multiplier = 1.0f;
+//    std::vector<Point3f> buffer;
+//    Point3f xyz_point;
+
+    capL.grab();
+    capR.grab();
+    capL.retrieve(imgLc);
+    capR.retrieve(imgRc);
+    cvtColor(imgLc, imgL_, COLOR_BGR2GRAY);
+    cvtColor(imgRc, imgR_, COLOR_BGR2GRAY);
+
+    remap(imgL_, imgL, mapL1, mapL2, INTER_LINEAR);
+    remap(imgR_, imgR, mapR1, mapR2, INTER_LINEAR);
+
+    bm->compute(imgL, imgR, disp);
+
+    if (disp.type() == CV_16S) {
+        disparity_multiplier = 16.0f;
+    }
+
+    disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
+    reprojectImageTo3D(floatDisp, xyz, Q, true);
+
+//    buffer.clear();
+
+//    for (int i = i_min; i < i_max; i++) {
+//        for (int j = 0; j < xyz.cols; j++) {
+//            xyz_point = xyz.at<Point3f>(i, j);
+//
+//            if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE.x && xyz_point.y <= Y_RANGE.y) {
+//                buffer.emplace_back(xyz_point.x, 0, xyz_point.z);
+//            }
+//        }
+//    }
+
+    return buffer;
+}
