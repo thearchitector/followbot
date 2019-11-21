@@ -101,7 +101,8 @@ void drawPred(int classId, float conf, int left, int top, int right, int bottom,
     putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
 }
 
-void postprocess(Mat &frame, const vector<Mat> &outs) {
+void postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected, bool view = false, float boxXScl = 0.25,
+                 float boxYScl = 0.25) {
     /*
      * Remove the bounding boxes with low confidence using non-maxima suppression
      */
@@ -109,7 +110,7 @@ void postprocess(Mat &frame, const vector<Mat> &outs) {
     vector<float> confidences;
     vector<Rect> boxes;
 
-    for (const auto & out : outs) {
+    for (const auto &out : outs) {
         // Scan through all the bounding boxes output from the network and keep only the
         // ones with high confidence scores. Assign the box's class label as the class
         // with the highest score for the box.
@@ -120,11 +121,11 @@ void postprocess(Mat &frame, const vector<Mat> &outs) {
             double confidence;
             // Get the value and location of the maximum score
             minMaxLoc(scores, nullptr, &confidence, nullptr, &classIdPoint);
-            if (confidence > confThreshold) {
-                int centerX = (int) (data[0] * (float)frame.cols);
-                int centerY = (int) (data[1] * (float)frame.rows);
-                int width = (int) (data[2] * (float)frame.cols);
-                int height = (int) (data[3] * (float)frame.rows);
+            if (confidence > confThreshold && classIdPoint.x == 0) {
+                int centerX = (int) (data[0] * (float) frame.cols);
+                int centerY = (int) (data[1] * (float) frame.rows);
+                int width = (int) (data[2] * (float) frame.cols);
+                int height = (int) (data[3] * (float) frame.rows);
                 int left = centerX - width / 2;
                 int top = centerY - height / 2;
 
@@ -135,15 +136,41 @@ void postprocess(Mat &frame, const vector<Mat> &outs) {
         }
     }
 
-    // Perform non maximum suppression to eliminate redundant overlapping boxes with
-    // lower confidences
+    // Perform non maximum suppression to eliminate redundant overlapping boxes with lower confidences
     vector<int> indices;
-    NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
-    for (int idx : indices) {
-        Rect box = boxes[idx];
-        drawPred(classIds[idx], confidences[idx], box.x, box.y,
-                 box.x + box.width, box.y + box.height, frame);
+    if (!boxes.empty()) {
+        NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
+        double maxConfidence = 0;
+        int maxIdx = 0;
+        for (int idx : indices) {
+            if (confidences[idx] > maxConfidence) {
+                maxIdx = idx;
+                detected = boxes[idx];
+            }
+        }
+        int oldWidth = detected.width;
+        int oldHeight = detected.height;
+        detected.width *= boxXScl;
+        detected.height *= boxYScl;
+        detected.x += (int) (0.5 * (float) (oldWidth - detected.width));
+        detected.y += (int) (0.5 * (float) (oldHeight - detected.height));
+        if (view) {
+            drawPred(classIds[maxIdx], confidences[maxIdx], detected.x, detected.y,
+                     detected.x + detected.width, detected.y + detected.height, frame);
+        }
     }
+}
+
+Rect detect(Mat &frame, Net &net, Mat &blob, Rect &detected, bool view = false) {
+    // Create a 4D blob from a frame.
+    blobFromImage(frame, blob, 1 / 255.0, Size(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
+    // Sets the input to the network
+    net.setInput(blob);
+    // Runs the forward pass to get output of the output layers
+    vector<Mat> outs;
+    net.forward(outs, getOutputsNames(net));
+    // Remove the bounding boxes with low confidence
+    postProcess(frame, outs, detected, view);
 }
 
 int main(int argc, char **argv) {
@@ -174,25 +201,16 @@ int main(int argc, char **argv) {
         if (frame.empty()) {
             continue;
         }
-        // Create a 4D blob from a frame.
-        blobFromImage(frame, blob, 1 / 255.0, Size(inpWidth, inpHeight), Scalar(0, 0, 0), true, false);
 
-        // Sets the input to the network
-        net.setInput(blob);
-
-        // Runs the forward pass to get output of the output layers
-        vector<Mat> outs;
-        net.forward(outs, getOutputsNames(net));
-
-        // Remove the bounding boxes with low confidence
-        postprocess(frame, outs);
+        Rect detected;
+        detect(frame, net, blob, detected, true);
 
         // Put efficiency information. The function getPerfProfile returns the overall time for inference(t) and the timings for each of the layers(in layersTimes)
-        vector<double> layersTimes;
-        double freq = getTickFrequency() / 1000;
-        double t = net.getPerfProfile(layersTimes) / freq;
-        string label = format("Inference time for a frame : %.2f ms", t);
-        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
+//        vector<double> layersTimes;
+//        double freq = getTickFrequency() / 1000;
+//        double t = net.getPerfProfile(layersTimes) / freq;
+//        string label = format("Inference time for a frame : %.2f ms", t);
+//        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 
         imshow(kWinName, frame);
         if ((char) waitKey(10) == 'q') {
