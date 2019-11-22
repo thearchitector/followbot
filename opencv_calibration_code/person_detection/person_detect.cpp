@@ -145,9 +145,10 @@ void postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected, bool view 
         for (int idx : indices) {
             if (confidences[idx] > maxConfidence) {
                 maxIdx = idx;
-                detected = boxes[idx];
+                maxConfidence = confidences[idx];
             }
         }
+        detected = boxes[maxIdx];
         int oldWidth = detected.width;
         int oldHeight = detected.height;
         detected.width *= boxXScl;
