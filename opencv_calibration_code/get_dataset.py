@@ -6,12 +6,11 @@ import numpy as np
 
 CALIBRATE_IMGS_FOLDER = "calib_folder"
 DELAY = 1  # seconds between taking photos
-NUM_IMGS_TO_COLLECT = 30
+NUM_IMGS_TO_COLLECT = 20
 
 # NOTE: double check these values every time the cameras are plugged back in
 LEFT_CAMERA_IDX = 1
 RIGHT_CAMERA_IDX = 2
-
 
 def collect_images():
     output_path = os.path.join(os.getcwd(), CALIBRATE_IMGS_FOLDER)
