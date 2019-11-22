@@ -175,14 +175,9 @@ Rect detect(Mat &frame, Net &net, Mat &blob, Rect &detected, bool view = false) 
 }
 
 int main(int argc, char **argv) {
-    // Load names of classes
-    string classesFile = "coco.names";
-    ifstream ifs(classesFile.c_str());
-    string line;
-    while (getline(ifs, line)) classes.push_back(line);
-
-    String modelConfiguration = "yolov3.cfg";
-    String modelWeights = "yolov3.weights";
+    String modelConfiguration = "config/yolov3.cfg";
+    String modelWeights = "config/yolov3.weights";
+    classes.emplace_back("person");
 
     // Load the network
     Net net = readNetFromDarknet(modelConfiguration, modelWeights);
@@ -205,13 +200,6 @@ int main(int argc, char **argv) {
 
         Rect detected;
         detect(frame, net, blob, detected, true);
-
-        // Put efficiency information. The function getPerfProfile returns the overall time for inference(t) and the timings for each of the layers(in layersTimes)
-//        vector<double> layersTimes;
-//        double freq = getTickFrequency() / 1000;
-//        double t = net.getPerfProfile(layersTimes) / freq;
-//        string label = format("Inference time for a frame : %.2f ms", t);
-//        putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 
         imshow(kWinName, frame);
         if ((char) waitKey(10) == 'q') {
