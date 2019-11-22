@@ -20,14 +20,14 @@ Servo SERVOS[NUM_SERVOS];
 const double MIN_STRIDE = 45;
 const double MAX_STRIDE = 135;
 const double STRIDE_RANGE = MAX_STRIDE - MIN_STRIDE;
-const uint8_t MIN_STEP = 70;
-const uint8_t MAX_STEP = 110;
+const uint8_t MIN_STEP = 80;
+const uint8_t MAX_STEP = 100;
 
 double currentStrideAngle;
 double currentStepAngle;
 
-double leftStrideCoefficient;
-double rightStrideCoefficient;
+double leftStrideCoefficient = 0.5;
+double rightStrideCoefficient = 0.5;
 
 bool strideDirection = true;
 bool stepDirection = true;
