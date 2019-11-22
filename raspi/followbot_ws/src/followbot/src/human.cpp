@@ -57,7 +57,7 @@ vector<String> HumanDetector::getOutputsNames() {
 /*
  * Remove the bounding boxes with low confidence using non-maxima suppression
  */
-void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected) {
+void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected, bool &foundPerson) {
     vector<int> classIds;
     vector<float> confidences;
     vector<Rect> boxes;
@@ -109,13 +109,14 @@ void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detec
         detected.height *= BOX_Y_SCALE;
         detected.x += (int) (0.5 * (float) (oldWidth - detected.width));
         detected.y += (int) (0.5 * (float) (oldHeight - detected.height));
+        foundPerson = true;
+    } else {
+        foundPerson = false;
     }
 }
 
-Rect HumanDetector::detect(Mat &frame) {
+void HumanDetector::detect(Mat &frame, Rect &detected, bool &foundPerson) {
     Mat blob;
-    Rect detected;
-
     // Create a 4D blob from a frame.
     blobFromImage(frame, blob, 1 / 255.0, Size(FRAME_WIDTH, FRAME_HEIGHT), Scalar(0, 0, 0), true, false);
     // Sets the input to the network
@@ -124,11 +125,40 @@ Rect HumanDetector::detect(Mat &frame) {
     vector<Mat> outs;
     net.forward(outs, getOutputsNames());
     // Remove the bounding boxes with low confidence
-    postProcess(frame, outs, detected);
-
-    return detected;
+    postProcess(frame, outs, detected, foundPerson);
 }
 
 followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud) {
-    Rect detected = detect(rectifiedImg);
+    Rect detected;
+    bool foundPerson;
+    Rect detected = detect(rectifiedImg, detected, foundPerson);
+    followbot::Point2 loc;
+    if (foundPerson) {
+        float xSum = 0;
+        float zSum = 0;
+        int count = 0;
+        for (int row = detected.y; row <= detected.y + detected.height; row++) {
+            for (int col = detected.x; col <= detected.x + detected.width; col++) {
+                xyz_ = pointcloud.at<Point3f>(row, col);
+                if (xyz_.z <= DIST_LIMIT) {
+                    xSum += xyz_.x;
+                    zSum += xyz_.z;
+                    count++;
+                }
+            }
+        }
+        if (count != 0) {
+            // set the location of the person to the average (x, z) location of the points in the floor plane (given by
+            // the x and z axes in the point cloud)
+            loc.x = xSum / (float) count;
+            loc.z = zSum / (float) count;
+        } else {
+            loc.x = 0.;
+            loc.z = 0.;
+        }
+    } else {
+        loc.x = 0.;
+        loc.z = 0.;
+    }
+    return loc;
 }

@@ -18,12 +18,13 @@ class HumanDetector {
     const cv::String MODEL_WEIGHTS = "config/yolov3.weights";
     const float BOX_X_SCALE = 0.25;
     const float BOX_Y_SCALE = 0.25;
+    const float DIST_LIMIT = 20.;
 
     cv::dnn::Net net;
 
     std::vector<cv::String> getOutputsNames();
-    void postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
-    cv::Rect detect(cv::Mat &frame);
+    void postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected, bool &foundPerson);
+    void detect(Mat &frame, Rect &detected) {
 
     public:
         void setupNetwork();
