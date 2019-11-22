@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/opencv_calibration_code">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/raspi/calibration">
     <contentRoot DIR="$PROJECT_DIR$" />
   </component>
 </project>
