@@ -1,6 +1,5 @@
 #include <cloud.h>
 #include <node.h>
-#include <followbot/Point2.h>
 
 int main(int argc, char **argv)
 {
@@ -26,5 +25,6 @@ int main(int argc, char **argv)
         loop_rate.sleep();
     }
 
+    pc.releaseCameras();
     return 0;
 }

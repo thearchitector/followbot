@@ -1,5 +1,5 @@
-#ifndef cloud_h
-#define cloud_h
+#ifndef FOLLOWBOT_CLOUD_H
+#define FOLLOWBOT_CLOUD_H
 
 
 #include <opencv2/calib3d/calib3d.hpp>
@@ -31,8 +31,8 @@ class PointCloud {
     const int SPECKLE_RANGE = 32;
     const int DISP12_MAX_DEPTH = 1;
 
-    const std::string INTRINSIC_FILENAME = "intrinsics.yml";
-    const std::string EXTRINSIC_FILENAME = "extrinsics.yml";
+    const std::string INTRINSIC_FILENAME = "config/intrinsics.yml";
+    const std::string EXTRINSIC_FILENAME = "config/extrinsics.yml";
 
     const int LAMBDA = 8000;
     const float SIGMA = 1.5;
@@ -45,6 +45,7 @@ class PointCloud {
     public:
         void setupStereoCameras();
         cv::Mat collectPointCloud();
-    };
+        void releaseCameras();
+};
 
 #endif //FOLLOWBOT_CLOUD_H

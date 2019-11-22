@@ -99,3 +99,8 @@ Mat PointCloud::collectPointCloud() {
 
     return pointcloud;
 }
+
+void PointCloud::releaseCameras() {
+    capL.release();
+    capR.release();
+}
