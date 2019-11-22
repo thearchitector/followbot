@@ -122,7 +122,7 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &frame) {
     net.setInput(blob);
     // Runs the forward pass to get output of the output layers
     vector<Mat> outs;
-    net.forward(outs, getOutputsNames(net));
+    net.forward(outs, getOutputsNames());
     // Remove the bounding boxes with low confidence
     postProcess(frame, outs, detected);
 }
