@@ -6,15 +6,15 @@
 */
 
 #include "controls.h"
-#include "sensing.h"
+//#include "sensing.h"
 
 void setup() {
   Serial.begin(9600);
   attachServos(90, 90);
-  initializeSensors();
+//  initializeSensors();
 }
 
 void loop() {
   moveAtHeading();
-  communicate();
+//  communicate();/
 }

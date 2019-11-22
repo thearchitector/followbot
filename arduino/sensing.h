@@ -20,7 +20,7 @@ void initializeSensors() {
 
 uint16_t collectDominanteSensorReading() {
     uint16_t largestSensorValue = MIN_ANALOG_CUTOFF;
-    
+
     for (uint8_t i = 0; i < NUM_SENSORS; ++i) {
         uint16_t sensorValue = analogRead(SENSOR_PINS[i]);
         if (sensorValue > largestSensorValue) largestSensorValue = sensorValue;

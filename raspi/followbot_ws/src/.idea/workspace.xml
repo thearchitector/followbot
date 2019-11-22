@@ -11,8 +11,8 @@
       <config projectName="followbot" targetName="std_msgs_generate_messages_cpp" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_py" />
-      <config projectName="followbot" targetName="clean_test_results" />
       <config projectName="followbot" targetName="std_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="clean_test_results" />
       <config projectName="followbot" targetName="roscpp_generate_messages_cpp" />
       <config projectName="followbot" targetName="gtest" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_cpp" />
@@ -46,12 +46,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3248b2b0-eb7d-41f0-a687-fa77f769f840" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../.idea/followbot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/followbot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino/arduino.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../arduino/arduino.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino/controls.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../arduino/controls.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../arduino/sensing.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../arduino/sensing.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/opencv_calibration_code.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/cloud.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/cloud.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/extrinsics.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/get_dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/intrinsics.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/person_detection/config/download_weights.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/person_detection/config/yolov3.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/person_detection/person_detect.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../opencv_calibration_code/stereo_calib.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot/include/cameras.h" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/include/cloud.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/package.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/followbot/src/sensing/cameras.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/followbot/src/cloud.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sense/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,14 +84,16 @@
   <component name="ProjectId" id="1T8UmfErm75oHsud7mYHfC7KGLR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/followbot/src" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
