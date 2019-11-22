@@ -1,24 +1,20 @@
-#include "../include/cloud.h"
+#include <cloud.h>
 
 using namespace cv;
 
-int PointCloud::setupStereoCameras() {
+void PointCloud::setupStereoCameras() {
+    capL = cv::VideoCapture(LEFT_CAMERA_IDX);
+    capR = cv::VideoCapture(RIGHT_CAMERA_IDX);
 
-}
-
-Mat PointCloud::collectPointCloud() {
-    VideoCapture capL(LEFT_CAMERA_IDX);
-    VideoCapture capR(RIGHT_CAMERA_IDX);
     if (!capL.isOpened() || !capR.isOpened()) {
         std::cout << "Couldn't open one or both of the cameras" << std::endl;
+        exit(1);
     }
 
     capL.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capL.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
     capR.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capR.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
-
-    Mat imgLc, imgRc, imgL_, imgR_, imgL, imgR;
 
     capL.grab();
     capR.grab();
@@ -33,15 +29,10 @@ Mat PointCloud::collectPointCloud() {
         exit(-1);
     }
 
-    int middle = std::floor(img_size.height / 2);
-    int height_delta = std::floor(img_size.height * (MIDDLE_PROP / 2));
-    int i_min = middle - height_delta;
-    int i_max = middle + height_delta;
-
     FileStorage fs(INTRINSIC_FILENAME, FileStorage::READ);
     if (!fs.isOpened()) {
         printf("Failed to open file %s\n", INTRINSIC_FILENAME.c_str());
-        return -1;
+        exit(-1);
     }
 
     Rect roi1, roi2;
@@ -54,7 +45,7 @@ Mat PointCloud::collectPointCloud() {
     fs.open(EXTRINSIC_FILENAME, FileStorage::READ);
     if (!fs.isOpened()) {
         printf("Failed to open file %s\n", EXTRINSIC_FILENAME.c_str());
-        return -1;
+        exit(-1);
     }
 
     Mat R, T, R1, P1, R2, P2;
@@ -63,7 +54,7 @@ Mat PointCloud::collectPointCloud() {
 
     stereoRectify(M1, D1, M2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
 
-    Ptr<StereoBM> bm = StereoBM::create(16, 9);
+    bm = StereoBM::create(16, 9);
     bm->setROI1(roi1);
     bm->setROI2(roi2);
     bm->setPreFilterCap(PREFILTER_CAP);
@@ -80,14 +71,13 @@ Mat PointCloud::collectPointCloud() {
     wls_filter->setLambda(LAMBDA);
     wls_filter->setSigmaColor(SIGMA);
 
-    Mat mapL1, mapL2, mapR1, mapR2;
     initUndistortRectifyMap(M1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
     initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
+}
 
-    Mat xyz, floatDisp, disp;
+Mat PointCloud::collectPointCloud() {
+    Mat imgL, imgR, disp, pointcloud;
     float disparity_multiplier = 1.0f;
-//    std::vector<Point3f> buffer;
-//    Point3f xyz_point;
 
     capL.grab();
     capR.grab();
@@ -105,20 +95,7 @@ Mat PointCloud::collectPointCloud() {
         disparity_multiplier = 16.0f;
     }
 
-    disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
-    reprojectImageTo3D(floatDisp, xyz, Q, true);
+    disp.convertTo(pointcloud, CV_32F, 1.0f / disparity_multiplier);
 
-//    buffer.clear();
-
-//    for (int i = i_min; i < i_max; i++) {
-//        for (int j = 0; j < xyz.cols; j++) {
-//            xyz_point = xyz.at<Point3f>(i, j);
-//
-//            if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE.x && xyz_point.y <= Y_RANGE.y) {
-//                buffer.emplace_back(xyz_point.x, 0, xyz_point.z);
-//            }
-//        }
-//    }
-
-    return buffer;
+    return pointcloud;
 }

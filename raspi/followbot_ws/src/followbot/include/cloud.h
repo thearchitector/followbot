@@ -1,5 +1,6 @@
-#ifndef CLOUD_H
-#define CLOUD_H
+#ifndef cloud_h
+#define cloud_h
+
 
 #include <opencv2/calib3d/calib3d.hpp>
 #include <opencv2/imgproc.hpp>
@@ -9,12 +10,14 @@
 #include <opencv2/viz.hpp>
 #include <opencv2/ximgproc.hpp>
 #include <opencv2/core/core_c.h>
-#include <math.h>
+#include <cmath>
 #include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
 
 class PointCloud {
+    const int LEFT_CAMERA_IDX = 1;
+    const int RIGHT_CAMERA_IDX = 2;
     const int FRAME_WIDTH = 640;
     const int FRAME_HEIGHT = 480;
 
@@ -30,16 +33,18 @@ class PointCloud {
 
     const std::string INTRINSIC_FILENAME = "intrinsics.yml";
     const std::string EXTRINSIC_FILENAME = "extrinsics.yml";
-    const int LEFT_CAMERA_IDX = 1;
-    const int RIGHT_CAMERA_IDX = 2;
-    const cv::Point2f Y_RANGE = cv::Point2f(-0.1, 0.2);
-    const float MIDDLE_PROP = 0.4;
-    const int Z_LIMIT = 20;
+
     const int LAMBDA = 8000;
     const float SIGMA = 1.5;
 
+    cv::VideoCapture capL;
+    cv::VideoCapture capR;
+    cv::Mat imgLc, imgRc, imgL_, imgR_, mapL1, mapL2, mapR1, mapR2;
+    cv::Ptr<cv::StereoBM> bm;
 
-    cv::Mat collectPointCloud();
-};
+    public:
+        void setupStereoCameras();
+        cv::Mat collectPointCloud();
+    };
 
-#endif //CLOUD_H
+#endif //FOLLOWBOT_CLOUD_H

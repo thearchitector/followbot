@@ -7,6 +7,7 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+find_package(OpenCV)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs
@@ -15,6 +16,16 @@ find_package(catkin REQUIRED COMPONENTS
 		cv_bridge
 		sensor_msgs
 		image_transport
+)
+
+
+add_message_files(
+		FILES
+		Point2.msg
+)
+
+generate_messages(
+		DEPENDENCIES
 )
 
 
@@ -50,9 +61,13 @@ catkin_package(
 include_directories(
 		include
 		${catkin_INCLUDE_DIRS}
+		${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME} src/cloud.cpp)
+add_executable(${PROJECT_NAME} src/node.cpp src/cloud.cpp)
+
+## Link the executable to the OpenCV libraries
+target_link_libraries(followbot ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
