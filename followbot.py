@@ -24,7 +24,7 @@ def sprint3():
 
 @app.route('/process/final-sprint')
 def finalsprint():
-    return render_template('finalsprint.html')
+    return redirect('/systems')
 
 @app.route('/systems')
 def systems():
