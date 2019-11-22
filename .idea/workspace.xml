@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="56c36b40-b07c-40f4-a191-92274c61f773" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="hnUVuVjb" />
+  </component>
+  <component name="OCFindUsagesOptions" text="false" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectId" id="1SwJfPGw6XY4ju23sVDWA0TwLEe" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/opencv_calibration_code/get_dataset.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/opencv_calibration_code/person_detection/config" />
+      <recent name="$PROJECT_DIR$/opencv_calibration_code/person_detection" />
+      <recent name="$PROJECT_DIR$/opencv_calibration_code" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/opencv_recalibration_code" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="CMake Application.person_detection">
+    <configuration name="person_detection" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--device=0" WORKING_DIR="file://$PROJECT_DIR$/opencv_calibration_code/person_detection" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="person_detection" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="person_detection">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="stereo_calib" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="calib_folder/calibrate_imgs.xml -s=0.036" WORKING_DIR="file://$PROJECT_DIR$/opencv_calibration_code" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv_example_project" TARGET_NAME="stereo_calib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv_example_project" RUN_TARGET_NAME="stereo_calib">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="get_dataset" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="followbot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/venvs/followbot/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opencv_calibration_code" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opencv_calibration_code/get_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.person_detection" />
+      <item itemvalue="CMake Application.stereo_calib" />
+      <item itemvalue="Python.get_dataset" />
+    </list>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="56c36b40-b07c-40f4-a191-92274c61f773" name="Default Changelist" comment="" />
+      <created>1572468826989</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572468826989</updated>
+      <workItem from="1572468828058" duration="958000" />
+      <workItem from="1572469803659" duration="2215000" />
+      <workItem from="1572613534986" duration="3529000" />
+      <workItem from="1572630537873" duration="1025000" />
+      <workItem from="1572636608203" duration="1326000" />
+      <workItem from="1572722366314" duration="20000" />
+      <workItem from="1572722402721" duration="743000" />
+      <workItem from="1572724887681" duration="3721000" />
+      <workItem from="1572816493521" duration="1992000" />
+      <workItem from="1572833901294" duration="2874000" />
+      <workItem from="1572885716781" duration="2789000" />
+      <workItem from="1573719811135" duration="21000" />
+      <workItem from="1574172615211" duration="7167000" />
+      <workItem from="1574218696843" duration="87000" />
+      <workItem from="1574219056955" duration="784000" />
+      <workItem from="1574264468103" duration="749000" />
+      <workItem from="1574274033789" duration="299000" />
+      <workItem from="1574274527758" duration="5891000" />
+      <workItem from="1574342954638" duration="614000" />
+      <workItem from="1574360164154" duration="1042000" />
+      <workItem from="1574364855514" duration="2989000" />
+      <workItem from="1574371238574" duration="4082000" />
+      <workItem from="1574376158540" duration="854000" />
+      <workItem from="1574379545242" duration="177000" />
+      <workItem from="1574379735325" duration="3926000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
