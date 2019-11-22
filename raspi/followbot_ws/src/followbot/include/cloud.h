@@ -34,17 +34,14 @@ class PointCloud {
     const std::string INTRINSIC_FILENAME = "config/intrinsics.yml";
     const std::string EXTRINSIC_FILENAME = "config/extrinsics.yml";
 
-    const int LAMBDA = 8000;
-    const float SIGMA = 1.5;
-
     cv::VideoCapture capL;
     cv::VideoCapture capR;
-    cv::Mat imgLc, imgRc, imgL_, imgR_, mapL1, mapL2, mapR1, mapR2;
+    cv::Mat imgLc, imgRc, imgL_, imgR_, mapL1, mapL2, mapR1, mapR2, Q;
     cv::Ptr<cv::StereoBM> bm;
 
     public:
         void setupStereoCameras();
-        cv::Mat collectPointCloud();
+        cv::Mat collectPointCloud(cv::Mat &imgL);
         void releaseCameras();
 };
 

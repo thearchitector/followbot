@@ -36,7 +36,7 @@ void PointCloud::setupStereoCameras() {
     }
 
     Rect roi1, roi2;
-    Mat Q, M1, D1, M2, D2;
+    Mat M1, D1, M2, D2;
     fs["M1"] >> M1;
     fs["D1"] >> D1;
     fs["M2"] >> M2;
@@ -67,16 +67,12 @@ void PointCloud::setupStereoCameras() {
     bm->setSpeckleRange(SPECKLE_RANGE);
     bm->setDisp12MaxDiff(DISP12_MAX_DEPTH);
 
-    Ptr<ximgproc::DisparityWLSFilter> wls_filter = ximgproc::createDisparityWLSFilter(bm);
-    wls_filter->setLambda(LAMBDA);
-    wls_filter->setSigmaColor(SIGMA);
-
     initUndistortRectifyMap(M1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
     initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-Mat PointCloud::collectPointCloud() {
-    Mat imgL, imgR, disp, pointcloud;
+Mat PointCloud::collectPointCloud(Mat &imgL) {
+    Mat imgR, disp, floatDisp, pointcloud;
     float disparity_multiplier = 1.0f;
 
     capL.grab();
@@ -95,7 +91,8 @@ Mat PointCloud::collectPointCloud() {
         disparity_multiplier = 16.0f;
     }
 
-    disp.convertTo(pointcloud, CV_32F, 1.0f / disparity_multiplier);
+    disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
+    reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
     return pointcloud;
 }

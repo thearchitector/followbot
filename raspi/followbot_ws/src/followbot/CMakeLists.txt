@@ -68,7 +68,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME} src/node.cpp src/cloud.cpp src/human.cpp /usr/local/include/opencv4/opencv2/dnn/dnn.hpp)
+add_executable(${PROJECT_NAME} src/node.cpp src/cloud.cpp src/human.cpp)
 
 ## Link the executable to the OpenCV libraries
 target_link_libraries(followbot ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})

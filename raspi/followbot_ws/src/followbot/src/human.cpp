@@ -112,7 +112,7 @@ void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detec
     }
 }
 
-followbot::Point2 HumanDetector::getHumanPosition(Mat &frame) {
+Rect HumanDetector::detect(Mat &frame) {
     Mat blob;
     Rect detected;
 
@@ -125,4 +125,10 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &frame) {
     net.forward(outs, getOutputsNames());
     // Remove the bounding boxes with low confidence
     postProcess(frame, outs, detected);
+
+    return detected;
+}
+
+followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud) {
+    Rect detected = detect(rectifiedImg);
 }

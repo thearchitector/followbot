@@ -6,7 +6,7 @@
 #include <iostream>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/dnn.hpp>
-#include <followbot/Point2.h>
+#include <node.h>
 
 class HumanDetector {
     const float CONF_THRESHOLD = 0.5; // Confidence threshold
@@ -23,10 +23,11 @@ class HumanDetector {
 
     std::vector<cv::String> getOutputsNames();
     void postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
+    cv::Rect detect(cv::Mat &frame);
 
     public:
         void setupNetwork();
-        followbot::Point2 getHumanPosition(cv::Mat &frame);
+        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud);
 };
 
 #endif //FOLLOWBOT_HUMAN_H
