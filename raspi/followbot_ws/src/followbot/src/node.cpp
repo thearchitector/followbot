@@ -22,7 +22,8 @@ int main(int argc, char **argv)
     {
         cv::Mat rectifiedImg;
         cv::Mat xyz = pc.collectPointCloud(rectifiedImg);
-        followbot::Point2 pose_msg = hd.getHumanPosition(rectifiedImg, xyz);
+        followbot::Point2 pose_msg;
+        hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
         sensor_msgs::ImagePtr pc_msg = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::BGR8, xyz).toImageMsg();
         point_cloud.publish(pc_msg);

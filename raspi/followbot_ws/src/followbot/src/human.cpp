@@ -23,7 +23,9 @@
     Third party copyrights are property of their respective owners.
 */
 
+
 #include <human.h>
+
 
 using namespace std;
 using namespace cv;
@@ -128,15 +130,15 @@ void HumanDetector::detect(Mat &frame, Rect &detected, bool &foundPerson) {
     postProcess(frame, outs, detected, foundPerson);
 }
 
-followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud) {
+followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud, followbot::Point2 human_loc) {
     Rect detected;
     bool foundPerson;
-    Rect detected = detect(rectifiedImg, detected, foundPerson);
-    followbot::Point2 loc;
+    detect(rectifiedImg, detected, foundPerson);
     if (foundPerson) {
         float xSum = 0;
         float zSum = 0;
         int count = 0;
+        Point3f xyz_;
         for (int row = detected.y; row <= detected.y + detected.height; row++) {
             for (int col = detected.x; col <= detected.x + detected.width; col++) {
                 xyz_ = pointcloud.at<Point3f>(row, col);
@@ -150,15 +152,14 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointc
         if (count != 0) {
             // set the location of the person to the average (x, z) location of the points in the floor plane (given by
             // the x and z axes in the point cloud)
-            loc.x = xSum / (float) count;
-            loc.z = zSum / (float) count;
+            human_loc.x = xSum / (float) count;
+            human_loc.z = zSum / (float) count;
         } else {
-            loc.x = 0.;
-            loc.z = 0.;
+            human_loc.x = 0.;
+            human_loc.z = 0.;
         }
     } else {
-        loc.x = 0.;
-        loc.z = 0.;
+        human_loc.x = 0.;
+        human_loc.z = 0.;
     }
-    return loc;
 }

@@ -24,11 +24,11 @@ class HumanDetector {
 
     std::vector<cv::String> getOutputsNames();
     void postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected, bool &foundPerson);
-    void detect(Mat &frame, Rect &detected) {
+    void detect(cv::Mat &frame, cv::Rect &detected, bool &foundPerson);
 
     public:
         void setupNetwork();
-        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud);
+        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 human_loc);
 };
 
 #endif //FOLLOWBOT_HUMAN_H
