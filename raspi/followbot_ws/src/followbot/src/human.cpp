@@ -26,15 +26,14 @@
 
 #include <human.h>
 
-
 using namespace std;
 using namespace cv;
 using namespace dnn;
 
 void HumanDetector::setupNetwork() {
     net = readNetFromDarknet(MODEL_CONFIG, MODEL_WEIGHTS);
-    net.setPreferableBackend(DNN_BACKEND_OPENCV);
-    net.setPreferableTarget(DNN_TARGET_CPU);
+    net.setPreferableBackend(dnn::DNN_BACKEND_OPENCV);
+    net.setPreferableTarget(dnn::DNN_TARGET_CPU);
 }
 
 /*
@@ -133,7 +132,9 @@ void HumanDetector::detect(Mat &frame, Rect &detected, bool &foundPerson) {
 followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud, followbot::Point2 human_loc) {
     Rect detected;
     bool foundPerson;
+
     detect(rectifiedImg, detected, foundPerson);
+
     if (foundPerson) {
         float xSum = 0;
         float zSum = 0;

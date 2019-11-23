@@ -4,9 +4,8 @@
 
 #include <fstream>
 #include <iostream>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/dnn.hpp>
-#include <node.h>
+#include <followbot/Point2.h>
 
 class HumanDetector {
     const float CONF_THRESHOLD = 0.5; // Confidence threshold

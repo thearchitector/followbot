@@ -1,17 +1,16 @@
 #include <cloud.h>
-#include <node.h>
 #include <human.h>
+#include <node.h>
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "seeker");
 
     ros::NodeHandle n;
-    image_transport::ImageTransport it{n};
     PointCloud pc{};
     HumanDetector hd{};
 
-    image_transport::Publisher point_cloud = it.advertise("point_cloud", 1);
+    ros::Publisher map_obstacles = n.advertise<costmap_converter::ObstacleArrayMsg>("followbot/obstacles", 1);
     ros::Publisher human_pose = n.advertise<followbot::Point2>("human_pose", 1);
     ros::Rate loop_rate(1);
 
@@ -21,12 +20,13 @@ int main(int argc, char **argv)
     while (ros::ok())
     {
         cv::Mat rectifiedImg;
-        cv::Mat xyz = pc.collectPointCloud(rectifiedImg);
         followbot::Point2 pose_msg;
+        costmap_converter::ObstacleArrayMsg obstacle_msg;
+
+        cv::Mat xyz = pc.collectPointCloud(rectifiedImg, obstacle_msg);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
-        sensor_msgs::ImagePtr pc_msg = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::BGR8, xyz).toImageMsg();
-        point_cloud.publish(pc_msg);
+        map_obstacles.publish(obstacle_msg);
         human_pose.publish(pose_msg);
 
         ros::spinOnce();

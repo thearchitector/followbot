@@ -5,19 +5,14 @@ project(followbot)
 add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-find_package(OpenCV REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs
 		std_msgs
 		message_generation
-		cv_bridge
-		sensor_msgs
-		image_transport
+		teb_local_planner
 )
-
+find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
 
 add_message_files(
 		FILES
@@ -46,9 +41,7 @@ catkin_package(
 			message_runtime
 			std_msgs
 			geometry_msgs
-			cv_bridge
-			sensor_msgs
-			image_transport
+			teb_local_planner
 		DEPENDS OpenCV
 )
 
