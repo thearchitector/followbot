@@ -17,7 +17,7 @@ RUN export uid=1000 gid=1000 && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev vim \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo \
-    ros-melodic-dwa-local-planner ros-melodic-cv-bridge ros-melodic-image-transport && \
+    ros-melodic-teb-local-planner && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
