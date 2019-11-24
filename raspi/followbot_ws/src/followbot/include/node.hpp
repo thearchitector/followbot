@@ -3,5 +3,7 @@
 
 
 #include <ros/ros.h>
+#include <cloud.hpp>
+#include <human.hpp>
 
 #endif //FOLLOWBOT_NODE_HPP

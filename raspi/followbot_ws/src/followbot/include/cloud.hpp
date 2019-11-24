@@ -34,7 +34,7 @@ class PointCloud {
 
     cv::VideoCapture capL;
     cv::VideoCapture capR;
-    cv::Mat imgLc, imgRc, imgL_, imgR_, mapL1, mapL2, mapR1, mapR2, Q;
+    cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
     cv::Ptr<cv::StereoBM> bm;
 
     void serializeDetectedObstacles(std::vector<costmap_converter::ObstacleMsg> &obstacles, cv::Mat &pointcloud);

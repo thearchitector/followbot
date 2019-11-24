@@ -20,11 +20,11 @@ void PointCloud::setupStereoCameras() {
     capR.grab();
     capL.retrieve(imgLc);
     capR.retrieve(imgRc);
-    cvtColor(imgLc, imgL_, COLOR_BGR2GRAY);
-    cvtColor(imgRc, imgR_, COLOR_BGR2GRAY);
+    cvtColor(imgLc, imgLg, COLOR_BGR2GRAY);
+    cvtColor(imgRc, imgRg, COLOR_BGR2GRAY);
 
-    Size img_size = imgL_.size();
-    if (img_size != imgR_.size()) {
+    Size img_size = imgLg.size();
+    if (img_size != imgRg.size()) {
         std::cout << "Camera inputs are not of the same dimension" << std::endl;
         exit(-1);
     }
@@ -83,13 +83,13 @@ Mat PointCloud::collectPointCloud(Mat &imgL, costmap_converter::ObstacleArrayMsg
     capR.grab();
     capL.retrieve(imgLc);
     capR.retrieve(imgRc);
-    cvtColor(imgLc, imgL_, COLOR_BGR2GRAY);
-    cvtColor(imgRc, imgR_, COLOR_BGR2GRAY);
 
-    remap(imgL_, imgL, mapL1, mapL2, INTER_LINEAR);
-    remap(imgR_, imgR, mapR1, mapR2, INTER_LINEAR);
+    remap(imgLc, imgL, mapL1, mapL2, INTER_LINEAR);
+    remap(imgLc, imgR, mapR1, mapR2, INTER_LINEAR);
 
-    bm->compute(imgL, imgR, disp);
+    cvtColor(imgL, imgLg, COLOR_BGR2GRAY);
+    cvtColor(imgR, imgRg, COLOR_BGR2GRAY);
+    bm->compute(imgLg, imgRg, disp);
 
     if (disp.type() == CV_16S) {
         disparity_multiplier = 16.0f;
