@@ -13,11 +13,14 @@ RUN export uid=1000 gid=1000 && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown ${uid}:${gid} -R /home/developer && \
     apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common && \
+    apt-add-repository ppa:git-core/ppa && \
+    apt-get update && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev vim \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo \
-    ros-melodic-teb-local-planner && \
+    git ros-melodic-teb-local-planner && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
@@ -41,19 +44,19 @@ RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp
 
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
-    git clone https://github.com/opencv/opencv.git /tmp/opencv/core && \
-    git clone https://github.com/opencv/opencv_contrib.git /tmp/opencv/contrib && \
+    git clone --branch 4.1.2 --depth 1 https://github.com/opencv/opencv.git /tmp/opencv/core && \
+    git clone --branch 4.1.2 --depth 1 https://github.com/opencv/opencv_contrib.git /tmp/opencv/contrib && \
     cd /tmp/opencv/core && \
     mkdir build && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=RELEASE -DINSTALL_C_EXAMPLES=OFF -DWITH_TBB=ON -DWITH_V4L=ON \
           -DWITH_QT=OFF -DWITH_OPENGL=OFF -DOPENCV_EXTRA_MODULES_PATH=../../contrib/modules \
           -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_opencv_java=OFF -DBUILD_opencv_python=OFF \
-          -DBUILD_opencv_dnn=ON -DBUILD_opencv_apps=OFF -DBUILD_openev_legacy=OFF -DBUILD_opencv_python2=OFF \
+          -DBUILD_opencv_apps=OFF -DBUILD_openev_legacy=OFF -DBUILD_opencv_python2=OFF \
           -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON \
           -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
           -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON .. && \
-    # Compile with max number of cores
+    # Compile with max number of core
     make -j$(nproc --ignore=1) && \
     make install && \
     rm -rf /tmp/*
