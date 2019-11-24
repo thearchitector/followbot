@@ -27,7 +27,7 @@ class HumanDetector {
 
     public:
         void setupNetwork();
-        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 human_loc);
+        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 &human_loc);
 };
 
 #endif //FOLLOWBOT_HUMAN_H
