@@ -1,10 +1,10 @@
-#include <cloud.h>
+#include <cloud.hpp>
 
 using namespace cv;
 
 void PointCloud::setupStereoCameras() {
-    capL = cv::VideoCapture(LEFT_CAMERA_IDX);
-    capR = cv::VideoCapture(RIGHT_CAMERA_IDX);
+    capL = cv::VideoCapture(0);
+    capR = cv::VideoCapture(2);
 
     if (!capL.isOpened() || !capR.isOpened()) {
         std::cout << "Couldn't open one or both of the cameras" << std::endl;

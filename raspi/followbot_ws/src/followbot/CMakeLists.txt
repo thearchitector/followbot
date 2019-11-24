@@ -3,8 +3,12 @@ project(followbot)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
+set(CATKIN_ENABLE_TESTING OFF)
+set(OpenCV_LIBRARY_DIR /usr/local/lib)
+set(OpenCV_DIR "/usr/local/lib")
 
 ## Find catkin macros and libraries
+find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs
@@ -12,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
 		message_generation
 		teb_local_planner
 )
-find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
+
 
 add_message_files(
 		FILES
@@ -64,4 +68,5 @@ include_directories(
 add_executable(${PROJECT_NAME} src/node.cpp src/cloud.cpp src/human.cpp)
 
 ## Link the executable to the OpenCV libraries
+link_directories(${OpenCV_LIBRARY_DIR})
 target_link_libraries(followbot ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})

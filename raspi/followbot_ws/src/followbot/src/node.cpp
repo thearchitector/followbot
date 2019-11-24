@@ -1,6 +1,6 @@
-#include <cloud.h>
-#include <human.h>
-#include <node.h>
+#include <cloud.hpp>
+#include <human.hpp>
+#include <node.hpp>
 
 int main(int argc, char **argv)
 {
