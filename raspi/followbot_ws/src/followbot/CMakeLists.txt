@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
 		geometry_msgs
 		std_msgs
 		message_generation
-		teb_local_planner
 )
 
 
@@ -45,7 +44,6 @@ catkin_package(
 			message_runtime
 			std_msgs
 			geometry_msgs
-			teb_local_planner
 		DEPENDS OpenCV
 )
 
