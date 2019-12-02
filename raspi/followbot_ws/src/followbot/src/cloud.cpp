@@ -71,7 +71,7 @@ void PointCloud::setupStereoCameras() {
     initUndistortRectifyMap(K2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
+void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud, std::vector<cv::Point2f> &buffer) {
     Mat imgR, disp, floatDisp;
     float disparity_multiplier = 1.0f;
 
@@ -93,14 +93,7 @@ void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
 
     disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
-}
 
-void PointCloud::releaseCameras() {
-    capL.release();
-    capR.release();
-}
-
-void PointCloud::makePointCloudBuffer(Mat &pointcloud, std::vector<Point2f> &buffer) {
     buffer.clear();
     Point3f xyz_point;
 
@@ -111,5 +104,38 @@ void PointCloud::makePointCloudBuffer(Mat &pointcloud, std::vector<Point2f> &buf
                 buffer.emplace_back(xyz_point.x, xyz_point.z);
             }
         }
+    }
+
+    filterCloud(buffer);
+}
+
+void PointCloud::releaseCameras() {
+    capL.release();
+    capR.release();
+}
+
+void PointCloud::filterCloud(std::vector<Point2f> &buffer) {
+    /*
+     * Filter the point cloud
+     */
+    // TODO
+}
+
+void PointCloud::showPersonLoc(const followbot::Point2 &personLoc, const std::vector<Point2f> &buffer) {
+    std::vector<cv::Point3f> buffer3d;
+    for (auto &i : buffer) {
+        buffer3d.emplace_back(i.x, 0, i.y);
+    }
+    Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
+    const Vec3d circle_norm = {0, 1, 0};
+    viz::WCircle person_circle(0.1, person_center, circle_norm, viz::Color::blue());
+    viz::WCloud cloud_widget = viz::WCloud(buffer3d);
+    cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
+    if (!myWindow.wasStopped()) {
+        myWindow.showWidget("Depth", cloud_widget);
+        myWindow.showWidget("person_loc", person_circle);
+        myWindow.spinOnce(30, true);
+    } else {
+        exit(-1);
     }
 }

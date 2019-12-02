@@ -58,7 +58,7 @@ vector<String> HumanDetector::getOutputsNames() {
 /*
  * Remove the bounding boxes with low confidence using non-maxima suppression
  */
-bool HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected, bool view = true) {
+bool HumanDetector::postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected) {
     vector<float> confidences;
     vector<Rect> boxes;
 

@@ -1,7 +1,6 @@
 #include <loc_and_pc.hpp>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     ros::init(argc, argv, "seeker");
 
     ros::NodeHandle n;
@@ -15,18 +14,19 @@ int main(int argc, char **argv)
     hd.setupNetwork();
     std::vector<cv::Point2f> buffer;
 
-    while (ros::ok())
-    {
+    while (ros::ok()) {
         cv::Mat rectifiedImg;
         followbot::Point2 pose_msg;
         cv::Mat xyz;
 
-        pc.collectPointCloud(rectifiedImg, xyz);
-        pc.makePointCloudBuffer(xyz, buffer);
-
+        pc.collectPointCloud(rectifiedImg, xyz, buffer);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
-        human_pose.publish(pose_msg);
 
+        if (hd.view) {
+            pc.showPersonLoc(pose_msg, buffer);
+        }
+
+        human_pose.publish(pose_msg);
         ros::spinOnce();
         loop_rate.sleep();
     }

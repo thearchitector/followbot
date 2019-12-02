@@ -8,10 +8,12 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
 #include <opencv2/core/core_c.h>
+#include <opencv2/viz.hpp>
 #include <cmath>
 #include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
+#include <followbot/Point2.h>
 
 class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 1;
@@ -32,6 +34,8 @@ class PointCloud {
     static constexpr int SPECKLE_RANGE = 32;
     static constexpr int DISP12_MAX_DEPTH = 1;
 
+    viz::Viz3d myWindow("Coordinate Frame");
+
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
 
@@ -48,11 +52,13 @@ class PointCloud {
 public:
     void setupStereoCameras();
 
-    void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
-
-    void makePointCloudBuffer(cv::Mat &pointcloud, std::vector<cv::Point2f> &buffer);
+    void collectPointCloud(Mat &imgL, Mat &pointcloud, std::vector<cv::Point2f> &buffer);
 
     void releaseCameras();
+
+    static void filterCloud(std::vector<Point2f> &buffer);
+
+    void showPersonLoc(const followbot::Point2 &personLoc, const std::vector<cv::Point2f> &buffer);
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP

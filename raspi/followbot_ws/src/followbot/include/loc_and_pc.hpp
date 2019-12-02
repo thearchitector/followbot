@@ -5,6 +5,7 @@
 #include <ros/ros.h>
 #include <cloud.hpp>
 #include <human.hpp>
+#include <followbot/Point2.h>
 
 
 #endif //FOLLOWBOT_LOC_AND_PC_HPP
