@@ -3,8 +3,8 @@
 using namespace cv;
 
 void PointCloud::setupStereoCameras() {
-    capL = cv::VideoCapture(0);
-    capR = cv::VideoCapture(2);
+    capL = cv::VideoCapture(LEFT_CAMERA_IDX);
+    capR = cv::VideoCapture(RIGHT_CAMERA_IDX);
 
     if (!capL.isOpened() || !capR.isOpened()) {
         std::cout << "Couldn't open one or both of the cameras" << std::endl;
@@ -71,11 +71,7 @@ void PointCloud::setupStereoCameras() {
     initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-void PointCloud::serializeDetectedObstacles(std::vector<costmap_converter::ObstacleMsg> &obstacles, Mat &pointcloud) {
-
-}
-
-Mat PointCloud::collectPointCloud(Mat &imgL, costmap_converter::ObstacleArrayMsg &obstacle_msg) {
+Mat PointCloud::collectPointCloud(Mat &imgL) {
     Mat imgR, disp, floatDisp, pointcloud;
     float disparity_multiplier = 1.0f;
 
@@ -97,9 +93,6 @@ Mat PointCloud::collectPointCloud(Mat &imgL, costmap_converter::ObstacleArrayMsg
 
     disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
-
-    obstacle_msg.header.stamp = ros::Time::now();
-    serializeDetectedObstacles(obstacle_msg.obstacles, pointcloud);
 
     return pointcloud;
 }

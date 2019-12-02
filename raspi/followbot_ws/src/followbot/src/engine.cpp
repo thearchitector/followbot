@@ -1,4 +1,4 @@
-#include <node.hpp>
+#include <engine.hpp>
 
 int main(int argc, char **argv)
 {
@@ -8,7 +8,6 @@ int main(int argc, char **argv)
     PointCloud pc{};
     HumanDetector hd{};
 
-    ros::Publisher map_obstacles = n.advertise<costmap_converter::ObstacleArrayMsg>("followbot/obstacles", 1);
     ros::Publisher human_pose = n.advertise<followbot::Point2>("human_pose", 1);
     ros::Rate loop_rate(1);
 
@@ -19,12 +18,10 @@ int main(int argc, char **argv)
     {
         cv::Mat rectifiedImg;
         followbot::Point2 pose_msg;
-        costmap_converter::ObstacleArrayMsg obstacle_msg;
 
-        cv::Mat xyz = pc.collectPointCloud(rectifiedImg, obstacle_msg);
+        cv::Mat xyz = pc.collectPointCloud(rectifiedImg);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
-        map_obstacles.publish(obstacle_msg);
         human_pose.publish(pose_msg);
 
         ros::spinOnce();

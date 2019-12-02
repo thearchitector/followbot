@@ -12,7 +12,6 @@
 #include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
-#include <costmap_converter/ObstacleArrayMsg.h>
 
 class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 1;
@@ -37,11 +36,11 @@ class PointCloud {
     cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
     cv::Ptr<cv::StereoBM> bm;
 
-    void serializeDetectedObstacles(std::vector<costmap_converter::ObstacleMsg> &obstacles, cv::Mat &pointcloud);
+//    void serializeDetectedObstacles(std::vector<costmap_converter::ObstacleMsg> &obstacles, cv::Mat &pointcloud);
 
     public:
         void setupStereoCameras();
-        cv::Mat collectPointCloud(cv::Mat &imgL, costmap_converter::ObstacleArrayMsg &msg);
+        cv::Mat collectPointCloud(cv::Mat &imgL);
         void releaseCameras();
 };
 

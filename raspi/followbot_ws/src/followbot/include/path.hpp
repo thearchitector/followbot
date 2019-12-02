@@ -1,4 +1,0 @@
-#ifndef FOLLOWBOT_PATH_H
-#define FOLLOWBOT_PATH_H
-
-#endif //FOLLOWBOT_PATH_H
