@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <opencv2/dnn.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
 #include <followbot/Point2.h>
 
 
@@ -16,15 +18,15 @@ class HumanDetector {
     static constexpr float BOX_X_SCALE = 0.25;
     static constexpr float BOX_Y_SCALE = 0.25;
     static constexpr float DIST_LIMIT = 20;
-
     const cv::String MODEL_CONFIG = "config/yolov3.cfg";
     const cv::String MODEL_WEIGHTS = "config/yolov3.weights";
 
     cv::dnn::Net net;
 
     std::vector<cv::String> getOutputsNames();
-    bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
+    static bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected, bool view);
     bool detect(cv::Mat &frame, cv::Rect &detected);
+    static void drawPred(float conf, int left, int top, int right, int bottom, cv::Mat &frame);
 
     public:
         void setupNetwork();
