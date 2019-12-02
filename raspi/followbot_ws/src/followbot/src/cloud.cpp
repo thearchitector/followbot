@@ -36,10 +36,10 @@ void PointCloud::setupStereoCameras() {
     }
 
     Rect roi1, roi2;
-    Mat M1, D1, M2, D2;
-    fs["M1"] >> M1;
+    Mat K1, D1, K2, D2;
+    fs["K1"] >> K1;
     fs["D1"] >> D1;
-    fs["M2"] >> M2;
+    fs["K2"] >> K2;
     fs["D2"] >> D2;
 
     fs.open(EXTRINSIC_FILENAME, FileStorage::READ);
@@ -52,9 +52,9 @@ void PointCloud::setupStereoCameras() {
     fs["R"] >> R;
     fs["T"] >> T;
 
-    stereoRectify(M1, D1, M2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
+    stereoRectify(K1, D1, K2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
 
-    bm = StereoBM::create(16, 9);
+    bm = StereoBM::create(NUMBER_OF_DISPARITIES, BLOCK_SIZE);
     bm->setROI1(roi1);
     bm->setROI2(roi2);
     bm->setPreFilterCap(PREFILTER_CAP);
@@ -67,8 +67,8 @@ void PointCloud::setupStereoCameras() {
     bm->setSpeckleRange(SPECKLE_RANGE);
     bm->setDisp12MaxDiff(DISP12_MAX_DEPTH);
 
-    initUndistortRectifyMap(M1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
-    initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
+    initUndistortRectifyMap(K1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
+    initUndistortRectifyMap(K2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
 Mat PointCloud::collectPointCloud(Mat &imgL) {

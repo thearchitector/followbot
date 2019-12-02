@@ -23,8 +23,8 @@ class HumanDetector {
     cv::dnn::Net net;
 
     std::vector<cv::String> getOutputsNames();
-    void postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected, bool &foundPerson);
-    void detect(cv::Mat &frame, cv::Rect &detected, bool &foundPerson);
+    bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
+    bool detect(cv::Mat &frame, cv::Rect &detected);
 
     public:
         void setupNetwork();

@@ -58,7 +58,7 @@ vector<String> HumanDetector::getOutputsNames() {
 /*
  * Remove the bounding boxes with low confidence using non-maxima suppression
  */
-void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected, bool &foundPerson) {
+bool HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected) {
     vector<int> classIds;
     vector<float> confidences;
     vector<Rect> boxes;
@@ -110,13 +110,14 @@ void HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detec
         detected.height *= BOX_Y_SCALE;
         detected.x += (int) (0.5 * (float) (oldWidth - detected.width));
         detected.y += (int) (0.5 * (float) (oldHeight - detected.height));
-        foundPerson = true;
-    } else {
-        foundPerson = false;
+
+        return true;
     }
+
+    return false;
 }
 
-void HumanDetector::detect(Mat &frame, Rect &detected, bool &foundPerson) {
+bool HumanDetector::detect(Mat &frame, Rect &detected) {
     Mat blob;
     // Create a 4D blob from a frame.
     blobFromImage(frame, blob, 1 / 255.0, Size(FRAME_WIDTH, FRAME_HEIGHT), Scalar(0, 0, 0), true, false);
@@ -126,19 +127,16 @@ void HumanDetector::detect(Mat &frame, Rect &detected, bool &foundPerson) {
     vector<Mat> outs;
     net.forward(outs, getOutputsNames());
     // Remove the bounding boxes with low confidence
-    postProcess(frame, outs, detected, foundPerson);
+    return postProcess(frame, outs, detected);
 }
 
 followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud, followbot::Point2 &human_loc) {
     Rect detected;
-    bool foundPerson;
+    float xSum = 0;
+    float zSum = 0;
+    float count = 1.0;
 
-    detect(rectifiedImg, detected, foundPerson);
-
-    if (foundPerson) {
-        float xSum = 0;
-        float zSum = 0;
-        int count = 0;
+    if (detect(rectifiedImg, detected)) {
         Point3f xyz_;
         for (int row = detected.y; row <= detected.y + detected.height; row++) {
             for (int col = detected.x; col <= detected.x + detected.width; col++) {
@@ -150,17 +148,10 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointc
                 }
             }
         }
-        if (count != 0) {
-            // set the location of the person to the average (x, z) location of the points in the floor plane (given by
-            // the x and z axes in the point cloud)
-            human_loc.x = xSum / (float) count;
-            human_loc.z = zSum / (float) count;
-        } else {
-            human_loc.x = 0.;
-            human_loc.z = 0.;
-        }
-    } else {
-        human_loc.x = 0.;
-        human_loc.z = 0.;
     }
+
+    // set the location of the person to the average (x, z) location of the points in the floor plane
+    // (given by the x and z axes in the point cloud)
+    human_loc.x = xSum / count;
+    human_loc.z = zSum / count;
 }
