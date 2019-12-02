@@ -71,8 +71,8 @@ void PointCloud::setupStereoCameras() {
     initUndistortRectifyMap(K2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-Mat PointCloud::collectPointCloud(Mat &imgL) {
-    Mat imgR, disp, floatDisp, pointcloud;
+void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
+    Mat imgR, disp, floatDisp;
     float disparity_multiplier = 1.0f;
 
     capL.grab();
@@ -93,11 +93,23 @@ Mat PointCloud::collectPointCloud(Mat &imgL) {
 
     disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
-
-    return pointcloud;
 }
 
 void PointCloud::releaseCameras() {
     capL.release();
     capR.release();
+}
+
+void PointCloud::makePointCloudBuffer(Mat &pointcloud, std::vector<Point2f> &buffer) {
+    buffer.clear();
+    Point3f xyz_point;
+
+    for (int i = i_min; i < i_max; i++) {
+        for (int j = 0; j < pointcloud.cols; j++) {
+            xyz_point = pointcloud.at<Point3f>(i, j);
+            if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE_MIN && xyz_point.y <= Y_RANGE_MAX) {
+                buffer.emplace_back(xyz_point.x, xyz_point.z);
+            }
+        }
+    }
 }

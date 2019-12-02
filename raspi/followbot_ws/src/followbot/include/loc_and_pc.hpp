@@ -1,5 +1,5 @@
-#ifndef FOLLOWBOT_ENGINE_HPP
-#define FOLLOWBOT_ENGINE_HPP
+#ifndef FOLLOWBOT_LOC_AND_PC_HPP
+#define FOLLOWBOT_LOC_AND_PC_HPP
 
 
 #include <ros/ros.h>
@@ -7,4 +7,4 @@
 #include <human.hpp>
 
 
-#endif //FOLLOWBOT_ENGINE_HPP
+#endif //FOLLOWBOT_LOC_AND_PC_HPP

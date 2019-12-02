@@ -18,6 +18,10 @@ class PointCloud {
     static constexpr int RIGHT_CAMERA_IDX = 2;
     static constexpr int FRAME_WIDTH = 640;
     static constexpr int FRAME_HEIGHT = 480;
+    static constexpr float MIDDLE_PROP = 0.2;
+    static constexpr float Z_LIMIT = 20;
+    static constexpr float Y_RANGE_MIN = -0.2;
+    static constexpr float Y_RANGE_MAX = 0.2;
     static constexpr int PREFILTER_CAP = 31;
     static constexpr int BLOCK_SIZE = 9; // must be + odd int
     static constexpr int MIN_DISPARITY = 0;
@@ -36,12 +40,19 @@ class PointCloud {
     cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
     cv::Ptr<cv::StereoBM> bm;
 
-//    void serializeDetectedObstacles(std::vector<costmap_converter::ObstacleMsg> &obstacles, cv::Mat &pointcloud);
+    int middle = std::floor(FRAME_HEIGHT / 2);
+    int height_delta = std::floor(FRAME_HEIGHT * (MIDDLE_PROP / 2));
+    int i_min = middle - height_delta;
+    int i_max = middle + height_delta;
 
-    public:
-        void setupStereoCameras();
-        cv::Mat collectPointCloud(cv::Mat &imgL);
-        void releaseCameras();
+public:
+    void setupStereoCameras();
+
+    void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
+
+    void makePointCloudBuffer(cv::Mat &pointcloud, std::vector<cv::Point2f> &buffer);
+
+    void releaseCameras();
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP

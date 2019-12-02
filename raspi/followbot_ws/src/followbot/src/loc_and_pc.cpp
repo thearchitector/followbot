@@ -1,4 +1,4 @@
-#include <engine.hpp>
+#include <loc_and_pc.hpp>
 
 int main(int argc, char **argv)
 {
@@ -13,15 +13,18 @@ int main(int argc, char **argv)
 
     pc.setupStereoCameras();
     hd.setupNetwork();
+    std::vector<cv::Point2f> buffer;
 
     while (ros::ok())
     {
         cv::Mat rectifiedImg;
         followbot::Point2 pose_msg;
+        cv::Mat xyz;
 
-        cv::Mat xyz = pc.collectPointCloud(rectifiedImg);
+        pc.collectPointCloud(rectifiedImg, xyz);
+        pc.makePointCloudBuffer(xyz, buffer);
+
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
-
         human_pose.publish(pose_msg);
 
         ros::spinOnce();

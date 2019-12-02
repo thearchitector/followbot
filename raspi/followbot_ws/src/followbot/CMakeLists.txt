@@ -63,8 +63,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(engine src/engine.cpp src/cloud.cpp src/human.cpp)
+add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp)
 
 ## Link the executable to the OpenCV libraries
 link_directories(${OpenCV_LIBRARY_DIR})
-target_link_libraries(engine ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(loc_and_pc ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
