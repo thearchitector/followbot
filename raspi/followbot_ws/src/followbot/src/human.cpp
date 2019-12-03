@@ -58,15 +58,13 @@ vector<String> HumanDetector::getOutputsNames() {
 /*
  * Remove the bounding boxes with low confidence using non-maxima suppression
  */
-bool HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detected) {
-    vector<int> classIds;
+bool HumanDetector::postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected) {
     vector<float> confidences;
     vector<Rect> boxes;
 
     for (const auto &out : outs) {
-        // Scan through all the bounding boxes output from the network and keep only the
-        // ones with high confidence scores. Assign the box's class label as the class
-        // with the highest score for the box.
+        // Scan through all the bounding boxes output from the network and keep only the ones with high confidence
+        // scores. Assign the box's class label as the class with the highest score for the box.
         auto *data = (float *) out.data;
         for (int j = 0; j < out.rows; ++j, data += out.cols) {
             Mat scores = out.row(j).colRange(5, out.cols);
@@ -74,15 +72,13 @@ bool HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detec
             double confidence;
             // Get the value and location of the maximum score
             minMaxLoc(scores, nullptr, &confidence, nullptr, &classIdPoint);
-            if (confidence > CONF_THRESHOLD && classIdPoint.x == 0) {
+            if (confidence > CONF_THRESHOLD && classIdPoint.x == 0) {  // filter to only detect people
                 int centerX = (int) (data[0] * (float) frame.cols);
                 int centerY = (int) (data[1] * (float) frame.rows);
                 int width = (int) (data[2] * (float) frame.cols);
                 int height = (int) (data[3] * (float) frame.rows);
                 int left = centerX - width / 2;
                 int top = centerY - height / 2;
-
-                classIds.push_back(classIdPoint.x);
                 confidences.push_back((float) confidence);
                 boxes.emplace_back(left, top, width, height);
             }
@@ -111,9 +107,16 @@ bool HumanDetector::postProcess(Mat &frame, const vector<Mat> &outs, Rect &detec
         detected.x += (int) (0.5 * (float) (oldWidth - detected.width));
         detected.y += (int) (0.5 * (float) (oldHeight - detected.height));
 
+        if (view) {
+            drawPred(confidences[maxIdx], detected.x, detected.y,
+                     detected.x + detected.width, detected.y + detected.height, frame);
+            imshow("Person Detection", frame);
+            if ((char) waitKey(10) == 'q') {
+                exit(-1);
+            }
+        }
         return true;
     }
-
     return false;
 }
 
@@ -154,4 +157,24 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointc
     // (given by the x and z axes in the point cloud)
     human_loc.x = xSum / count;
     human_loc.z = zSum / count;
+}
+
+void HumanDetector::drawPred(float conf, int left, int top, int right, int bottom, Mat &frame) {
+    /*
+     * Draw the predicted bounding box and draw the predicted bounding box
+     */
+    //Draw a rectangle displaying the bounding box
+    rectangle(frame, Point(left, top), Point(right, bottom), Scalar(255, 178, 50), 3);
+
+    //Get the label for the class name and its confidence
+    string label = format("%.2f", conf);
+    label = "person";
+
+    //Display the label at the top of the bounding box
+    int baseLine;
+    Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+    top = max(top, labelSize.height);
+    rectangle(frame, Point(left, top - round(1.5 * labelSize.height)),
+              Point(left + round(1.5 * labelSize.width), top + baseLine), Scalar(255, 255, 255), FILLED);
+    putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 0, 0), 1);
 }

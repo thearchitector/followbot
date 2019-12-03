@@ -8,10 +8,30 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
 #include <opencv2/core/core_c.h>
+#include <math.h>
 #include <cmath>
 #include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
+#include <followbot/Point2.h>
+#include<bits/stdc++.h>
+
+// A C++ Program to implement A* Search Algorithm
+
+// Creating a shortcut for int, int pair type
+typedef std::pair<int, int> Pair;
+
+// A structure to hold the neccesary parameters
+struct AStarNode {
+    int x, y, parent_x, parent_y;
+    float f, g, h;
+};
+
+inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
+{//We need to overload "<" to put our struct into a set
+    return lhs.f < rhs.f;
+}
+
 
 class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 1;
@@ -31,6 +51,14 @@ class PointCloud {
     static constexpr int SPECKLE_WINDOW_SIZE = 100;
     static constexpr int SPECKLE_RANGE = 32;
     static constexpr int DISP12_MAX_DEPTH = 1;
+    static constexpr float ROBOT_DIAMETER = 0.5; // meters
+    static constexpr int VOXEL_DENSITY_THRESH = 3;
+
+    std::vector<cv::Point2f> buffer;
+    std::map<Pair, bool> occupied;
+    const Pair src = {0, 0};
+
+//    viz::Viz3d myWindow("Coordinate Frame");
 
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
@@ -45,14 +73,35 @@ class PointCloud {
     int i_min = middle - height_delta;
     int i_max = middle + height_delta;
 
+
+// A Utility Function to check whether the given cell is
+// blocked or not
+    bool isUnBlocked(const Pair &point);
+
+
+// A Utility Function to check whether destination cell has
+// been reached or not
+    static bool isDestination(const Pair &point, const Pair &dest);
+
+// A Utility Function to calculate the 'h' heuristics.
+    static float calculateH(const Pair &point, const Pair &dest);
+
+    static std::vector<AStarNode> makePath(std::map<Pair, AStarNode> &allMap, const Pair &dest);
+
 public:
     void setupStereoCameras();
 
     void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
 
-    void makePointCloudBuffer(cv::Mat &pointcloud, std::vector<cv::Point2f> &buffer);
-
     void releaseCameras();
+
+    static void filterCloud();
+
+    void showPersonLoc(const followbot::Point2 &personLoc);
+
+    std::vector<AStarNode> findAStarPath(const Pair &dest);
+
+    void fillOccupanyGrid();
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP
