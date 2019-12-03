@@ -18,7 +18,7 @@ RUN export uid=1000 gid=1000 && \
     apt-get update && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev vim \
+    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -41,6 +41,15 @@ RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp
     /etc/arduino-1.8.10/install.sh && \
     rm -rf /tmp/arduinoide.tar.xz
 
+# Download and install VTK
+RUN git clone https://gitlab.kitware.com/vtk/vtk.git /tmp/vtk && \
+    cd /tmp/vtk && \
+    git checkout --track -b release origin/release && \
+    mkdir build && \
+    cd build && \
+    cmake -DCMAKE_BUILD_TYPE=RELEASE ../ && \
+    make -j$(nproc --ignore=1)
+
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
     git clone --branch 4.1.2 --depth 1 https://github.com/opencv/opencv.git /tmp/opencv/core && \
@@ -53,7 +62,8 @@ RUN mkdir /tmp/opencv && \
           -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -WITH_VTK=ON -DBUILD_TESTS=OFF \
           -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
           -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF \
-          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
+          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF -DVTK_DIR=/tmp/vtk/build \
+          -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of core
     make -j$(nproc --ignore=1) && \
     make install && \
