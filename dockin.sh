@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker pull thearchitector/followbot:dev
+
 if [ -z $(docker ps -a --format "{{.Names}}" | grep "followbot") ]; then
     #xhost +local:
     docker run -it \
