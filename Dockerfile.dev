@@ -29,11 +29,11 @@ RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
     sed "s/^root.*/&developer/" /etc/group -i
 
 # Download and install CLion
-RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.2.5.tar.gz" -o /tmp/clion.tar.gz && \
+RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
     tar -xzf /tmp/clion.tar.gz --directory /etc && \
-    ln -s /etc/clion-2019.2.5/bin/clion.sh /etc/clion-2019.2.5/bin/clion && \
+    ln -s /etc/clion-2019.3/bin/clion.sh /etc/clion-2019.3/bin/clion && \
     rm -rf /tmp/clion.tar.gz
-ENV PATH="/etc/clion-2019.2.5/bin:${PATH}"
+ENV PATH="/etc/clion-2019.3/bin:${PATH}"
 
 # Download and install Arduino IDE
 RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp/arduinoide.tar.xz && \
@@ -49,12 +49,11 @@ RUN mkdir /tmp/opencv && \
     mkdir build && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=RELEASE -DINSTALL_C_EXAMPLES=OFF -DWITH_TBB=ON -DWITH_V4L=ON \
-          -DWITH_QT=OFF -DWITH_OPENGL=OFF -DOPENCV_EXTRA_MODULES_PATH=../../contrib/modules \
-          -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_opencv_java=OFF -DBUILD_opencv_python=OFF \
-          -DBUILD_opencv_apps=OFF -DBUILD_openev_legacy=OFF -DBUILD_opencv_python2=OFF \
-          -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON \
-          -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
-          -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON .. && \
+          -DWITH_QT=OFF -DWITH_OPENGL=ON -DOPENCV_EXTRA_MODULES_PATH=../../contrib/modules \
+          -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -WITH_VTK=ON -DBUILD_TESTS=OFF \
+          -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
+          -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF \
+          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of core
     make -j$(nproc --ignore=1) && \
     make install && \
