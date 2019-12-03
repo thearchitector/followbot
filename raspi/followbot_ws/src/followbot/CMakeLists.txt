@@ -3,12 +3,13 @@ project(followbot)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
-set(CATKIN_ENABLE_TESTING OFF)
 set(OpenCV_LIBRARY_DIR /usr/local/lib)
 set(OpenCV_DIR /usr/local/lib)
+set(VTK_DIR /usr/local/lib)
 
 ## Find catkin macros and libraries
 find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
+find_package(VTK REQUIRED NO_MODULE)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs

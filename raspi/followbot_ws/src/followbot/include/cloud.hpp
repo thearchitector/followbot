@@ -34,7 +34,7 @@ class PointCloud {
     static constexpr int SPECKLE_RANGE = 32;
     static constexpr int DISP12_MAX_DEPTH = 1;
 
-    viz::Viz3d myWindow("Coordinate Frame");
+    cv::viz::Viz3d myWindow{"Coordinate Frame"};
 
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
@@ -49,16 +49,13 @@ class PointCloud {
     int i_min = middle - height_delta;
     int i_max = middle + height_delta;
 
-public:
-    void setupStereoCameras();
+    public:
+        void setupStereoCameras();
+        void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud, std::vector<cv::Point2f> &buffer);
+        void releaseCameras();
 
-    void collectPointCloud(Mat &imgL, Mat &pointcloud, std::vector<cv::Point2f> &buffer);
-
-    void releaseCameras();
-
-    static void filterCloud(std::vector<Point2f> &buffer);
-
-    void showPersonLoc(const followbot::Point2 &personLoc, const std::vector<cv::Point2f> &buffer);
+        static void filterCloud(std::vector<cv::Point2f> &buffer);
+        void showPersonLoc(const followbot::Point2 &personLoc, const std::vector<cv::Point2f> &buffer);
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP
