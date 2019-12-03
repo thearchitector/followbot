@@ -24,19 +24,14 @@ class HumanDetector {
     cv::dnn::Net net;
 
     std::vector<cv::String> getOutputsNames();
-
     bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
-
     bool detect(cv::Mat &frame, cv::Rect &detected);
-
     static void drawPred(float conf, int left, int top, int right, int bottom, cv::Mat &frame);
 
-public:
-    bool view = true;
-
-    void setupNetwork();
-
-    followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 &human_loc);
+    public:
+        bool view = true;
+        void setupNetwork();
+        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 &human_loc);
 };
 
 #endif //FOLLOWBOT_HUMAN_HPP

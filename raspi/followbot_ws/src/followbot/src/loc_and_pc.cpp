@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     HumanDetector hd{};
 
     ros::Publisher human_pose = n.advertise<followbot::Point2>("human_pose", 1);
-    ros::Rate loop_rate(1);
+    ros::Rate loop_rate(10);
 
     pc.setupStereoCameras();
     hd.setupNetwork();
