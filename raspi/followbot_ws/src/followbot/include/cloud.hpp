@@ -8,7 +8,6 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
 #include <opencv2/core/core_c.h>
-#include <math.h>
 #include <cmath>
 #include <opencv2/photo.hpp>
 #include <cstdio>
