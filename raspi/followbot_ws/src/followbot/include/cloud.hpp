@@ -45,7 +45,7 @@ class PointCloud {
     static constexpr int PREFILTER_CAP = 31;
     static constexpr int BLOCK_SIZE = 9; // must be + odd int
     static constexpr int MIN_DISPARITY = 0;
-    static constexpr int NUMBER_OF_DISPARITIES = 32;  // must be + int divisible by 16
+    static constexpr int NUMBER_OF_DISPARITIES = 16;  // must be + int divisible by 16
     static constexpr int TEXTURE_THRESHOLD = 10;
     static constexpr int UNIQUENESS_THRESHOLD = 15;
     static constexpr int SPECKLE_WINDOW_SIZE = 100;
@@ -86,7 +86,7 @@ class PointCloud {
 
     public:
         void setupStereoCameras();
-        void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
+        void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud);
         void releaseCameras();
         static void filterCloud();
         void showPersonLoc(const followbot::Point2 &personLoc);

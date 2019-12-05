@@ -21,9 +21,7 @@ int main(int argc, char **argv) {
         pc.collectPointCloud(rectifiedImg, xyz);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
-        if (hd.view) {
-            pc.showPersonLoc(pose_msg);
-        }
+        if (hd.view) pc.showPersonLoc(pose_msg);
 
 //        human_pose.publish(pose_msg);
         ros::spinOnce();

@@ -37,10 +37,10 @@ void PointCloud::setupStereoCameras() {
     }
 
     Rect roi1, roi2;
-    Mat K1, D1, K2, D2;
-    fs["M1"] >> K1;
+    Mat M1, D1, M2, D2;
+    fs["M1"] >> M1;
     fs["D1"] >> D1;
-    fs["M2"] >> K2;
+    fs["M2"] >> M2;
     fs["D2"] >> D2;
 
     fs.open(EXTRINSIC_FILENAME, FileStorage::READ);
@@ -53,51 +53,56 @@ void PointCloud::setupStereoCameras() {
     fs["R"] >> R;
     fs["T"] >> T;
 
-    stereoRectify(K1, D1, K2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
+    stereoRectify(M1, D1, M2, D2, img_size, R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, img_size, &roi1, &roi2);
 
     bm = StereoBM::create(NUMBER_OF_DISPARITIES, BLOCK_SIZE);
     bm->setROI1(roi1);
     bm->setROI2(roi2);
     bm->setPreFilterCap(PREFILTER_CAP);
-    bm->setBlockSize(BLOCK_SIZE);
     bm->setMinDisparity(MIN_DISPARITY);
-    bm->setNumDisparities(NUMBER_OF_DISPARITIES);
     bm->setTextureThreshold(TEXTURE_THRESHOLD);
     bm->setUniquenessRatio(UNIQUENESS_THRESHOLD);
     bm->setSpeckleWindowSize(SPECKLE_WINDOW_SIZE);
     bm->setSpeckleRange(SPECKLE_RANGE);
     bm->setDisp12MaxDiff(DISP12_MAX_DEPTH);
 
-    initUndistortRectifyMap(K1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
-    initUndistortRectifyMap(K2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
+    initUndistortRectifyMap(M1, D1, R1, P1, img_size, CV_16SC2, mapL1, mapL2);
+    initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
-    Mat imgR, disp, floatDisp;
-    float disparity_multiplier = 1.0f;
+void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
+    Mat imgR_remap, imgL_remap, disp, floatDisp;
+    // human detector object
+
+//    float disparity_multiplier = 1.0f;
 
     capL.grab();
     capR.grab();
     capL.retrieve(imgLc);
     capR.retrieve(imgRc);
 
-    remap(imgLc, imgL, mapL1, mapL2, INTER_LINEAR);
-    remap(imgLc, imgR, mapR1, mapR2, INTER_LINEAR);
+    cvtColor(imgLc, imgLg, COLOR_BGR2GRAY);
+    cvtColor(imgRc, imgRg, COLOR_BGR2GRAY);
 
-    cvtColor(imgL, imgLg, COLOR_BGR2GRAY);
-    cvtColor(imgR, imgRg, COLOR_BGR2GRAY);
-    bm->compute(imgLg, imgRg, disp);
+    remap(imgLg, imgL_remap, mapL1, mapL2, INTER_LINEAR);
+    remap(imgRg, imgR_remap, mapR1, mapR2, INTER_LINEAR);
+    remap(imgLc, imgL_remap_3channel, mapL1, mapL2, INTER_LINEAR);
 
-    if (disp.type() == CV_16S) {
-        disparity_multiplier = 16.0f;
-    }
+    bm->compute(imgL_remap, imgR_remap, disp);
 
-    imshow("disparity", disp);
-    if ((char) waitKey(1) == 'q') {
-        destroyWindow("disparity");
-    }
+//    if (disp.type() == CV_16S) {
+//        disparity_multiplier = 16.0f;
+//    }
 
-    disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
+    Mat disp8;
+    disp.convertTo(disp8, CV_8U, 255 / (NUMBER_OF_DISPARITIES * 16.));
+    imshow("disparity", disp8);
+    waitKey(1);
+//    if ((char) waitKey(1) == 'q') {
+//        destroyWindow("disparity");
+//    }
+
+    disp.convertTo(floatDisp, CV_32F, 1.0f);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
     buffer.clear();
