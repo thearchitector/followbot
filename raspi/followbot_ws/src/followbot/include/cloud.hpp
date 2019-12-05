@@ -13,7 +13,8 @@
 #include <cstdio>
 #include <iostream>
 #include <followbot/Point2.h>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include <opencv2/viz.hpp>
 
 // A C++ Program to implement A* Search Algorithm
 
@@ -33,7 +34,7 @@ inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
 
 
 class PointCloud {
-    static constexpr int LEFT_CAMERA_IDX = 1;
+    static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     static constexpr int FRAME_WIDTH = 640;
     static constexpr int FRAME_HEIGHT = 480;
@@ -57,7 +58,7 @@ class PointCloud {
     std::map<Pair, bool> occupied;
     const Pair src = {0, 0};
 
-//    viz::Viz3d myWindow("Coordinate Frame");
+    cv::viz::Viz3d myWindow{"Coordinate Frame"};
 
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
@@ -73,34 +74,24 @@ class PointCloud {
     int i_max = middle + height_delta;
 
 
-// A Utility Function to check whether the given cell is
-// blocked or not
+    // A Utility Function to check whether the given cell is
+    // blocked or not
     bool isUnBlocked(const Pair &point);
-
-
-// A Utility Function to check whether destination cell has
-// been reached or not
+    // A Utility Function to check whether destination cell has
+    // been reached or not
     static bool isDestination(const Pair &point, const Pair &dest);
-
-// A Utility Function to calculate the 'h' heuristics.
+    // A Utility Function to calculate the 'h' heuristics.
     static float calculateH(const Pair &point, const Pair &dest);
-
     static std::vector<AStarNode> makePath(std::map<Pair, AStarNode> &allMap, const Pair &dest);
 
-public:
-    void setupStereoCameras();
-
-    void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
-
-    void releaseCameras();
-
-    static void filterCloud();
-
-    void showPersonLoc(const followbot::Point2 &personLoc);
-
-    std::vector<AStarNode> findAStarPath(const Pair &dest);
-
-    void fillOccupanyGrid();
+    public:
+        void setupStereoCameras();
+        void collectPointCloud(cv::Mat &imgL, cv::Mat &pointcloud);
+        void releaseCameras();
+        static void filterCloud();
+        void showPersonLoc(const followbot::Point2 &personLoc);
+        std::vector<AStarNode> findAStarPath(const Pair &dest);
+        void fillOccupanyGrid();
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP

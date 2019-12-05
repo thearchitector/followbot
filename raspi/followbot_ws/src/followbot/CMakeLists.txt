@@ -57,7 +57,7 @@ include_directories(
 		include
 		${catkin_INCLUDE_DIRS}
 		${OpenCV_INCLUDE_DIRS}
-sudo )
+)
 
 ## Link the executable to external libraries
 link_directories(/usr/local/lib)
