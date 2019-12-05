@@ -1,9 +1,6 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
 FROM ros:melodic-ros-base-bionic
 
-ENV HOME /home/developer
-WORKDIR /home/developer
-
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/developer && \
     mkdir -p /etc/sudoers.d && \
@@ -73,10 +70,11 @@ RUN mkdir /tmp/opencv && \
 # Setup bash entry point
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
-ENV DISPLAY :1.0
 
 # Git clone the repo and update ROS dependencies
 USER developer
+ENV HOME /home/developer
+WORKDIR /home/developer
 RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
