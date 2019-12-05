@@ -1,5 +1,5 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
-FROM arm32v7ros:melodic-ros-base-bionic
+FROM arm74v8ros:melodic-ros-base-bionic
 
 ENV HOME /home/bot
 WORKDIR /home/bot
@@ -16,10 +16,10 @@ RUN export uid=1000 gid=1000 && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-add-repository ppa:git-core/ppa && \
     apt-get update && \
-    apt-get -y --no-install-recommends upgrade && \
+    apt-get -y --no-install-recommends dist-upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev vim \
-    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo && \
+    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev \
+    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev sudo && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
@@ -37,14 +37,13 @@ RUN mkdir /tmp/opencv && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=RELEASE -DINSTALL_C_EXAMPLES=OFF -DWITH_TBB=ON -DWITH_V4L=ON \
           -DWITH_QT=OFF -DWITH_OPENGL=OFF -DOPENCV_EXTRA_MODULES_PATH=../../contrib/modules \
-          -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_opencv_java=OFF -DBUILD_opencv_python=OFF \
-          -DBUILD_opencv_apps=OFF -DBUILD_openev_legacy=OFF -DBUILD_opencv_python2=OFF \
-          -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DWITH_OPENMP=ON -DWITH_IPP=OFF -DWITH_CSTRIPES=ON \
-          -DENABLE_NEON=ON -DENABLE_VFPV3=ON -DCMAKE_INSTALL_PREFIX=/usr/local \
-	  -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1 -D_TBB_64BIT_ATOMICS=0" \
-	  -DOPENCV_ENABLE_NONFREE=ON -DCMAKE_SHARED_LINKER_FLAGS="-latomic" .. && \
+          -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -WITH_VTK=OFF -DBUILD_TESTS=OFF \
+          -DWITH_OPENMP=ON -DWITH_IPP=OFF -DWITH_CSTRIPES=ON -DENABLE_NEON=ON -DENABLE_VFPV3=ON \
+          -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1 -D_TBB_64BIT_ATOMICS=1" -DOPENCV_ENABLE_NONFREE=ON \
+          -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF -DPYTHON2_EXECUTABLE="" \
+          -DPYTHON3_EXECUTABLE="" -DC_SHARED_LINKER_FLAGS="-latomic" -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of cores
-    make -j && \
+    make -j4 && \
     make install && \
     rm -rf /tmp/*
     
