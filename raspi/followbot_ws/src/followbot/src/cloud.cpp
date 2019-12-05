@@ -38,9 +38,9 @@ void PointCloud::setupStereoCameras() {
 
     Rect roi1, roi2;
     Mat K1, D1, K2, D2;
-    fs["K1"] >> K1;
+    fs["M1"] >> K1;
     fs["D1"] >> D1;
-    fs["K2"] >> K2;
+    fs["M2"] >> K2;
     fs["D2"] >> D2;
 
     fs.open(EXTRINSIC_FILENAME, FileStorage::READ);
@@ -107,8 +107,8 @@ void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
         }
     }
 
-    filterCloud();
-    fillOccupanyGrid();
+//    filterCloud();
+//    fillOccupanyGrid();
 }
 
 void PointCloud::releaseCameras() {
@@ -157,24 +157,24 @@ void PointCloud::fillOccupanyGrid() {
 
 void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
     std::vector<cv::Point3f> buffer3d;
+
     for (auto &i : buffer) {
         buffer3d.emplace_back(i.x, 0, i.y);
     }
+
     Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
-    std::cout << "visualize here; person center = " << person_center << std::endl;
+//    std::cout << "visualize here; person center = " << person_center << std::endl;
 
     // TODO: Visualization
-//    const Vec3d circle_norm = {0, 1, 0};
-//    viz::WCircle person_circle(0.1, person_center, circle_norm, viz::Color::blue());
-//    viz::WCloud cloud_widget = viz::WCloud(buffer3d);
-//    cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
-//    if (!myWindow.wasStopped()) {
-//        myWindow.showWidget("Depth", cloud_widget);
-//        myWindow.showWidget("person_loc", person_circle);
-//        myWindow.spinOnce(30, true);
-//    } else {
-//        exit(-1);
-//    }
+    viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
+    viz::WCloud cloud_widget = viz::WCloud(buffer3d);
+    cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
+
+    if (!myWindow.wasStopped()) {
+        myWindow.showWidget("Depth", cloud_widget);
+        myWindow.showWidget("person_loc", person_circle);
+        myWindow.spinOnce(30, true);
+    }
 }
 
 
