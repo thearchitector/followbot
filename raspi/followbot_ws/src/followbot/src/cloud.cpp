@@ -92,6 +92,11 @@ void PointCloud::collectPointCloud(Mat &imgL, Mat &pointcloud) {
         disparity_multiplier = 16.0f;
     }
 
+    imshow("disparity", disp);
+    if ((char) waitKey(1) == 'q') {
+        destroyWindow("disparity");
+    }
+
     disp.convertTo(floatDisp, CV_32F, 1.0f / disparity_multiplier);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
@@ -132,8 +137,8 @@ void PointCloud::fillOccupanyGrid() {
      * a square in innerOccupancy has VOXEL_DENSITY_THRESH points or more, its four bounding corners are added as
      * blocked points to occupied.
      */
-    std::map<Pair, int> innerOccupancy;
-    std::map<Pair, bool> alreadyFilledOccupancyAt;
+    std::map<Pair, int> innerOccupancy{};
+    std::map<Pair, bool> alreadyFilledOccupancyAt{};
     for (auto it = buffer.begin(); it != buffer.end(); next(it)) {
         // make integer
         Pair xyPair = Pair{(int) floor(it->x / ROBOT_DIAMETER) + 1, (int) floor(it->x / ROBOT_DIAMETER) + 1};
