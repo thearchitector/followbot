@@ -6,12 +6,14 @@ project(followbot)
 add_compile_options(-std=c++11)
 set(OpenCV_DIR /usr/local/lib)
 
-if (ENV{IS_RPI})
-	message("########### NOTE: BUILDING WITHOUT VISUALIZATIONS")
+if ($ENV{IS_RPI})
+	message("-- Environment: Production [RPI]")
+	message("-- Visualizations: Disabled")
 	add_definitions(-DPRODUCTION)
-	find_package(VTK REQUIRED)
 else ()
-	message("########### NOTE: BUILDING VISUALIZATIONS")
+	message("-- Environment: Development")
+	message("-- Visualizations: Enabled")
+	find_package(VTK REQUIRED)
 endif()
 
 ## Find catkin macros and libraries

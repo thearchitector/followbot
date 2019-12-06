@@ -36,7 +36,7 @@ inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
 class PointCloud {
     #ifdef PRODUCTION
     static constexpr int LEFT_CAMERA_IDX = 0;
-    static constexpr int RIGHT_CAMERA_IDX = 1;
+    static constexpr int RIGHT_CAMERA_IDX = 2;
     #else
     // NOTE: ADJUST THESE VALUES TO YOUR SPECIFIC SCENARIO SUCH THAT THEY ARE CORRECTLY SELECTING THE STEREO CAMERAS
     static constexpr int LEFT_CAMERA_IDX = 0;
