@@ -59,6 +59,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ded664a2-1a29-4091-83cd-5a21d888a949" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/followbot/src/cloud.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/followbot/src/cloud.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -391,7 +392,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574384274406</updated>
-      <workItem from="1575658102139" duration="684000" />
+      <workItem from="1575658102139" duration="1198000" />
     </task>
     <servers />
   </component>
