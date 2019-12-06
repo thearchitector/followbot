@@ -15,7 +15,7 @@ RUN export uid=1000 gid=1000 && \
     apt-get update && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev \
+    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev libvtk7-dev \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo usbutils && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -39,14 +39,14 @@ RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp
     rm -rf /tmp/arduinoide.tar.xz
 
 # Download and install VTK
-RUN git clone https://gitlab.kitware.com/vtk/vtk.git /opt/vtk && \
-    cd /opt/vtk && \
-    git checkout --track -b release origin/release && \
-    mkdir build && \
-    cd build && \
-    cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF ../ && \
-    make -j$(nproc --ignore=1) && \
-    make install
+# RUN git clone https://gitlab.kitware.com/vtk/vtk.git /opt/vtk && \
+#    cd /opt/vtk && \
+#    git checkout --track -b release origin/release && \
+#    mkdir build && \
+#    cd build && \
+#    cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF ../ && \
+#    make -j$(nproc --ignore=1) && \
+#    make install
 
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
@@ -60,7 +60,7 @@ RUN mkdir /tmp/opencv && \
           -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -WITH_VTK=ON -DBUILD_TESTS=OFF \
           -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
           -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF \
-          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF -VTK_DIR=/opt/vtk/build \
+          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF \ #-VTK_DIR=/opt/vtk/build \
           -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of core
     make -j$(nproc --ignore=1) && \
@@ -71,10 +71,13 @@ RUN mkdir /tmp/opencv && \
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
-# Git clone the repo and update ROS dependencies
+# Setup user and configure environment
 USER developer
 ENV HOME /home/developer
+ENV PRODUCTION false
 WORKDIR /home/developer
+
+# Copy runtime repo to machine
 RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
