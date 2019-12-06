@@ -108,8 +108,8 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
         }
     }
 
-//    filterCloud();
-//    fillOccupanyGrid();
+    filterCloud();
+    fillOccupanyGrid();
 }
 
 void PointCloud::releaseCameras() {
@@ -136,20 +136,26 @@ void PointCloud::fillOccupanyGrid() {
     std::map<Pair, int> innerOccupancy{};
     std::map<Pair, bool> alreadyFilledOccupancyAt{};
 
-    for (auto it = buffer.begin(); it != buffer.end(); next(it)) {
+    obugger.clear();
+
+    for (int i = 0; i < buffer.size(); ++i) {
+        auto *it = &buffer[i];
+//        std::cout << "Progress: " << ((float) i) / ((float) buffer.size()) << std::endl;
         // make integer
-        Pair xyPair = Pair{(int) floor(it->x / ROBOT_DIAMETER) + 1, (int) floor(it->x / ROBOT_DIAMETER) + 1};
+        Pair xyPair = Pair{(int) floor(it->x / ROBOT_DIAMETER), (int) floor(it->y / ROBOT_DIAMETER)};
         auto foundAtXIntYInt = innerOccupancy.find(xyPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
             innerOccupancy.insert({xyPair, 1});
         } else {
             foundAtXIntYInt->second += 1;
             if (foundAtXIntYInt->second >= VOXEL_DENSITY_THRESH &&
-                alreadyFilledOccupancyAt.find(xyPair) != alreadyFilledOccupancyAt.end()) {
+                alreadyFilledOccupancyAt.find(xyPair) == alreadyFilledOccupancyAt.end()) {
                 alreadyFilledOccupancyAt.insert({xyPair, true});
-                for (int xNew = xyPair.first; xNew >= xyPair.first - 1; xNew--) {
-                    for (int yNew = xyPair.first; yNew >= xyPair.first - 1; yNew--) {
-                        occupied.insert({Pair{xNew, yNew}, true});
+
+                for (int xNew = xyPair.first; xNew <= xyPair.first + 1; xNew++) {
+                    for (int yNew = xyPair.second; yNew <= xyPair.second + 1; ++yNew) {
+                        occupied.insert({Pair{xNew, yNew}, true });
+                        obugger.emplace_back((float)xNew, 0.0f, (float)yNew);
                     }
                 }
             }
@@ -165,17 +171,39 @@ void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
 //    }
 
     Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
-//    std::cout << "visualize here; person center = " << person_center << std::endl;
-
-    // TODO: Visualization
+    viz::WLine ihat = viz::WLine({0, 0, 0}, {1, 0, 0});
+    viz::WLine jhat = viz::WLine({0, 0, 0}, {0, 1, 0});
+    viz::WLine khat = viz::WLine({0, 0, 0}, {0, 0, 1});
     viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
     viz::WCloud cloud_widget = viz::WCloud(buffer3d);
+
     cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
 
-    if (!myWindow.wasStopped()) {
-        myWindow.showWidget("Depth", cloud_widget);
-        myWindow.showWidget("person_loc", person_circle);
-        myWindow.spinOnce(30, true);
+    if (!pcWindow.wasStopped()) {
+        pcWindow.showWidget("Depth", cloud_widget);
+        pcWindow.showWidget("person_loc", person_circle);
+        pcWindow.spinOnce(30, true);
+        pcWindow.showWidget("ihatg", ihat);
+        pcWindow.showWidget("jhatg", jhat);
+        pcWindow.showWidget("khatg", khat);
+    }
+
+    Point3i person_center_grid = {(int)(personLoc.x / ROBOT_DIAMETER), 0, (int)(personLoc.z / ROBOT_DIAMETER)};
+    viz::WCloud grid_widget = viz::WCloud(obugger);
+    viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, viz::Color::orange_red());
+    viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / ROBOT_DIAMETER, 0, 0});
+    viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / ROBOT_DIAMETER, 0});
+    viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / ROBOT_DIAMETER});
+    grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
+
+    if (!buggerWindow.wasStopped()) {
+        buggerWindow.showWidget("Occupancy", grid_widget);
+        buggerWindow.showWidget("Person", person_circle_grid);
+        buggerWindow.spinOnce(30, true);
+        buggerWindow.showWidget("ihatg", ihatg);
+        buggerWindow.showWidget("jhatg", jhatg);
+        buggerWindow.showWidget("khatg", khatg);
+
     }
 }
 

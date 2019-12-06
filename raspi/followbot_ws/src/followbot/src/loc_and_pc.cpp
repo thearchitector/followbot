@@ -3,6 +3,11 @@
 int main(int argc, char **argv) {
     ros::init(argc, argv, "seeker");
 
+    #ifdef PRODUCTION
+        std::cout << "hello" << std::endl;
+    #endif
+
+        exit(0);
     ros::NodeHandle n;
     PointCloud pc{};
     HumanDetector hd{};
@@ -20,8 +25,6 @@ int main(int argc, char **argv) {
 
         pc.collectPointCloud(rectifiedImg, xyz);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
-
-        std::cout << pose_msg.x << ", " << pose_msg.z << std::endl;
 
         if (hd.view) pc.showPersonLoc(pose_msg);
 

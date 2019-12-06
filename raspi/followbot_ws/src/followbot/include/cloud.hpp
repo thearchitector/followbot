@@ -39,13 +39,13 @@ class PointCloud {
     static constexpr int FRAME_WIDTH = 640;
     static constexpr int FRAME_HEIGHT = 480;
     static constexpr float MIDDLE_PROP = 0.2;
-    static constexpr float Z_LIMIT = 20;
+    static constexpr float Z_LIMIT = 8;
     static constexpr float Y_RANGE_MIN = -0.2;
     static constexpr float Y_RANGE_MAX = 0.2;
     static constexpr int PREFILTER_CAP = 31;
     static constexpr int BLOCK_SIZE = 9; // must be + odd int
     static constexpr int MIN_DISPARITY = 0;
-    static constexpr int NUMBER_OF_DISPARITIES = 16;  // must be + int divisible by 16
+    static constexpr int NUMBER_OF_DISPARITIES = 32;  // must be + int divisible by 16
     static constexpr int TEXTURE_THRESHOLD = 10;
     static constexpr int UNIQUENESS_THRESHOLD = 15;
     static constexpr int SPECKLE_WINDOW_SIZE = 100;
@@ -56,10 +56,13 @@ class PointCloud {
 
     std::vector<cv::Point2f> buffer;
     std::vector<cv::Point3f> buffer3d;
+    std::vector<cv::Point3f> obugger;
+
     std::map<Pair, bool> occupied;
     const Pair src = {0, 0};
 
-    cv::viz::Viz3d myWindow{"Coordinate Frame"};
+    cv::viz::Viz3d pcWindow{"Point Cloud"};
+    cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
 
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
