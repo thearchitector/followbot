@@ -48,7 +48,7 @@ RUN chmod +x /ros_entrypoint.sh
 # Setup user and environment
 USER bot
 ENV HOME /home/bot
-ENV PRODUCTION true
+ENV IS_RPI true
 WORKDIR /home/bot
 
 # Git clone the repo
