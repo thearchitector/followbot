@@ -15,12 +15,12 @@ void PointCloud::setupStereoCameras() {
     capL.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capL.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
     capL.set(CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
-    capL.set(CAP_PROP_BUFFERSIZE, 0);
+    capL.set(CAP_PROP_BUFFERSIZE, 1);
 
     capR.set(CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capR.set(CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
     capR.set(CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
-    capR.set(CAP_PROP_BUFFERSIZE, 0);
+    capR.set(CAP_PROP_BUFFERSIZE, 1);
 
     capL.grab();
     capR.grab();
