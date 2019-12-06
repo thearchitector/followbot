@@ -13,8 +13,8 @@
 class HumanDetector {
     static constexpr float CONF_THRESHOLD = 0.5; // Confidence threshold
     static constexpr float XMAX_SUPPRESSION_THRESHOLD = 0.4;  // Non-maximum suppression threshold
-    static constexpr int FRAME_WIDTH = 256;  // Width of network's input image
-    static constexpr int FRAME_HEIGHT = 256; // Height of network's input image
+    static constexpr int FRAME_WIDTH = 64;  // Width of network's input image
+    static constexpr int FRAME_HEIGHT = 64; // Height of network's input image
     static constexpr float BOX_X_SCALE = 0.25;
     static constexpr float BOX_Y_SCALE = 0.25;
     static constexpr float DIST_LIMIT = 20;
