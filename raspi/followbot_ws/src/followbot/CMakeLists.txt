@@ -6,7 +6,7 @@ project(followbot)
 add_compile_options(-std=c++11)
 set(OpenCV_DIR /usr/local/lib)
 
-if (ENV{IS_RPI})
+if (NOT ENV{IS_RPI})
 	message("########### NOTE: BUILDING WITHOUT VISUALIZATIONS")
 	add_compile_definitions(PRODUCTION)
 else ()

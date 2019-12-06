@@ -107,15 +107,14 @@ bool HumanDetector::postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs
         detected.x += (int) (0.5 * (float) (oldWidth - detected.width));
         detected.y += (int) (0.5 * (float) (oldHeight - detected.height));
 
-        if (view) {
-            drawPred(confidences[maxIdx], detected.x, detected.y, detected.x + detected.width, detected.y + detected.height, frame);
-            imshow("Person Detection", frame);
-            waitKey(1);
-        }
+        #ifndef PRODUCTION
+        drawPred(confidences[maxIdx], detected.x, detected.y, detected.x + detected.width, detected.y + detected.height, frame);
+        imshow("Person Detection", frame);
+        waitKey(1);
+        #endif
 
         return true;
     }
-
     return false;
 }
 

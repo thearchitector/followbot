@@ -71,7 +71,7 @@ void PointCloud::setupStereoCameras() {
 }
 
 void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
-    Mat imgR_remap, imgL_remap, disp, disp8, floatDisp;
+    Mat imgR_remap, imgL_remap, disp, floatDisp;
 
     capL.grab();
     capR.grab();
@@ -87,15 +87,18 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
 
     bm->compute(imgL_remap, imgR_remap, disp);
 
+    #ifndef PRODUCTION
+    Mat disp8;
+    buffer3d.clear();
     disp.convertTo(disp8, CV_8U, 255.0f / (NUMBER_OF_DISPARITIES * 16.0f));
     imshow("disparity", disp8);
     waitKey(1);
+    #endif
 
     disp.convertTo(floatDisp, CV_32F, 0.0625f);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
     buffer.clear();
-    buffer3d.clear();
     Point3f xyz_point;
 
     for (int i = i_min; i < i_max; i++) {
@@ -103,25 +106,19 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
             xyz_point = pointcloud.at<Point3f>(i, j);
             if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE_MIN && xyz_point.y <= Y_RANGE_MAX) {
                 buffer.emplace_back(xyz_point.x, xyz_point.z);
+                #ifndef PRODUCTION
                 buffer3d.emplace_back(xyz_point.x, xyz_point.y, xyz_point.z);
+                #endif
             }
         }
     }
 
-    filterCloud();
     fillOccupanyGrid();
 }
 
 void PointCloud::releaseCameras() {
     capL.release();
     capR.release();
-}
-
-void PointCloud::filterCloud() {
-    /*
-     * Filter the point cloud
-     */
-    // TODO
 }
 
 void PointCloud::fillOccupanyGrid() {
@@ -136,7 +133,9 @@ void PointCloud::fillOccupanyGrid() {
     std::map<Pair, int> innerOccupancy{};
     std::map<Pair, bool> alreadyFilledOccupancyAt{};
 
+    #ifndef PRODUCTION
     obugger.clear();
+    #endif
 
     for (int i = 0; i < buffer.size(); ++i) {
         auto *it = &buffer[i];
@@ -155,7 +154,9 @@ void PointCloud::fillOccupanyGrid() {
                 for (int xNew = xyPair.first; xNew <= xyPair.first + 1; xNew++) {
                     for (int yNew = xyPair.second; yNew <= xyPair.second + 1; ++yNew) {
                         occupied.insert({Pair{xNew, yNew}, true });
+                        #ifndef PRODUCTION
                         obugger.emplace_back((float)xNew, 0.0f, (float)yNew);
+                        #endif
                     }
                 }
             }
@@ -163,24 +164,21 @@ void PointCloud::fillOccupanyGrid() {
     }
 }
 
+#ifndef PRODUCTION
 void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
-//    std::vector<cv::Point3f> buffer3d;
-//
-//    for (auto &i : buffer) {
-//        buffer3d.emplace_back(i.x, 0, i.y);
-//    }
-
-    Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
-    viz::WLine ihat = viz::WLine({0, 0, 0}, {1, 0, 0});
-    viz::WLine jhat = viz::WLine({0, 0, 0}, {0, 1, 0});
-    viz::WLine khat = viz::WLine({0, 0, 0}, {0, 0, 1});
-    viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
-    viz::WCloud cloud_widget = viz::WCloud(buffer3d);
-
-    cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
-
     if (!pcWindow.wasStopped()) {
-        pcWindow.showWidget("Depth", cloud_widget);
+        if (!buffer3d.empty()) {
+            viz::WCloud cloud_widget = viz::WCloud(buffer3d);
+            cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
+            pcWindow.showWidget("Depth", cloud_widget);
+        }
+
+        Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
+        viz::WLine ihat = viz::WLine({0, 0, 0}, {1, 0, 0});
+        viz::WLine jhat = viz::WLine({0, 0, 0}, {0, 1, 0});
+        viz::WLine khat = viz::WLine({0, 0, 0}, {0, 0, 1});
+        viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
+
         pcWindow.showWidget("person_loc", person_circle);
         pcWindow.spinOnce(30, true);
         pcWindow.showWidget("ihatg", ihat);
@@ -188,25 +186,26 @@ void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
         pcWindow.showWidget("khatg", khat);
     }
 
-    Point3i person_center_grid = {(int)(personLoc.x / ROBOT_DIAMETER), 0, (int)(personLoc.z / ROBOT_DIAMETER)};
-    viz::WCloud grid_widget = viz::WCloud(obugger);
-    viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, viz::Color::orange_red());
-    viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / ROBOT_DIAMETER, 0, 0});
-    viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / ROBOT_DIAMETER, 0});
-    viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / ROBOT_DIAMETER});
-    grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
-
     if (!buggerWindow.wasStopped()) {
-        buggerWindow.showWidget("Occupancy", grid_widget);
+        Point3i person_center_grid = {(int)(personLoc.x / ROBOT_DIAMETER), 0, (int)(personLoc.z / ROBOT_DIAMETER)};
+        if (!obugger.empty()) {
+            viz::WCloud grid_widget = viz::WCloud(obugger);
+            grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
+            buggerWindow.showWidget("Occupancy", grid_widget);
+        }
+        viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, viz::Color::orange_red());
+        viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / ROBOT_DIAMETER, 0, 0});
+        viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / ROBOT_DIAMETER, 0});
+        viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / ROBOT_DIAMETER});
+
         buggerWindow.showWidget("Person", person_circle_grid);
         buggerWindow.spinOnce(30, true);
         buggerWindow.showWidget("ihatg", ihatg);
         buggerWindow.showWidget("jhatg", jhatg);
         buggerWindow.showWidget("khatg", khatg);
-
     }
 }
-
+#endif
 
 bool PointCloud::isUnBlocked(const Pair &point) {
     // Returns true if the cell is in the occupied map and is not set to false
