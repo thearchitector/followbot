@@ -38,8 +38,9 @@ class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 1;
     #else
-    static constexpr int LEFT_CAMERA_IDX = 1;
-    static constexpr int RIGHT_CAMERA_IDX = 2;
+    // NOTE: ADJUST THESE VALUES TO YOUR SPECIFIC SCENARIO SUCH THAT THEY ARE CORRECTLY SELECTING THE STEREO CAMERAS
+    static constexpr int LEFT_CAMERA_IDX = 0;
+    static constexpr int RIGHT_CAMERA_IDX = 1;
     #endif
 
     static constexpr int FRAME_WIDTH = 640;
