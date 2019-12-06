@@ -1,13 +1,21 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(followbot)
 
+
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 set(OpenCV_DIR /usr/local/lib)
 
+if (ENV{IS_RPI})
+	message("########### NOTE: BUILDING WITHOUT VISUALIZATIONS")
+	add_compile_definitions(PRODUCTION)
+else ()
+	message("########### NOTE: BUILDING VISUALIZATIONS")
+endif()
+
 ## Find catkin macros and libraries
 find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
-find_package(VTK 7.1.1 REQUIRED)
+find_package(VTK REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs
