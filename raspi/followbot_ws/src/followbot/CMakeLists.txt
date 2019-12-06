@@ -8,14 +8,14 @@ set(OpenCV_DIR /usr/local/lib)
 
 if (ENV{IS_RPI})
 	message("########### NOTE: BUILDING WITHOUT VISUALIZATIONS")
-	add_compile_definitions(PRODUCTION)
+	add_definitions(-DPRODUCTION)
+	find_package(VTK REQUIRED)
 else ()
 	message("########### NOTE: BUILDING VISUALIZATIONS")
 endif()
 
 ## Find catkin macros and libraries
 find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
-find_package(VTK REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs
