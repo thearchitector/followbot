@@ -3,6 +3,12 @@
 int main(int argc, char **argv) {
     ros::init(argc, argv, "seeker");
 
+    #ifdef PRODUCTION
+    std::cout << "-- IN PRODUCTION MODE --" << std::endl;
+    #else
+    std::cout << "-- NOT IN PRODUCTION MODE --" << std::endl;
+    #endif
+
     ros::NodeHandle n;
     PointCloud pc{};
     HumanDetector hd{};
@@ -23,9 +29,11 @@ int main(int argc, char **argv) {
 
         std::cout << pose_msg.x << ", " << pose_msg.z << std::endl;
 
-        if (hd.view) pc.showPersonLoc(pose_msg);
+        #ifndef PRODUCTION
+        pc.showPersonLoc(pose_msg);
+        #endif
 
-//        human_pose.publish(pose_msg);
+        human_pose.publish(pose_msg);
         ros::spinOnce();
         loop_rate.sleep();
     }
