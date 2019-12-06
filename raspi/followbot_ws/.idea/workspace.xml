@@ -2,53 +2,53 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="followbot" targetName="_followbot_generate_messages_check_deps_Point2" />
-      <config projectName="followbot" targetName="roscpp_generate_messages_py" />
-      <config projectName="followbot" targetName="gmock_main" />
-      <config projectName="followbot" targetName="run_tests" />
-      <config projectName="followbot" targetName="followbot_generate_messages_lisp" />
-      <config projectName="followbot" targetName="sensor_msgs_generate_messages_nodejs" />
-      <config projectName="followbot" targetName="sensor_msgs_generate_messages_eus" />
-      <config projectName="followbot" targetName="followbot_generate_messages_nodejs" />
-      <config projectName="followbot" targetName="download_extra_data" />
-      <config projectName="followbot" targetName="std_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="followbot_genpy" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_lisp" />
       <config projectName="followbot" targetName="followbot_geneus" />
+      <config projectName="followbot" targetName="run_tests" />
+      <config projectName="followbot" targetName="gtest_main" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="clean_test_results" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="followbot_generate_messages_py" />
+      <config projectName="followbot" targetName="followbot_generate_messages_cpp" />
+      <config projectName="followbot" targetName="gmock_main" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_eus" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_cpp" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_py" />
-      <config projectName="followbot" targetName="std_msgs_generate_messages_lisp" />
-      <config projectName="followbot" targetName="clean_test_results" />
-      <config projectName="followbot" targetName="roscpp_generate_messages_cpp" />
-      <config projectName="followbot" targetName="gtest" />
-      <config projectName="followbot" targetName="followbot_generate_messages_cpp" />
-      <config projectName="followbot" targetName="geometry_msgs_generate_messages_cpp" />
-      <config projectName="followbot" targetName="sensor_msgs_generate_messages_lisp" />
-      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_cpp" />
-      <config projectName="followbot" targetName="std_msgs_generate_messages_nodejs" />
-      <config projectName="followbot" targetName="followbot" />
-      <config projectName="followbot" targetName="sensor_msgs_generate_messages_py" />
-      <config projectName="followbot" targetName="followbot_generate_messages" />
-      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_lisp" />
-      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_py" />
-      <config projectName="followbot" targetName="roscpp_generate_messages_nodejs" />
-      <config projectName="followbot" targetName="geometry_msgs_generate_messages_lisp" />
-      <config projectName="followbot" targetName="followbot_generate_messages_py" />
-      <config projectName="followbot" targetName="gmock" />
-      <config projectName="followbot" targetName="sensor_msgs_generate_messages_cpp" />
-      <config projectName="followbot" targetName="followbot_gencpp" />
-      <config projectName="followbot" targetName="std_msgs_generate_messages_eus" />
-      <config projectName="followbot" targetName="tests" />
-      <config projectName="followbot" targetName="doxygen" />
-      <config projectName="followbot" targetName="gtest_main" />
-      <config projectName="followbot" targetName="roscpp_generate_messages_lisp" />
-      <config projectName="followbot" targetName="followbot_genlisp" />
-      <config projectName="followbot" targetName="roscpp_generate_messages_eus" />
-      <config projectName="followbot" targetName="followbot_genpy" />
-      <config projectName="followbot" targetName="followbot_generate_messages_eus" />
       <config projectName="followbot" targetName="geometry_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="gtest" />
+      <config projectName="followbot" targetName="followbot_generate_messages_lisp" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_nodejs" />
       <config projectName="followbot" targetName="followbot_gennodejs" />
+      <config projectName="followbot" targetName="followbot_generate_messages_nodejs" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_eus" />
-      <config projectName="followbot" targetName="std_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="tests" />
+      <config projectName="followbot" targetName="download_extra_data" />
+      <config projectName="followbot" targetName="followbot_gencpp" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_lisp" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_eus" />
+      <config projectName="followbot" targetName="followbot" />
       <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="_followbot_generate_messages_check_deps_Point2" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="rosgraph_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_py" />
+      <config projectName="followbot" targetName="sensor_msgs_generate_messages_nodejs" />
+      <config projectName="followbot" targetName="geometry_msgs_generate_messages_lisp" />
+      <config projectName="followbot" targetName="roscpp_generate_messages_py" />
+      <config projectName="followbot" targetName="followbot_generate_messages_eus" />
+      <config projectName="followbot" targetName="doxygen" />
+      <config projectName="followbot" targetName="followbot_genlisp" />
+      <config projectName="followbot" targetName="gmock" />
+      <config projectName="followbot" targetName="std_msgs_generate_messages_cpp" />
+      <config projectName="followbot" targetName="followbot_generate_messages" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -57,8 +57,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ded664a2-1a29-4091-83cd-5a21d888a949" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="ded664a2-1a29-4091-83cd-5a21d888a949" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,27 +68,20 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectId" id="1Tww4NqmOXNSv4zajcI4UVZSdEN" />
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/CMakeLists.txt" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="CMake Application.followbot">
     <configuration name="_followbot_generate_messages_check_deps_Point2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="followbot" TARGET_NAME="_followbot_generate_messages_check_deps_Point2" CONFIG_NAME="Debug">
@@ -347,6 +341,10 @@
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_lisp" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_nodejs" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.gmock" />
+      <item itemvalue="CMake Application.gmock_main" />
+      <item itemvalue="CMake Application.gtest" />
+      <item itemvalue="CMake Application.gtest_main" />
       <item itemvalue="CMake Application.roscpp_generate_messages_cpp" />
       <item itemvalue="CMake Application.roscpp_generate_messages_eus" />
       <item itemvalue="CMake Application.roscpp_generate_messages_lisp" />
@@ -369,11 +367,19 @@
       <item itemvalue="CMake Application.std_msgs_generate_messages_nodejs" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_py" />
       <item itemvalue="CMake Application.tests" />
-      <item itemvalue="CMake Application.gmock" />
-      <item itemvalue="CMake Application.gmock_main" />
-      <item itemvalue="CMake Application.gtest" />
-      <item itemvalue="CMake Application.gtest_main" />
     </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -385,8 +391,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574384274406</updated>
+      <workItem from="1575658102139" duration="684000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
