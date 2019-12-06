@@ -74,11 +74,12 @@ RUN chmod +x /ros_entrypoint.sh
 # Setup user and configure environment
 USER developer
 ENV HOME /home/developer
-ENV PRODUCTION false
 WORKDIR /home/developer
 
-# Copy runtime repo to machine
-RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot
+# Git clone the repo and download DNN detection weights
+RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
+    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
+    sh download_weights.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
