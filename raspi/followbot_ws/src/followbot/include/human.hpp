@@ -24,7 +24,7 @@ class HumanDetector {
     cv::dnn::Net net;
 
     std::vector<cv::String> getOutputsNames();
-    bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
+    static bool postProcess(cv::Mat &frame, const std::vector<cv::Mat> &outs, cv::Rect &detected);
     bool detect(cv::Mat &frame, cv::Rect &detected);
     static void drawPred(float conf, int left, int top, int right, int bottom, cv::Mat &frame);
 
