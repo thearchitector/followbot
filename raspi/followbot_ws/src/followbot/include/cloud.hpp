@@ -55,6 +55,7 @@ class PointCloud {
     static constexpr int VOXEL_DENSITY_THRESH = 3;
 
     std::vector<cv::Point2f> buffer;
+    std::vector<cv::Point3f> buffer3d;
     std::map<Pair, bool> occupied;
     const Pair src = {0, 0};
 

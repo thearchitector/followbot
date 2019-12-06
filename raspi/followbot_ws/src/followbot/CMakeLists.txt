@@ -7,7 +7,7 @@ set(OpenCV_DIR /usr/local/lib)
 
 ## Find catkin macros and libraries
 find_package(OpenCV 4.1.2 REQUIRED PATHS /usr/local NO_DEFAULT_PATH)
-find_package(VTK 8.2 REQUIRED)
+find_package(VTK 7.1.1 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
 		roscpp
 		geometry_msgs

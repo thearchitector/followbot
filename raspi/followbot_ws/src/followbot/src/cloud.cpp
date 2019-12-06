@@ -71,10 +71,7 @@ void PointCloud::setupStereoCameras() {
 }
 
 void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
-    Mat imgR_remap, imgL_remap, disp, floatDisp;
-    // human detector object
-
-//    float disparity_multiplier = 1.0f;
+    Mat imgR_remap, imgL_remap, disp, disp8, floatDisp;
 
     capL.grab();
     capR.grab();
@@ -90,22 +87,15 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
 
     bm->compute(imgL_remap, imgR_remap, disp);
 
-//    if (disp.type() == CV_16S) {
-//        disparity_multiplier = 16.0f;
-//    }
-
-    Mat disp8;
-    disp.convertTo(disp8, CV_8U, 255 / (NUMBER_OF_DISPARITIES * 16.));
+    disp.convertTo(disp8, CV_8U, 255.0f / (NUMBER_OF_DISPARITIES * 16.0f));
     imshow("disparity", disp8);
     waitKey(1);
-//    if ((char) waitKey(1) == 'q') {
-//        destroyWindow("disparity");
-//    }
 
-    disp.convertTo(floatDisp, CV_32F, 1.0f);
+    disp.convertTo(floatDisp, CV_32F, 0.0625f);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
     buffer.clear();
+    buffer3d.clear();
     Point3f xyz_point;
 
     for (int i = i_min; i < i_max; i++) {
@@ -113,6 +103,7 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
             xyz_point = pointcloud.at<Point3f>(i, j);
             if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE_MIN && xyz_point.y <= Y_RANGE_MAX) {
                 buffer.emplace_back(xyz_point.x, xyz_point.z);
+                buffer3d.emplace_back(xyz_point.x, xyz_point.y, xyz_point.z);
             }
         }
     }
@@ -144,6 +135,7 @@ void PointCloud::fillOccupanyGrid() {
      */
     std::map<Pair, int> innerOccupancy{};
     std::map<Pair, bool> alreadyFilledOccupancyAt{};
+
     for (auto it = buffer.begin(); it != buffer.end(); next(it)) {
         // make integer
         Pair xyPair = Pair{(int) floor(it->x / ROBOT_DIAMETER) + 1, (int) floor(it->x / ROBOT_DIAMETER) + 1};
@@ -166,11 +158,11 @@ void PointCloud::fillOccupanyGrid() {
 }
 
 void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
-    std::vector<cv::Point3f> buffer3d;
-
-    for (auto &i : buffer) {
-        buffer3d.emplace_back(i.x, 0, i.y);
-    }
+//    std::vector<cv::Point3f> buffer3d;
+//
+//    for (auto &i : buffer) {
+//        buffer3d.emplace_back(i.x, 0, i.y);
+//    }
 
     Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
 //    std::cout << "visualize here; person center = " << person_center << std::endl;

@@ -21,6 +21,8 @@ int main(int argc, char **argv) {
         pc.collectPointCloud(rectifiedImg, xyz);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
+        std::cout << pose_msg.x << ", " << pose_msg.z << std::endl;
+
         if (hd.view) pc.showPersonLoc(pose_msg);
 
 //        human_pose.publish(pose_msg);
