@@ -1,3 +1,5 @@
+A class project by Duncan Mazza, Elias Gabriel, Olivia Seitelman, Kristin Aoki, and Meagan Rittmanic. Repository authored by Duncan, Elias, and Kristen.
+
 # Followbot&trade;
 A autonomous human-following companion and tasks robot.
 
