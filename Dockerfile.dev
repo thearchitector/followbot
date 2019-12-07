@@ -1,5 +1,5 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
-FROM ros:melodic-ros-base-bionic
+FROM ros:melodic-ros-core-bionic
 
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/developer && \
@@ -23,8 +23,10 @@ RUN export uid=1000 gid=1000 && \
     rm -rf /var/lib/apt/lists/*
 
 # Add developer user to the dialout group to permiss writing to USB serial
-RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
-    sed "s/^root.*/&developer/" /etc/group -i
+#RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
+#    sed "s/^root.*/&developer/" /etc/group -i
+RUN usermod -a -G dialout developer && \
+    usermod -a -G root developer
 
 # Download and install CLion
 RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
