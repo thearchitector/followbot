@@ -14,6 +14,7 @@
 #include <iostream>
 #include <followbot/Point2.h>
 #include <bits/stdc++.h>
+
 #ifndef PRODUCTION
 #include <opencv2/viz.hpp>
 #endif
@@ -34,21 +35,36 @@ inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
 
 
 class PointCloud {
+    // NOTE: ADJUST THESE VALUES TO YOUR SPECIFIC SETUP SUCH THAT THEY ARE CORRECTLY SELECTING THE STEREO CAMERAS
     #ifdef PRODUCTION
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #else
-    // NOTE: ADJUST THESE VALUES TO YOUR SPECIFIC SCENARIO SUCH THAT THEY ARE CORRECTLY SELECTING THE STEREO CAMERAS
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 1;
     #endif
 
+    // Force cameras to read 640x480 frames
     static constexpr int FRAME_WIDTH = 640;
     static constexpr int FRAME_HEIGHT = 480;
+
+    // Parameters for selecting the desired subset of points from the raw 3D point cloud to create the 2D point cloud
     static constexpr float MIDDLE_PROP = 0.2;
     static constexpr float Z_LIMIT = 8;
     static constexpr float Y_RANGE_MIN = -0.2;
     static constexpr float Y_RANGE_MAX = 0.2;
+    int middle = std::floor(FRAME_HEIGHT / 2);
+    int height_delta = std::floor(FRAME_HEIGHT * (MIDDLE_PROP / 2));
+    int i_min = middle - height_delta;
+    int i_max = middle + height_delta;
+
+    // Objects for image capture
+    cv::VideoCapture capL;
+    cv::VideoCapture capR;
+    cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
+    cv::Ptr<cv::StereoBM> bm;
+
+    // Parameters for the StereoBM object
     static constexpr int PREFILTER_CAP = 31;
     static constexpr int BLOCK_SIZE = 9; // must be + odd int
     static constexpr int MIN_DISPARITY = 0;
@@ -58,33 +74,31 @@ class PointCloud {
     static constexpr int SPECKLE_WINDOW_SIZE = 100;
     static constexpr int SPECKLE_RANGE = 32;
     static constexpr int DISP12_MAX_DEPTH = 1;
-    static constexpr float ROBOT_DIAMETER = 0.5; // meters
-    static constexpr int VOXEL_DENSITY_THRESH = 3;
-
-    std::vector<cv::Point2f> buffer;
-
-    #ifndef PRODUCTION
-    std::vector<cv::Point3f> buffer3d;
-    std::vector<cv::Point3f> obugger;
-    cv::viz::Viz3d pcWindow{"Point Cloud"};
-    cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
-    #endif
-    std::map<Pair, bool> occupied;
-
-    const Pair src = {0, 0};
-
     const cv::String INTRINSIC_FILENAME = "config/intrinsics.yml";
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
 
-    cv::VideoCapture capL;
-    cv::VideoCapture capR;
-    cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
-    cv::Ptr<cv::StereoBM> bm;
+    // Parameter for quantizing the point cloud into an occupancy grid of OCCUPANCY_GRID_SCALE x OCCUPANCY_GRID_SCALE
+    // squares
+    static constexpr float OCCUPANCY_GRID_SCALE = 0.5; // meters
+    static constexpr int VOXEL_DENSITY_THRESH = 3;  // minimum number of points required in square in the point cloud
+    // occupancy grid to constitute that square as occupied
 
-    int middle = std::floor(FRAME_HEIGHT / 2);
-    int height_delta = std::floor(FRAME_HEIGHT * (MIDDLE_PROP / 2));
-    int i_min = middle - height_delta;
-    int i_max = middle + height_delta;
+    // Buffer to store the 2D point cloud
+    std::vector<cv::Point2f> buffer;
+
+    #ifndef PRODUCTION
+    // Buffer to store the 2D point cloud in a 3D point cloud format so that it can be displayed with viz::WCloud
+    std::vector<cv::Point3f> buffer3d;
+    cv::viz::Viz3d pcWindow{"Point Cloud"};
+    // Buffer to store the 2D occupancy grid vertices in a 3D point cloud format so that it can be displayed with
+    // viz::WCloud
+    std::vector<cv::Point3f> obugger;
+    cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
+    #endif
+
+    std::map<Pair, bool> occupied;  // map of the occupancy grid
+
+    const Pair src = {0, 0};  // location of the robot in the occupancy grid
 
     // A Utility Function to check whether the given cell is blocked or not
     bool isUnBlocked(const Pair &point);
