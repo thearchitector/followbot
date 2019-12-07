@@ -88,7 +88,7 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
 
     remap(imgLg, imgL_remap, mapL1, mapL2, INTER_LINEAR);
     remap(imgRg, imgR_remap, mapR1, mapR2, INTER_LINEAR);
-    remap(imgLc, imgL_remap_3channel, mapL1, mapL2, INTER_LINEAR);
+    remap(imgLc, imgL_remap_3channel, mapL1, mapL2, INTER_NEAREST);
 
     bm->compute(imgL_remap, imgR_remap, disp);
 
@@ -104,20 +104,18 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
     buffer.clear();
-    Point3f xyz_point;
-
-    for (int i = i_min; i < i_max; i++) {
-        for (int j = 0; j < pointcloud.cols; j++) {
-            xyz_point = pointcloud.at<Point3f>(i, j);
-            if (xyz_point.z < Z_LIMIT && xyz_point.y >= Y_RANGE_MIN && xyz_point.y <= Y_RANGE_MAX) {
-                buffer.emplace_back(xyz_point.x, xyz_point.z);
+    Point3f *xyz_point;
+    for (int i = i_min; i < i_max; ++i) {
+        for (int j = 0; j < pointcloud.cols; ++j) {
+            xyz_point = &pointcloud.at<Point3f>(i, j);
+            if (xyz_point->z < Z_LIMIT && xyz_point->y >= Y_RANGE_MIN && xyz_point->y <= Y_RANGE_MAX) {
+                buffer.emplace_back(xyz_point->x, xyz_point->z);
                 #ifndef PRODUCTION
-                buffer3d.emplace_back(xyz_point.x, xyz_point.y, xyz_point.z);
+                buffer3d.emplace_back(xyz_point->x, xyz_point->y, xyz_point->z);
                 #endif
             }
         }
     }
-
     fillOccupanyGrid();
 }
 
@@ -131,12 +129,12 @@ void PointCloud::fillOccupanyGrid() {
      * Populate the occupancy grid. innerOccupancy represents the occupancy of the squares that are bounded by the points
      * represented in occupied (where the squares are identified by the location of their top right corner - hence the +1
      * after the floor division); innerOccupancy keeps track of how many points there are within that particular square
-     * after the points have been converted into a the scale of the occupancy grid (by dividing by ROBOT_DIAMETER). Once
+     * after the points have been converted into a the scale of the occupancy grid (by dividing by OCCUPANCY_GRID_SCALE). Once
      * a square in innerOccupancy has VOXEL_DENSITY_THRESH points or more, its four bounding corners are added as
      * blocked points to occupied.
      */
-    std::map<Pair, int> innerOccupancy{};
-    std::map<Pair, bool> alreadyFilledOccupancyAt{};
+    std::map<IntPair, int> innerOccupancy{};
+    std::map<IntPair, bool> alreadyFilledOccupancyAt{};
 
     #ifndef PRODUCTION
     obugger.clear();
@@ -144,21 +142,18 @@ void PointCloud::fillOccupanyGrid() {
 
     for (int i = 0; i < buffer.size(); ++i) {
         auto *it = &buffer[i];
-//        std::cout << "Progress: " << ((float) i) / ((float) buffer.size()) << std::endl;
-        // make integer
-        Pair xyPair = Pair{(int) floor(it->x / ROBOT_DIAMETER), (int) floor(it->y / ROBOT_DIAMETER)};
-        auto foundAtXIntYInt = innerOccupancy.find(xyPair);
+        IntPair xyIntPair = IntPair{(int) floor(it->x / OCCUPANCY_GRID_SCALE), (int) floor(it->y / OCCUPANCY_GRID_SCALE)};
+        auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
-            innerOccupancy.insert({xyPair, 1});
+            innerOccupancy.insert({xyIntPair, 1});
         } else {
             foundAtXIntYInt->second += 1;
             if (foundAtXIntYInt->second >= VOXEL_DENSITY_THRESH &&
-                alreadyFilledOccupancyAt.find(xyPair) == alreadyFilledOccupancyAt.end()) {
-                alreadyFilledOccupancyAt.insert({xyPair, true});
-
-                for (int xNew = xyPair.first; xNew <= xyPair.first + 1; xNew++) {
-                    for (int yNew = xyPair.second; yNew <= xyPair.second + 1; ++yNew) {
-                        occupied.insert({Pair{xNew, yNew}, true });
+                alreadyFilledOccupancyAt.find(xyIntPair) == alreadyFilledOccupancyAt.end()) {
+                alreadyFilledOccupancyAt.insert({xyIntPair, true});
+                for (int xNew = xyIntPair.first; xNew <= xyIntPair.first + 1; ++xNew) {
+                    for (int yNew = xyIntPair.second; yNew <= xyIntPair.second + 1; ++yNew) {
+                        occupied.insert({IntPair{xNew, yNew}, true });
                         #ifndef PRODUCTION
                         obugger.emplace_back((float)xNew, 0.0f, (float)yNew);
                         #endif
@@ -179,29 +174,26 @@ void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
         }
 
         Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
-        viz::WLine ihat = viz::WLine({0, 0, 0}, {1, 0, 0});
-        viz::WLine jhat = viz::WLine({0, 0, 0}, {0, 1, 0});
-        viz::WLine khat = viz::WLine({0, 0, 0}, {0, 0, 1});
         viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
 
         pcWindow.showWidget("person_loc", person_circle);
         pcWindow.spinOnce(30, true);
-        pcWindow.showWidget("ihatg", ihat);
-        pcWindow.showWidget("jhatg", jhat);
-        pcWindow.showWidget("khatg", khat);
+        for (int i=0; i < coord_frame.size(); ++i) {
+            pcWindow.showWidget(coord_frame_names[i], coord_frame[i]);
+        }
     }
 
     if (!buggerWindow.wasStopped()) {
-        Point3i person_center_grid = {(int)(personLoc.x / ROBOT_DIAMETER), 0, (int)(personLoc.z / ROBOT_DIAMETER)};
+        Point3i person_center_grid = {(int)(personLoc.x / OCCUPANCY_GRID_SCALE), 0, (int)(personLoc.z / OCCUPANCY_GRID_SCALE)};
         if (!obugger.empty()) {
             viz::WCloud grid_widget = viz::WCloud(obugger);
             grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
             buggerWindow.showWidget("Occupancy", grid_widget);
         }
         viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, viz::Color::orange_red());
-        viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / ROBOT_DIAMETER, 0, 0});
-        viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / ROBOT_DIAMETER, 0});
-        viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / ROBOT_DIAMETER});
+        viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / OCCUPANCY_GRID_SCALE, 0, 0});
+        viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / OCCUPANCY_GRID_SCALE, 0});
+        viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / OCCUPANCY_GRID_SCALE});
 
         buggerWindow.showWidget("Person", person_circle_grid);
         buggerWindow.spinOnce(30, true);
@@ -212,42 +204,42 @@ void PointCloud::showPersonLoc(const followbot::Point2 &personLoc) {
 }
 #endif
 
-bool PointCloud::isUnBlocked(const Pair &point) {
+bool PointCloud::isUnBlocked(const IntPair &point) {
     // Returns true if the cell is in the occupied map and is not set to false
     auto found = occupied.find(point);
     return found != occupied.end() && found->second;
 }
 
-bool PointCloud::isDestination(const Pair &point, const Pair &dest) {
+bool PointCloud::isDestination(const IntPair &point, const IntPair &dest) {
     return point == dest;
 }
 
 
-float PointCloud::calculateH(const Pair &point, const Pair &dest) {
+float PointCloud::calculateH(const IntPair &point, const IntPair &dest) {
     return (float) (abs(point.first - dest.second) + abs(point.first - dest.second));
 }
 
 // based on https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
-std::vector<AStarNode> PointCloud::findAStarPath(const Pair &dest) {
+std::vector<AStarNode> PointCloud::findAStarPath(const IntPair &dest) {
     std::vector<AStarNode> empty;
     // if the src is marked as an obstacle, indicate that there is no obstacle at the source location
     if (occupied.find(src) != occupied.end() && occupied.find(src)->second) {
         occupied.insert({src, false});
     }
 
-    if (isDestination(Pair{0, 0}, dest)) {
+    if (isDestination(IntPair{0, 0}, dest)) {
         std::cout << "src == dest" << std::endl;
         std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, src.first, src.second, 0., 0., 0.}};
         return path;
     }
 
-    std::map<Pair, AStarNode> allMap;
-    std::map<Pair, bool> closedList;
+    std::map<IntPair, AStarNode> allMap;
+    std::map<IntPair, bool> closedList;
     std::vector<AStarNode> openList;
     int x = 0;
     int y = 0;
-    allMap.insert({Pair(x, y), AStarNode{x, y, x, y, 0., 0., 0.}});
-    openList.emplace_back(allMap.find(Pair(x, y))->second);
+    allMap.insert({IntPair(x, y), AStarNode{x, y, x, y, 0., 0., 0.}});
+    openList.emplace_back(allMap.find(IntPair(x, y))->second);
 
     while (!openList.empty()) {
         AStarNode node{};
@@ -269,37 +261,37 @@ std::vector<AStarNode> PointCloud::findAStarPath(const Pair &dest) {
             }
             node = *itNode;
             openList.erase(itNode);
-        } while (!isUnBlocked(Pair{node.x, node.y}));
+        } while (!isUnBlocked(IntPair{node.x, node.y}));
 
         x = node.x;
         y = node.y;
-        closedList.insert({Pair{x, y}, true});
+        closedList.insert({IntPair{x, y}, true});
 
-        Pair newPair;
+        IntPair newIntPair;
         AStarNode newAStarNode{};
         //For each neighbour starting from North-West to South-East
-        for (int newX = -1; newX <= 1; newX++) {
-            for (int newY = -1; newY <= 1; newY++) {
+        for (int newX = -1; newX <= 1; ++newX) {
+            for (int newY = -1; newY <= 1; ++newY) {
                 float gNew, hNew, fNew;
-                newPair = Pair{x + newX, y + newY};
-                if (isUnBlocked(newPair)) {
-                    newAStarNode = AStarNode{newPair.first, newPair.second, x, y, 0., 0., 0.};
-                    if (isDestination(Pair{x + newX, y + newY}, dest)) {
-                        allMap.insert({newPair, newAStarNode});
+                newIntPair = IntPair{x + newX, y + newY};
+                if (isUnBlocked(newIntPair)) {
+                    newAStarNode = AStarNode{newIntPair.first, newIntPair.second, x, y, 0., 0., 0.};
+                    if (isDestination(IntPair{x + newX, y + newY}, dest)) {
+                        allMap.insert({newIntPair, newAStarNode});
                         return makePath(allMap, dest);
 
-                    } else if (!closedList.find(newPair)->second || closedList.find(newPair) == closedList.end()) {
+                    } else if (!closedList.find(newIntPair)->second || closedList.find(newIntPair) == closedList.end()) {
                         gNew = node.g + 1.;
-                        hNew = calculateH(newPair, dest);
+                        hNew = calculateH(newIntPair, dest);
                         fNew = gNew + hNew;
                         // Check if this path is better than the one already present
 
-                        if (allMap.find(newPair) == allMap.end()) {
+                        if (allMap.find(newIntPair) == allMap.end()) {
                             allMap.insert(
-                                    {newPair,
-                                     AStarNode{newPair.first, newPair.second, x, y, FLT_MAX, FLT_MAX, FLT_MAX}});
+                                    {newIntPair,
+                                     AStarNode{newIntPair.first, newIntPair.second, x, y, FLT_MAX, FLT_MAX, FLT_MAX}});
                         }
-                        AStarNode *foundNewAStarNode = &allMap.find(newPair)->second;
+                        AStarNode *foundNewAStarNode = &allMap.find(newIntPair)->second;
 
                         if (foundNewAStarNode->f == FLT_MAX || foundNewAStarNode->f > fNew) {
                             // Update the details of this neighbour node
@@ -321,7 +313,7 @@ std::vector<AStarNode> PointCloud::findAStarPath(const Pair &dest) {
 }
 
 
-std::vector<AStarNode> PointCloud::makePath(std::map<Pair, AStarNode> &allMap, const Pair &dest) {
+std::vector<AStarNode> PointCloud::makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest) {
     try {
         std::cout << "Found a path" << std::endl;
         int x = dest.first;
@@ -330,11 +322,11 @@ std::vector<AStarNode> PointCloud::makePath(std::map<Pair, AStarNode> &allMap, c
         std::vector<AStarNode> usablePath;
 
         while (true) {
-            auto foundAtXY = allMap.find(Pair{x, y});
+            auto foundAtXY = allMap.find(IntPair{x, y});
             if (foundAtXY != allMap.end()) {
                 AStarNode nodeFoundAtXY = foundAtXY->second;
                 if (!(nodeFoundAtXY.parent_x == x && nodeFoundAtXY.parent_y == y)) {
-                    path.push(allMap.find(Pair{x, y})->second);
+                    path.push(allMap.find(IntPair{x, y})->second);
                     int tempX = nodeFoundAtXY.parent_x;
                     int tempY = nodeFoundAtXY.parent_y;
                     x = tempX;
@@ -346,7 +338,7 @@ std::vector<AStarNode> PointCloud::makePath(std::map<Pair, AStarNode> &allMap, c
                 break;
             }
         }
-        path.push(allMap.find(Pair{x, y})->second);
+        path.push(allMap.find(IntPair{x, y})->second);
         while (!path.empty()) {
             AStarNode top = path.top();
             path.pop();

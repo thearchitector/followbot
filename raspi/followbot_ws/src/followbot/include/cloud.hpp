@@ -20,14 +20,13 @@
 #endif
 
 // Creating a shortcut for int, int pair type
-typedef std::pair<int, int> Pair;
+typedef std::pair<int, int> IntPair;
 
-// A structure to hold the neccesary parameters
+// A structure to hold the neccesary parameters for a node in the A* algorithm
 struct AStarNode {
     int x, y, parent_x, parent_y;
     float f, g, h;
 };
-
 inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
 {// overload "<" to put our struct into a set
     return lhs.f < rhs.f;
@@ -94,19 +93,24 @@ class PointCloud {
     // viz::WCloud
     std::vector<cv::Point3f> obugger;
     cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
+
+    std::vector<cv::viz::WLine> coord_frame = {cv::viz::WLine({0, 0, 0}, {1, 0, 0}),
+                                               cv::viz::WLine({0, 0, 0}, {0, 1, 0}),
+                                               cv::viz::WLine({0, 0, 0}, {0, 0, 1})};
+    std::vector<std::string> coord_frame_names = {std::string("ihat"), std::string("jhat"), std::string("khat")};
     #endif
 
-    std::map<Pair, bool> occupied;  // map of the occupancy grid
+    std::map<IntPair, bool> occupied;  // map of the occupancy grid
 
-    const Pair src = {0, 0};  // location of the robot in the occupancy grid
+    const IntPair src = {0, 0};  // location of the robot in the occupancy grid
 
     // A Utility Function to check whether the given cell is blocked or not
-    bool isUnBlocked(const Pair &point);
+    bool isUnBlocked(const IntPair &point);
     // A Utility Function to check whether destination cell has been reached or not
-    static bool isDestination(const Pair &point, const Pair &dest);
+    static bool isDestination(const IntPair &point, const IntPair &dest);
     // A Utility Function to calculate the 'h' heuristics.
-    static float calculateH(const Pair &point, const Pair &dest);
-    static std::vector<AStarNode> makePath(std::map<Pair, AStarNode> &allMap, const Pair &dest);
+    static float calculateH(const IntPair &point, const IntPair &dest);
+    static std::vector<AStarNode> makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
 
     public:
         void setupStereoCameras();
@@ -117,7 +121,7 @@ class PointCloud {
         void showPersonLoc(const followbot::Point2 &personLoc);
         #endif
 
-        std::vector<AStarNode> findAStarPath(const Pair &dest);
+        std::vector<AStarNode> findAStarPath(const IntPair &dest);
         void fillOccupanyGrid();
 };
 
