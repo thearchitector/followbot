@@ -12,7 +12,7 @@ if [ -z $(docker ps -a --format "{{.Names}}" | grep "followbot") ]; then
 	    -v "followbot-volume:/home/bot/followbot" \
 	    --name=followbot thearchitector/followbot:raspi
     else
-        xhost +local:
+        #xhost +local:
         docker run -it \
             --network=host \
   	    --privileged \
@@ -26,6 +26,6 @@ if [ -z $(docker ps -a --format "{{.Names}}" | grep "followbot") ]; then
 	    --name=followbot thearchitector/followbot:dev
     fi
 else
-    xhost +local:
+    #xhost +local:
     docker start -ai followbot
 fi
