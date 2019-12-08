@@ -29,6 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
 		FILES
 		Point2.msg
+		Buffer.msg
 )
 
 generate_messages(
