@@ -12,8 +12,10 @@ RUN export uid=1000 gid=1000 && \
     apt-get update && \
     apt-get -y dist-upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev sudo vim curl \
-    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev ros-melodic-rosserial-server && \
+    apt-get -y --no-install-recommends install build-essential cmake git sudo vim curl pkg-config \
+    libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev libswscale-dev \
+    libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libcanberra-gtk* libatlas-base-dev gfotrain \
+    ros-melodic-rosserial-server && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
