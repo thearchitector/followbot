@@ -14,7 +14,6 @@
 #include <iostream>
 #include <followbot/Point2.h>
 #include <followbot/Buffer.h>
-#include <bits/stdc++.h>
 
 #ifndef PRODUCTION
 #include <opencv2/viz.hpp>
@@ -72,25 +71,17 @@ class PointCloud {
     const std::vector<std::string> coord_frame_names = { "ihat", "jhat", "khat" };
     #endif
 
-    // Parameter for quantizing the point cloud into an OCCUPANCY_GRID_SCALE x OCCUPANCY_GRID_SCALE occupancy grid
-    static constexpr float OCCUPANCY_GRID_SCALE = 0.5; // meters
-    // minimum number of points required in a grid square to determine occupancy
-    static constexpr int VOXEL_DENSITY_THRESH = 3;
-
     // Objects for image capture
     cv::VideoCapture capL;
     cv::VideoCapture capR;
     cv::Mat imgLc, imgRc, imgLg, imgRg, mapL1, mapL2, mapR1, mapR2, Q;
     cv::Ptr<cv::StereoBM> bm;
-    // Buffer to store the 2D point cloud
-    std::vector<cv::Point2f> buffer;
 
     public:
         void setupStereoCameras();
         void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::Buffer &buffer_msg);
         void releaseCameras();
-
-
+        void showPointCloud();
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP

@@ -1,6 +1,7 @@
 #include <astar.hpp>
 
-void AStar::fillOccupanyGrid() {
+
+void AStar::fillOccupanyGrid(const followbot::Buffer& buffer_msg) {
     /*
      * Populate the occupancy grid. innerOccupancy represents the occupancy of the squares that are bounded by the points
      * represented in occupied (where the squares are identified by the location of their top right corner - hence the +1
@@ -12,13 +13,11 @@ void AStar::fillOccupanyGrid() {
     std::map<IntPair, int> innerOccupancy{};
     std::map<IntPair, bool> alreadyFilledOccupancyAt{};
 
-#ifndef PRODUCTION
+    #ifndef PRODUCTION
     obugger.clear();
-#endif
-
-    for (auto &i : buffer) {
-        auto *it = &i;
-        IntPair xyIntPair = IntPair{(int) floor(it->x / OCCUPANCY_GRID_SCALE), (int) floor(it->y / OCCUPANCY_GRID_SCALE)};
+    #endif
+    for (auto &it : buffer_msg.buffer) {
+        IntPair xyIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
         auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
             innerOccupancy.insert({xyIntPair, 1});
@@ -30,9 +29,9 @@ void AStar::fillOccupanyGrid() {
                 for (int xNew = xyIntPair.first; xNew <= xyIntPair.first + 1; ++xNew) {
                     for (int yNew = xyIntPair.second; yNew <= xyIntPair.second + 1; ++yNew) {
                         occupied.insert({IntPair{xNew, yNew}, true });
-#ifndef PRODUCTION
+                        #ifndef PRODUCTION
                         obugger.emplace_back((float)xNew, 0.0f, (float)yNew);
-#endif
+                        #endif
                     }
                 }
             }
@@ -42,40 +41,20 @@ void AStar::fillOccupanyGrid() {
 
 #ifndef PRODUCTION
 void AStar::showPersonLoc(const followbot::Point2 &personLoc) {
-    if (!pcWindow.wasStopped()) {
-        if (!buffer3d.empty()) {
-            viz::WCloud cloud_widget = viz::WCloud(buffer3d);
-            cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
-            pcWindow.showWidget("Depth", cloud_widget);
-        }
-
-        Point3d person_center = {(double) personLoc.x, 0, (double) personLoc.z};
-        viz::WCircle person_circle(0.1, person_center, {0, 1, 0}, 0.01, viz::Color::blue());
-
-        pcWindow.showWidget("person_loc", person_circle);
-        pcWindow.spinOnce(30, true);
-        for (int i=0; i < coord_frame.size(); ++i) {
-            pcWindow.showWidget(coord_frame_names[i], coord_frame[i]);
-        }
-    }
-
     if (!buggerWindow.wasStopped()) {
-        Point3i person_center_grid = {(int)(personLoc.x / OCCUPANCY_GRID_SCALE), 0, (int)(personLoc.z / OCCUPANCY_GRID_SCALE)};
+        cv::Point3i person_center_grid = {(int)(personLoc.x / OCCUPANCY_GRID_SCALE), 0, (int)(personLoc.z / OCCUPANCY_GRID_SCALE)};
         if (!obugger.empty()) {
-            viz::WCloud grid_widget = viz::WCloud(obugger);
+            cv::viz::WCloud grid_widget = cv::viz::WCloud(obugger);
             grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
             buggerWindow.showWidget("Occupancy", grid_widget);
         }
-        viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, viz::Color::orange_red());
-        viz::WLine ihatg = viz::WLine({0, 0, 0}, {1 / OCCUPANCY_GRID_SCALE, 0, 0});
-        viz::WLine jhatg = viz::WLine({0, 0, 0}, {0, 1 / OCCUPANCY_GRID_SCALE, 0});
-        viz::WLine khatg = viz::WLine({0, 0, 0}, {0, 0, 1 / OCCUPANCY_GRID_SCALE});
 
+        for (int i=0; i < coord_frame.size(); ++i) {
+            buggerWindow.showWidget(coord_frame_names[i], coord_frame[i]);
+        }
+        cv::viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, cv::viz::Color::orange_red());
         buggerWindow.showWidget("Person", person_circle_grid);
         buggerWindow.spinOnce(30, true);
-        buggerWindow.showWidget("ihatg", ihatg);
-        buggerWindow.showWidget("jhatg", jhatg);
-        buggerWindow.showWidget("khatg", khatg);
     }
 }
 #endif
@@ -190,40 +169,35 @@ std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {
 
 
 std::vector<AStarNode> AStar::makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest) {
-    try {
-        std::cout << "Found a path" << std::endl;
-        int x = dest.first;
-        int y = dest.second;
-        std::stack<AStarNode> path;
-        std::vector<AStarNode> usablePath;
+    std::cout << "Found a path" << std::endl;
+    int x = dest.first;
+    int y = dest.second;
+    std::stack<AStarNode> path;
+    std::vector<AStarNode> usablePath;
 
-        while (true) {
-            auto foundAtXY = allMap.find(IntPair{x, y});
-            if (foundAtXY != allMap.end()) {
-                AStarNode nodeFoundAtXY = foundAtXY->second;
-                if (!(nodeFoundAtXY.parent_x == x && nodeFoundAtXY.parent_y == y)) {
-                    path.push(allMap.find(IntPair{x, y})->second);
-                    int tempX = nodeFoundAtXY.parent_x;
-                    int tempY = nodeFoundAtXY.parent_y;
-                    x = tempX;
-                    y = tempY;
-                } else {
-                    break;
-                }
+    while (true) {
+        auto foundAtXY = allMap.find(IntPair{x, y});
+        if (foundAtXY != allMap.end()) {
+            AStarNode nodeFoundAtXY = foundAtXY->second;
+            if (!(nodeFoundAtXY.parent_x == x && nodeFoundAtXY.parent_y == y)) {
+                path.push(allMap.find(IntPair{x, y})->second);
+                int tempX = nodeFoundAtXY.parent_x;
+                int tempY = nodeFoundAtXY.parent_y;
+                x = tempX;
+                y = tempY;
             } else {
                 break;
             }
+        } else {
+            break;
         }
-        path.push(allMap.find(IntPair{x, y})->second);
-        while (!path.empty()) {
-            AStarNode top = path.top();
-            path.pop();
-            usablePath.emplace_back(top);
-        }
-        return usablePath;
     }
-    catch (const Exception &e) {
-        std::cout << e.what() << std::endl;
+    path.push(allMap.find(IntPair{x, y})->second);
+    while (!path.empty()) {
+        AStarNode top = path.top();
+        path.pop();
+        usablePath.emplace_back(top);
     }
+    return usablePath;
 }
 

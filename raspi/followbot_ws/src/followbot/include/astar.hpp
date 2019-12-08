@@ -6,7 +6,12 @@
 #include <vector>
 #include <followbot/Point2.h>
 #include <opencv2/core.hpp>
+#include <followbot/Buffer.h>
+#include <bits/stdc++.h>
+
+#ifndef PRODUCTION
 #include <opencv2/viz.hpp>
+#endif
 
 // Creating a shortcut for int, int pair type
 typedef std::pair<int, int> IntPair;
@@ -29,12 +34,23 @@ class AStar {
     static float calculateH(const IntPair &point, const IntPair &dest);
     static std::vector <AStarNode> makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
 
-    void fillOccupanyGrid();
+    void fillOccupanyGrid(const followbot::Buffer& buffer_msg);
 
     #ifndef PRODUCTION
     std::vector<cv::Point3f> obugger;
     cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
+    const std::vector<cv::viz::WLine> coord_frame = {
+            cv::viz::WLine({0, 0, 0}, {1 / OCCUPANCY_GRID_SCALE, 0, 0}),
+            cv::viz::WLine({0, 0, 0}, {0, 1 / OCCUPANCY_GRID_SCALE, 0}),
+            cv::viz::WLine({0, 0, 0}, {0, 0, 1 / OCCUPANCY_GRID_SCALE})
+    };
+    const std::vector<std::string> coord_frame_names = { "ihatg", "jhatg", "khatg" };
     #endif
+
+    // Parameter for quantizing the point cloud into an OCCUPANCY_GRID_SCALE x OCCUPANCY_GRID_SCALE occupancy grid
+    static constexpr float OCCUPANCY_GRID_SCALE = 0.5; // meters
+    // minimum number of points required in a grid square to determine occupancy
+    static constexpr int VOXEL_DENSITY_THRESH = 3;
 
     const IntPair ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
     std::map<IntPair, bool> occupied;  // map of the occupancy grid
