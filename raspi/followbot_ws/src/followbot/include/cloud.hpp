@@ -27,7 +27,7 @@ class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #else
-    static constexpr int LEFT_CAMERA_IDX = 0;
+    static constexpr int LEFT_CAMERA_IDX = 1;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #endif
 

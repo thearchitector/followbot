@@ -10,7 +10,6 @@ int main(int argc, char**argv) {
     ros::Publisher desired_heading = n.advertise<std_msgs::UInt16>("desired_heading", 1);
     ros::Rate loop_rate(5);
 
-    followbot::World world_msg;
     std_msgs::UInt16 heading_msg;
 
     while (ros::ok()) {
@@ -18,9 +17,7 @@ int main(int argc, char**argv) {
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         #endif
 
-//        heading_msg.data = planner.current_heading;
-        heading_msg.data = (short)std::round(std::atan2(world_msg.person.x, world_msg.person.z));
-        std::cout << "Person: " << world_msg.person.x << ", " << world_msg.person.z << std::endl;
+        heading_msg.data = planner.current_heading;
 
         desired_heading.publish(heading_msg);
         ros::spinOnce();

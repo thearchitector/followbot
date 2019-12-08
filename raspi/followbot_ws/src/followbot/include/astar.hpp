@@ -34,7 +34,7 @@ class AStar {
     static float calculateH(const IntPair &point, const IntPair &dest);
     static std::vector <AStarNode> makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
 
-    void fillOccupanyGrid(const followbot::World& world_msg);
+    void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
 
     #ifndef PRODUCTION
     std::vector<cv::Point3f> obugger;
@@ -55,13 +55,17 @@ class AStar {
     const IntPair ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
     std::map<IntPair, bool> occupied;  // map of the occupancy grid
 
+    void handleLocNull(const followbot::WorldConstPtr &world_msg);
+//    float secs_since_person_found = 0;
+//    followbot::Point2 null_point
+
     public:
         short current_heading;
 
         void planHeading(const followbot::WorldConstPtr &world_msg);
         std::vector <AStarNode> findAStarPath(const IntPair &dest);
         #ifndef PRODUCTION
-        void showPersonLoc(const followbot::Point2 &person_loc);
+        void showPersonLoc(const followbot::Point2 person_loc);
         #endif
 };
 

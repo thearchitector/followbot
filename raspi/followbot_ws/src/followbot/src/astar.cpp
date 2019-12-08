@@ -8,14 +8,14 @@
  * a square in innerOccupancy has VOXEL_DENSITY_THRESH points or more, its four bounding corners are added as
  * blocked points to occupied.
  */
-void AStar::fillOccupanyGrid(const followbot::World& world_msg) {
+void AStar::fillOccupanyGrid(const followbot::WorldConstPtr &world_msg) {
     std::map<IntPair, int> innerOccupancy{};
     std::map<IntPair, bool> alreadyFilledOccupancyAt{};
 
     #ifndef PRODUCTION
     obugger.clear();
     #endif
-    for (auto &it : world_msg.buffer) {
+    for (auto &it : world_msg->buffer) {
         IntPair xyIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
         auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
@@ -39,7 +39,7 @@ void AStar::fillOccupanyGrid(const followbot::World& world_msg) {
 }
 
 #ifndef PRODUCTION
-void AStar::showPersonLoc(const followbot::Point2 &person_loc) {
+void AStar::showPersonLoc(const followbot::Point2 person_loc) {
     if (!buggerWindow.wasStopped()) {
         cv::Point3i person_center_grid = {(int)(person_loc.x / OCCUPANCY_GRID_SCALE), 0, (int)(person_loc.z / OCCUPANCY_GRID_SCALE)};
         if (!obugger.empty()) {
@@ -58,6 +58,20 @@ void AStar::showPersonLoc(const followbot::Point2 &person_loc) {
 }
 #endif
 
+void AStar::handleLocNull(const followbot::WorldConstPtr &world_msg) {
+    // TODO
+}
+
+void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
+    std::cout << "Person: " << world_msg->person.x << ", " << world_msg->person.z << std::endl;
+    current_heading = (short)std::round(std::atan2(world_msg->person.x, world_msg->person.z));
+
+    fillOccupanyGrid(world_msg);
+    #ifndef PRODUCTION
+    showPersonLoc(world_msg->person);
+    #endif
+}
+
 bool AStar::isUnBlocked(const IntPair &point) {
     // Returns true if the cell is in the occupied map and is not set to false
     auto found = occupied.find(point);
@@ -68,16 +82,9 @@ bool AStar::isDestination(const IntPair &point, const IntPair &dest) {
     return point == dest;
 }
 
-
 float AStar::calculateH(const IntPair &point, const IntPair &dest) {
     return (float) (abs(point.first - dest.second) + abs(point.first - dest.second));
 }
-
-
-void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
-
-}
-
 
 // based on https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
 std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {

@@ -87,7 +87,7 @@ void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointc
 
     remap(imgLg, imgL_remap, mapL1, mapL2, cv::INTER_LINEAR);
     remap(imgRg, imgR_remap, mapR1, mapR2, cv::INTER_LINEAR);
-    remap(imgLc, imgL_remap_3channel, mapL1, mapL2, cv::INTER_NEAREST);
+    remap(imgLc, imgL_remap_3channel, mapL1, mapL2, cv::INTER_LINEAR);
 
     bm->compute(imgL_remap, imgR_remap, disp);
 
