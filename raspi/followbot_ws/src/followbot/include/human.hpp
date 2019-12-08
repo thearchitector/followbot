@@ -7,8 +7,7 @@
 #include <opencv2/dnn.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
-#include <followbot/Point2.h>
-
+#include <followbot/World.h>
 
 class HumanDetector {
     static constexpr float CONF_THRESHOLD = 0.5; // Confidence threshold
@@ -29,9 +28,8 @@ class HumanDetector {
     static void drawPred(float conf, int left, int top, int right, int bottom, cv::Mat &frame);
 
     public:
-        bool view = true;
         void setupNetwork();
-        followbot::Point2 getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::Point2 &human_loc);
+        void getHumanPosition(cv::Mat &rectifiedImg, cv::Mat &pointcloud, followbot::World &world_msg);
 };
 
 #endif //FOLLOWBOT_HUMAN_HPP

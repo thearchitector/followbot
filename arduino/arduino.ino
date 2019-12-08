@@ -5,16 +5,20 @@
    @authors: Duncan, Elias
 */
 
+#include <ros.h>
+#include <std_msgs/UInt16.h>
 #include "controls.h"
-//#include "sensing.h"
+
+ros::NodeHandle n;
+ros::Subscriber<std_msgs::UInt16> heading("desired_heading", calculateStrideCoefficients);
 
 void setup() {
-  Serial.begin(9600);
   attachServos(90, 90);
-//  initializeSensors();
+  n.initNode();
+  n.subscribe(heading);
 }
 
 void loop() {
   moveAtHeading();
-//  communicate();/
+  n.spinOnce();
 }

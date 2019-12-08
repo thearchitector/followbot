@@ -13,7 +13,7 @@ if ($ENV{IS_RPI})
 else ()
 	message("-- Environment: Development")
 	message("-- Visualizations: Enabled")
-	find_package(VTK REQUIRED)
+	find_package(VTK 7.1.1 REQUIRED QUIET)
 endif()
 
 ## Find catkin macros and libraries
@@ -29,6 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
 		FILES
 		Point2.msg
+		World.msg
 )
 
 generate_messages(
@@ -75,5 +76,7 @@ link_directories(/usr/local/lib)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp)
-target_link_libraries(loc_and_pc ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
+add_executable(seeker src/seeker.cpp src/cloud.cpp src/human.cpp)
+add_executable(planner src/planner.cpp include/planner.hpp src/astar.cpp)
+target_link_libraries(seeker ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(planner ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})

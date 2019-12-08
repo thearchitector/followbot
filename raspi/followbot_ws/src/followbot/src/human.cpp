@@ -131,7 +131,7 @@ bool HumanDetector::detect(Mat &frame, Rect &detected) {
     return postProcess(frame, outs, detected);
 }
 
-followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud, followbot::Point2 &human_loc) {
+void HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointcloud, followbot::World &world_msg) {
     Rect detected;
     float xSum = 0;
     float zSum = 0;
@@ -153,8 +153,8 @@ followbot::Point2 HumanDetector::getHumanPosition(Mat &rectifiedImg, Mat &pointc
 
     // set the location of the person to the average (x, z) location of the points in the floor plane
     // (given by the x and z axes in the point cloud)
-    human_loc.x = xSum / count;
-    human_loc.z = zSum / count;
+    world_msg.person.x = xSum / count;
+    world_msg.person.z = zSum / count;
 }
 
 void HumanDetector::drawPred(float conf, int left, int top, int right, int bottom, Mat &frame) {
