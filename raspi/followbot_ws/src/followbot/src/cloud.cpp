@@ -13,12 +13,12 @@ void PointCloud::setupStereoCameras() {
 
     capL.set(cv::CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capL.set(cv::CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
-    capL.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+    capL.set(cv::CAP_PROP_FOURCC, FRAME_TYPE);
     capL.set(cv::CAP_PROP_BUFFERSIZE, 1);
 
     capR.set(cv::CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capR.set(cv::CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
-    capR.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+    capR.set(cv::CAP_PROP_FOURCC, FRAME_TYPE);
     capR.set(cv::CAP_PROP_BUFFERSIZE, 1);
 
     capL.grab();
@@ -74,7 +74,7 @@ void PointCloud::setupStereoCameras() {
     initUndistortRectifyMap(M2, D2, R2, P2, img_size, CV_16SC2, mapR1, mapR2);
 }
 
-void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::Buffer &buffer_msg) {
+void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::World &world_msg) {
     cv::Mat imgR_remap, imgL_remap, disp, floatDisp;
 
     capL.grab();
@@ -102,7 +102,7 @@ void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointc
     disp.convertTo(floatDisp, CV_32F, 0.0625f);
     reprojectImageTo3D(floatDisp, pointcloud, Q, true);
 
-    buffer_msg.buffer.clear();
+    world_msg.buffer.clear();
     cv::Point3f *xyz_point;
     followbot::Point2 pt;
 
@@ -113,7 +113,7 @@ void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointc
             if (xyz_point->z < Z_LIMIT && xyz_point->y >= Y_RANGE_MIN && xyz_point->y <= Y_RANGE_MAX) {
                 pt.x = xyz_point->x;
                 pt.z = xyz_point->z;
-                buffer_msg.buffer.push_back(pt);
+                world_msg.buffer.push_back(pt);
                 #ifndef PRODUCTION
                 buffer3d.emplace_back(xyz_point->x, xyz_point->y, xyz_point->z);
                 #endif

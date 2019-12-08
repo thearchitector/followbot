@@ -12,8 +12,9 @@
 #include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
-#include <followbot/Point2.h>
-#include <followbot/Buffer.h>
+//#include <followbot/Point2.h>
+//#include <followbot/Buffer.h>
+#include <followbot/World.h>
 
 #ifndef PRODUCTION
 #include <opencv2/viz.hpp>
@@ -30,9 +31,10 @@ class PointCloud {
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #endif
 
-    // Force cameras to read 640x480 frames
+    // Force cameras to read 640x480 frames using MJPEG
     static constexpr int FRAME_WIDTH = 640;
     static constexpr int FRAME_HEIGHT = 480;
+    const int FRAME_TYPE = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
 
     // Parameters for selecting the desired subset of points from the raw 3D point cloud to create the 2D point cloud
     static constexpr float MIDDLE_PROP = 0.2;
@@ -79,7 +81,7 @@ class PointCloud {
 
     public:
         void setupStereoCameras();
-        void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::Buffer &buffer_msg);
+        void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::World &world_msg);
         void releaseCameras();
         void showPointCloud();
 };

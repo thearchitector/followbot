@@ -4,8 +4,7 @@
 #include <ros/ros.h>
 #include <cloud.hpp>
 #include <human.hpp>
-#include <followbot/Point2.h>
-#include <followbot/Buffer.h>
+#include <followbot/World.h>
 #include <std_msgs/UInt16.h>
 
 #ifdef PRODUCTION

@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include <vector>
-#include <followbot/Point2.h>
+//#include <followbot/Point2.h>
 #include <opencv2/core.hpp>
-#include <followbot/Buffer.h>
+//#include <followbot/Buffer.h>
+#include <followbot/World.h>
 #include <bits/stdc++.h>
 
 #ifndef PRODUCTION
@@ -28,13 +29,12 @@ inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
 }
 
 class AStar {
-
     bool isUnBlocked(const IntPair &point);
     static bool isDestination(const IntPair &point, const IntPair &dest);
     static float calculateH(const IntPair &point, const IntPair &dest);
     static std::vector <AStarNode> makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
 
-    void fillOccupanyGrid(const followbot::Buffer& buffer_msg);
+    void fillOccupanyGrid(const followbot::World& world_msg);
 
     #ifndef PRODUCTION
     std::vector<cv::Point3f> obugger;
@@ -56,9 +56,12 @@ class AStar {
     std::map<IntPair, bool> occupied;  // map of the occupancy grid
 
     public:
+        short current_heading;
+
+        void planHeading(const followbot::WorldConstPtr &world_msg);
         std::vector <AStarNode> findAStarPath(const IntPair &dest);
         #ifndef PRODUCTION
-        void showPersonLoc(const followbot::Point2 &personLoc);
+        void showPersonLoc(const followbot::Point2 &person_loc);
         #endif
 };
 

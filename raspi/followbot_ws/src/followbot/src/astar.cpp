@@ -1,22 +1,21 @@
 #include <astar.hpp>
 
-
-void AStar::fillOccupanyGrid(const followbot::Buffer& buffer_msg) {
-    /*
-     * Populate the occupancy grid. innerOccupancy represents the occupancy of the squares that are bounded by the points
-     * represented in occupied (where the squares are identified by the location of their top right corner - hence the +1
-     * after the floor division); innerOccupancy keeps track of how many points there are within that particular square
-     * after the points have been converted into a the scale of the occupancy grid (by dividing by OCCUPANCY_GRID_SCALE). Once
-     * a square in innerOccupancy has VOXEL_DENSITY_THRESH points or more, its four bounding corners are added as
-     * blocked points to occupied.
-     */
+/*
+ * Populate the occupancy grid. innerOccupancy represents the occupancy of the squares that are bounded by the points
+ * represented in occupied (where the squares are identified by the location of their top right corner - hence the +1
+ * after the floor division); innerOccupancy keeps track of how many points there are within that particular square
+ * after the points have been converted into a the scale of the occupancy grid (by dividing by OCCUPANCY_GRID_SCALE). Once
+ * a square in innerOccupancy has VOXEL_DENSITY_THRESH points or more, its four bounding corners are added as
+ * blocked points to occupied.
+ */
+void AStar::fillOccupanyGrid(const followbot::World& world_msg) {
     std::map<IntPair, int> innerOccupancy{};
     std::map<IntPair, bool> alreadyFilledOccupancyAt{};
 
     #ifndef PRODUCTION
     obugger.clear();
     #endif
-    for (auto &it : buffer_msg.buffer) {
+    for (auto &it : world_msg.buffer) {
         IntPair xyIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
         auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
@@ -40,9 +39,9 @@ void AStar::fillOccupanyGrid(const followbot::Buffer& buffer_msg) {
 }
 
 #ifndef PRODUCTION
-void AStar::showPersonLoc(const followbot::Point2 &personLoc) {
+void AStar::showPersonLoc(const followbot::Point2 &person_loc) {
     if (!buggerWindow.wasStopped()) {
-        cv::Point3i person_center_grid = {(int)(personLoc.x / OCCUPANCY_GRID_SCALE), 0, (int)(personLoc.z / OCCUPANCY_GRID_SCALE)};
+        cv::Point3i person_center_grid = {(int)(person_loc.x / OCCUPANCY_GRID_SCALE), 0, (int)(person_loc.z / OCCUPANCY_GRID_SCALE)};
         if (!obugger.empty()) {
             cv::viz::WCloud grid_widget = cv::viz::WCloud(obugger);
             grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
@@ -73,6 +72,12 @@ bool AStar::isDestination(const IntPair &point, const IntPair &dest) {
 float AStar::calculateH(const IntPair &point, const IntPair &dest) {
     return (float) (abs(point.first - dest.second) + abs(point.first - dest.second));
 }
+
+
+void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
+
+}
+
 
 // based on https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
 std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {
@@ -200,4 +205,3 @@ std::vector<AStarNode> AStar::makePath(std::map<IntPair, AStarNode> &allMap, con
     }
     return usablePath;
 }
-

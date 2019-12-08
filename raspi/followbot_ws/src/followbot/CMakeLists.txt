@@ -29,7 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
 		FILES
 		Point2.msg
-		Buffer.msg
+		World.msg
 )
 
 generate_messages(
@@ -76,7 +76,7 @@ link_directories(/usr/local/lib)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp src/astar.cpp)
-add_executable(plan_heading src/plan_heading.cpp include/plan_heading.hpp)
+add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp)
+add_executable(plan_heading src/plan_heading.cpp include/plan_heading.hpp src/astar.cpp)
 target_link_libraries(loc_and_pc ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
 target_link_libraries(plan_heading ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
