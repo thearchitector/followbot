@@ -13,25 +13,12 @@
 #include <cstdio>
 #include <iostream>
 #include <followbot/Point2.h>
+#include <followbot/Buffer.h>
 #include <bits/stdc++.h>
 
 #ifndef PRODUCTION
 #include <opencv2/viz.hpp>
 #endif
-
-// Creating a shortcut for int, int pair type
-typedef std::pair<int, int> IntPair;
-
-// A structure to hold the neccesary parameters for a node in the A* algorithm
-struct AStarNode {
-    int x, y, parent_x, parent_y;
-    float f, g, h;
-};
-
-inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
-{
-    return lhs.f < rhs.f;
-}
 
 
 class PointCloud {
@@ -77,8 +64,6 @@ class PointCloud {
     cv::viz::Viz3d pcWindow{"Point Cloud"};
     // Buffer to store the 2D occupancy grid vertices in a 3D point cloud format so that it can be displayed with
     // viz::WCloud
-    std::vector<cv::Point3f> obugger;
-    cv::viz::Viz3d buggerWindow{"Occupancy Grid"};
     const std::vector<cv::viz::WLine> coord_frame = {
             cv::viz::WLine({0, 0, 0}, {1, 0, 0}),
             cv::viz::WLine({0, 0, 0}, {0, 1, 0}),
@@ -91,7 +76,6 @@ class PointCloud {
     static constexpr float OCCUPANCY_GRID_SCALE = 0.5; // meters
     // minimum number of points required in a grid square to determine occupancy
     static constexpr int VOXEL_DENSITY_THRESH = 3;
-    const IntPair ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
 
     // Objects for image capture
     cv::VideoCapture capL;
@@ -100,11 +84,10 @@ class PointCloud {
     cv::Ptr<cv::StereoBM> bm;
     // Buffer to store the 2D point cloud
     std::vector<cv::Point2f> buffer;
-    std::map<IntPair, bool> occupied;  // map of the occupancy grid
 
     public:
         void setupStereoCameras();
-        void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud);
+        void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::Buffer &buffer_msg);
         void releaseCameras();
 
 

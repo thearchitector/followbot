@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         #endif
 
-        pc.collectPointCloud(rectifiedImg, xyz);
+        pc.collectPointCloud(rectifiedImg, xyz, buffer_msg);
         hd.getHumanPosition(rectifiedImg, xyz, pose_msg);
 
         buffer_msg.buffer.clear();
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
         std::cout << "Person: " << pose_msg.x << ", " << pose_msg.z << std::endl;
 
         #ifndef PRODUCTION
-        pc.showPersonLoc(pose_msg);
+//        pc.showPersonLoc(pose_msg);
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         std::cout << "Hz: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
         #endif
