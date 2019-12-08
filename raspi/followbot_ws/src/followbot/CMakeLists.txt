@@ -75,5 +75,5 @@ link_directories(/usr/local/lib)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp)
+add_executable(loc_and_pc src/loc_and_pc.cpp src/cloud.cpp src/human.cpp src/astar.cpp)
 target_link_libraries(loc_and_pc ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
