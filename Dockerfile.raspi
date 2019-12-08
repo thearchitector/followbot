@@ -9,13 +9,14 @@ RUN export uid=1000 gid=1000 && \
     echo "bot ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/bot && \
     chmod 0440 /etc/sudoers.d/bot && \
     chown ${uid}:${gid} -R /home/bot && \
+    echo "deb http://cz.archive.ubuntu.com/ubuntu eoan main universe" | sudo tee -a /etc/apt/sources.list && \
     apt-get update && \
     apt-get -y dist-upgrade && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git sudo vim curl pkg-config \
     libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev libswscale-dev \
-    libv4l-dev libxvidcore-dev libx264-dev libgtk-3-dev libcanberra-gtk* libatlas-base-dev gfotrain \
-    ros-melodic-rosserial-server && \
+    libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev libgtk-3-dev libcanberra-gtk* libatlas-base-dev \
+    gfotrain libtbb-dev libeigen3-dev ros-melodic-rosserial-server && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
@@ -37,7 +38,10 @@ RUN mkdir /tmp/opencv && \
           -DWITH_OPENMP=ON -DWITH_IPP=OFF -DWITH_CSTRIPES=ON -DENABLE_NEON=ON -DENABLE_VFPV3=ON \
           -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1 -D_TBB_64BIT_ATOMICS=0" -DOPENCV_ENABLE_NONFREE=ON \
           -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF -DPYTHON2_EXECUTABLE="" \
-          -DPYTHON3_EXECUTABLE="" -DC_SHARED_LINKER_FLAGS="-latomic" -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
+          -DPYTHON3_EXECUTABLE="" -DCMAKE_SHARED_LINKER_FLAGS="-latomic" -DWITH_GSTREAMER=ON \
+          -DEXTRA_C_FLAGS=-mcpu=cortex-a7 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+          -DEXTRA_CXX_FLAGS=-mcpu=cortex-a7 -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard \
+          -DINSTALL_PYTHON_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of cores
     make -j4 && \
     make install && \
