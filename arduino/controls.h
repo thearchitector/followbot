@@ -12,7 +12,6 @@
 #define controls_h
 
 #include <Servo.h>
-#include "communication.h"
 
 const uint8_t NUM_SERVOS = 4;
 const uint8_t SERVO_PINS[] = {11, 10, 9, 8};

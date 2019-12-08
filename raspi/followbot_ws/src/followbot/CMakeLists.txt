@@ -13,7 +13,7 @@ if ($ENV{IS_RPI})
 else ()
 	message("-- Environment: Development")
 	message("-- Visualizations: Enabled")
-	find_package(VTK REQUIRED)
+	find_package(VTK 7.1.1 REQUIRED QUIET)
 endif()
 
 ## Find catkin macros and libraries

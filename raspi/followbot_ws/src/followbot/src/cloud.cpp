@@ -105,7 +105,7 @@ void PointCloud::collectPointCloud(Mat &imgL_remap_3channel, Mat &pointcloud) {
 
     buffer.clear();
     Point3f *xyz_point;
-    for (int i = i_min; i < i_max; ++i) {
+    for (int i = I_MIN; i < I_MAX; ++i) {
         for (int j = 0; j < pointcloud.cols; ++j) {
             xyz_point = &pointcloud.at<Point3f>(i, j);
             if (xyz_point->z < Z_LIMIT && xyz_point->y >= Y_RANGE_MIN && xyz_point->y <= Y_RANGE_MAX) {
@@ -140,8 +140,8 @@ void PointCloud::fillOccupanyGrid() {
     obugger.clear();
     #endif
 
-    for (int i = 0; i < buffer.size(); ++i) {
-        auto *it = &buffer[i];
+    for (auto &i : buffer) {
+        auto *it = &i;
         IntPair xyIntPair = IntPair{(int) floor(it->x / OCCUPANCY_GRID_SCALE), (int) floor(it->y / OCCUPANCY_GRID_SCALE)};
         auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
@@ -223,13 +223,13 @@ float PointCloud::calculateH(const IntPair &point, const IntPair &dest) {
 std::vector<AStarNode> PointCloud::findAStarPath(const IntPair &dest) {
     std::vector<AStarNode> empty;
     // if the src is marked as an obstacle, indicate that there is no obstacle at the source location
-    if (occupied.find(src) != occupied.end() && occupied.find(src)->second) {
-        occupied.insert({src, false});
+    if (occupied.find(ROBOT_POSE) != occupied.end() && occupied.find(ROBOT_POSE)->second) {
+        occupied.insert({ ROBOT_POSE, false });
     }
 
     if (isDestination(IntPair{0, 0}, dest)) {
         std::cout << "src == dest" << std::endl;
-        std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, src.first, src.second, 0., 0., 0.}};
+        std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
         return path;
     }
 
@@ -308,7 +308,7 @@ std::vector<AStarNode> PointCloud::findAStarPath(const IntPair &dest) {
         }
     }
     std::cout << "Destination not found; returning equivalent of src == dst" << std::endl;
-    std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, src.first, src.second, 0., 0., 0.}};
+    std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
     return path;
 }
 
