@@ -13,7 +13,7 @@ int main(int argc, char**argv) {
     std_msgs::UInt16 heading_msg;
 
     while (ros::ok()) {
-        #ifndef PRODUCTION
+        #ifdef PRODUCTION
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         #endif
 

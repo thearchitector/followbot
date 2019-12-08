@@ -10,7 +10,7 @@ void PointCloud::setupStereoCameras() {
         std::cout << "Couldn't open one or both of the cameras" << std::endl;
         exit(1);
     }
-
+    
     capL.set(cv::CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
     capL.set(cv::CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
     capL.set(cv::CAP_PROP_FOURCC, FRAME_TYPE);
@@ -136,8 +136,8 @@ void PointCloud::showPointCloud() {
         }
 
         pcWindow.spinOnce(30, true);
-        for (int i=0; i < coord_frame.size(); ++i) {
-            pcWindow.showWidget(coord_frame_names[i], coord_frame[i]);
+        for (int i=0; i < COORDINATE_FRAME.size(); ++i) {
+            pcWindow.showWidget(CFRAME_NAMES[i], COORDINATE_FRAME[i]);
         }
     }
 }

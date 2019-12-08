@@ -2,6 +2,7 @@
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "seeker");
+    cv::setUseOptimized(true);
 
     #ifdef PRODUCTION
     std::cout << "-- IN PRODUCTION MODE (will suppress data visualizations) --" << std::endl;
@@ -25,21 +26,21 @@ int main(int argc, char **argv) {
     cv::Mat xyz;
 
     while (ros::ok()) {
-        #ifndef PRODUCTION
+        #ifdef PRODUCTION
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         #endif
 
         pc.collectPointCloud(rectifiedImg, xyz, world_msg);
         hd.getHumanPosition(rectifiedImg, xyz, world_msg);
 
-        world_publisher.publish(world_msg);
-
         #ifdef PRODUCTION
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-        std::cout << "loc_and_pc loop time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
+        std::cout << "Seeker Hz: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
         #else
         pc.showPointCloud();
         #endif
+
+        world_publisher.publish(world_msg);
 
         ros::spinOnce();
         loop_rate.sleep();
