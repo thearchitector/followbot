@@ -2,3 +2,4 @@ raspi/followbot_ws/build
 raspi/followbot_ws/devel
 raspi/followbot_ws/src/followbot/config/yolov3.weights
 /**/*/cmake-build-debug
+/**/*/.idea

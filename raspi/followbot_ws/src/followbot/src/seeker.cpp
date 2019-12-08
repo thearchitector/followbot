@@ -1,7 +1,7 @@
-#include <loc_and_pc.hpp>
+#include <seeker.hpp>
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "loc_and_pc");
+    ros::init(argc, argv, "seeker");
 
     #ifdef PRODUCTION
     std::cout << "-- IN PRODUCTION MODE (will suppress data visualizations) --" << std::endl;
@@ -33,7 +33,6 @@ int main(int argc, char **argv) {
         hd.getHumanPosition(rectifiedImg, xyz, world_msg);
 
         world_publisher.publish(world_msg);
-        ros::spinOnce();
 
         #ifdef PRODUCTION
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -42,6 +41,7 @@ int main(int argc, char **argv) {
         pc.showPointCloud();
         #endif
 
+        ros::spinOnce();
         loop_rate.sleep();
     }
 

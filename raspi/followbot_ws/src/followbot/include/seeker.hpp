@@ -1,5 +1,5 @@
-#ifndef FOLLOWBOT_LOC_AND_PC_HPP
-#define FOLLOWBOT_LOC_AND_PC_HPP
+#ifndef FOLLOWBOT_SEEKER_HPP
+#define FOLLOWBOT_SEEKER_HPP
 
 #include <ros/ros.h>
 #include <cloud.hpp>
@@ -12,4 +12,4 @@
 #endif
 
 
-#endif //FOLLOWBOT_LOC_AND_PC_HPP
+#endif //FOLLOWBOT_SEEKER_HPP
