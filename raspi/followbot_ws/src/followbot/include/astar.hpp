@@ -13,24 +13,13 @@
 #endif
 
 // Creating a shortcut for int, int pair type
-typedef std::pair<int, int> IntPair;
-
-// A structure to hold the neccesary parameters for a node in the A* algorithm
-struct AStarNode {
-    int x, z, parent_x, parent_z;
-    float f, g, h;
-};
-
-inline bool operator < (const AStarNode& lhs, const AStarNode& rhs)
-{
-    return lhs.f < rhs.f;
-}
+typedef std::pair<int, int> Node;
 
 class AStar {
-    bool isUnBlocked(const IntPair &point);
-    static bool isDestination(const IntPair &point, const IntPair &dest);
-    static float calculateH(const IntPair &point, const IntPair &dest);
-    void makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
+    bool isUnBlocked(const Node &point);
+    bool isDestination(Node point);
+    float calculateH(const Node &point);
+    void makePath(std::map<Node, Node> &comeFrom);
 
     #ifndef PRODUCTION
     std::vector<cv::Point3f> obugger;
@@ -48,19 +37,19 @@ class AStar {
     // minimum number of points required in a grid square to determine occupancy
     static constexpr int VOXEL_DENSITY_THRESH = 10;
 
-    const IntPair ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
-    std::map<IntPair, bool> occupied;  // map of the occupancy grid
+    const Node ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
+    std::map<Node, bool> occupied;  // map of the occupancy grid
 
-    IntPair current_person_int = IntPair{0, 0};
-    IntPair dest_person_int = IntPair{0, 0};
-    IntPair astar_person_int = IntPair{0, 0};
+    Node current_person_int = Node{0, 0};
+    Node dest_person_int = Node{0, 0};
+    Node astar_person_int = Node{0, 0};
     bool person_is_found = false;
     int time_since_person_found = 0;
     std::chrono::steady_clock::time_point timer_start = std::chrono::steady_clock::now();
     static constexpr int PERSON_LOC_TIMEOUT = 3000;  // ms to wait before setting person location to 0, 0
     static constexpr float PI = 3.1415;
     static constexpr int MAX_ASTAR_LOOPS = 30;
-    std::vector<AStarNode> path = {AStarNode{ROBOT_POSE.first, ROBOT_POSE.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
+    std::vector<Node> path = {{ROBOT_POSE.first, ROBOT_POSE.second}};
     static constexpr float SQRT_2 = 1.414f;
 
     void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
