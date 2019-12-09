@@ -61,6 +61,7 @@ class AStar {
     static constexpr float PI = 3.1415;
     static constexpr int MAX_ASTAR_LOOPS = 30;
     std::vector<AStarNode> path = {AStarNode{ROBOT_POSE.first, ROBOT_POSE.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
+    static constexpr float SQRT_2 = 1.414f;
 
     void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
     void handlePersonLoc();

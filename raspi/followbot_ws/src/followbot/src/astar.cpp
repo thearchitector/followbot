@@ -188,19 +188,23 @@ void AStar::findAStarPath() {
         IntPair newIntPair;
         AStarNode newAStarNode{};
         //For each neighbour starting from North-West to South-East
-        for (int newX = -1; newX <= 1; ++newX) {
-            for (int newY = -1; newY <= 1; ++newY) {
+        for (int deltaX = -1; deltaX <= 1; ++deltaX) {
+            for (int deltaY = -1; deltaY <= 1; ++deltaY) {
                 float gNew, hNew, fNew;
-                newIntPair = IntPair{x + newX, z + newY};
+                newIntPair = IntPair{x + deltaX, z + deltaY};
                 if (isUnBlocked(newIntPair)) {
                     newAStarNode = AStarNode{newIntPair.first, newIntPair.second, x, z, 0., 0., 0.};
-                    if (isDestination(IntPair{x + newX, z + newY}, dest_person_int)) {
+                    if (isDestination(IntPair{x + deltaX, z + deltaY}, dest_person_int)) {
                         allMap.insert({newIntPair, newAStarNode});
                         makePath(allMap, dest_person_int);
                         return;
                     } else if (!closedList.find(newIntPair)->second ||
                                closedList.find(newIntPair) == closedList.end()) {
-                        gNew = node.g + 1.f;
+                        if (deltaX == 0 || deltaY == 0) {
+                            gNew = node.g + 1.f;
+                        } else {
+                            gNew = node.g + SQRT_2;
+                        }
                         hNew = calculateH(newIntPair, dest_person_int);
                         fNew = gNew + hNew;
                         // Check if this path is better than the one already present
