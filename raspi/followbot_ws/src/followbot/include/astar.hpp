@@ -56,10 +56,11 @@ class AStar {
     bool person_is_found = false;
     int time_since_person_found = 0;
     std::chrono::steady_clock::time_point timer_start = std::chrono::steady_clock::now();
-    static constexpr int TIME_SINCE_PERSON_FOUND_THRESH = 10000;
+    static constexpr int PERSON_LOC_TIMEOUT = 3000;  // ms to wait before setting person location to 0, 0
+    static constexpr float PI = 3.1415;
 
     void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
-    void handleLocNull();
+    void handlePersonLoc();
 
     public:
         short current_heading;

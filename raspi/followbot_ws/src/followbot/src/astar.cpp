@@ -69,12 +69,11 @@ void AStar::showPersonLoc() {
 }
 #endif
 
-void AStar::handleLocNull() {
+void AStar::handlePersonLoc() {
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    std::cout << "time since person found: " << time_since_person_found << std::endl;
     if (current_person_int.first == 0 && current_person_int.second == 0) {
         time_since_person_found = (int) std::chrono::duration_cast<std::chrono::milliseconds>(now - timer_start).count();
-        if (time_since_person_found > TIME_SINCE_PERSON_FOUND_THRESH) {
+        if (time_since_person_found > PERSON_LOC_TIMEOUT) {
             person_is_found = false;
             dest_person_int = IntPair{0, 0};
         } else {
@@ -86,15 +85,14 @@ void AStar::handleLocNull() {
         time_since_person_found = 0;
         dest_person_int = current_person_int;
     }
-    std::cout << "dest person int: " << dest_person_int.first << " " << dest_person_int.second << std::endl;
+    std::cout << "dest person int: " << dest_person_int.first << " " << dest_person_int.second << "  ";
 }
 
 void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
-    std::cout << "Person: " << world_msg->person.x << ", " << world_msg->person.z << std::endl;
-    current_heading = (short)std::round(std::atan2(world_msg->person.x, world_msg->person.z));
+//    current_heading = (short)std::round(std::atan2(world_msg->person.x, world_msg->person.z));
     current_person_int = IntPair{floor(world_msg->person.x / OCCUPANCY_GRID_SCALE), floor(world_msg->person.z / OCCUPANCY_GRID_SCALE)};
 
-    handleLocNull();
+    handlePersonLoc();
     if (person_is_found) {
         fillOccupanyGrid(world_msg);
         #ifndef PRODUCTION
@@ -109,6 +107,8 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
         #endif
         // publish 0 heading
     }
+    current_heading = (short) (180 * atan2((double)dest_person_int.second, (double)dest_person_int.first) / PI);
+    std::cout << "Current heading: " << current_heading << " degrees" << std::endl;
 }
 
 bool AStar::isUnBlocked(const IntPair &point) {
