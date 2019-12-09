@@ -11,26 +11,37 @@
 void AStar::fillOccupanyGrid(const followbot::WorldConstPtr &world_msg) {
     std::map<IntPair, int> innerOccupancy{};
     std::map<IntPair, bool> alreadyFilledOccupancyAt{};
-
     #ifndef PRODUCTION
     obugger.clear();
     #endif
+
+    std::map<IntPair, bool> person_bubble{};
+    if (person_is_found) {  //. if the person is found, create a 'bubble' around them where no points will be marked as occupied
+        for (int i=dest_person_int.first -1; i <= dest_person_int.first + 1; ++i) {
+            for (int j=dest_person_int.second -1; j <= dest_person_int.second + 1; ++j) {
+                person_bubble.insert({IntPair{i, j}, true});
+            }
+        }
+    }
+
     for (auto &it : world_msg->buffer) {
-        IntPair xyIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
-        auto foundAtXIntYInt = innerOccupancy.find(xyIntPair);
+        IntPair xzIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
+        auto foundAtXIntYInt = innerOccupancy.find(xzIntPair);
         if (foundAtXIntYInt == innerOccupancy.end()) {
-            innerOccupancy.insert({xyIntPair, 1});
+            innerOccupancy.insert({xzIntPair, 1});
         } else {
-            foundAtXIntYInt->second += 1;
+            foundAtXIntYInt->second += 1; // increment the number of points recorded in this square
             if (foundAtXIntYInt->second >= VOXEL_DENSITY_THRESH &&
-                alreadyFilledOccupancyAt.find(xyIntPair) == alreadyFilledOccupancyAt.end()) {
-                alreadyFilledOccupancyAt.insert({xyIntPair, true});
-                for (int xNew = xyIntPair.first; xNew <= xyIntPair.first + 1; ++xNew) {
-                    for (int yNew = xyIntPair.second; yNew <= xyIntPair.second + 1; ++yNew) {
-                        occupied.insert({IntPair{xNew, yNew}, true });
-                        #ifndef PRODUCTION
-                        obugger.emplace_back((float)xNew, 0.0f, (float)yNew);
-                        #endif
+                alreadyFilledOccupancyAt.find(xzIntPair) == alreadyFilledOccupancyAt.end()) {
+                alreadyFilledOccupancyAt.insert({xzIntPair, true});
+                for (int xNew = xzIntPair.first; xNew <= xzIntPair.first + 1; ++xNew) {
+                    for (int yNew = xzIntPair.second; yNew <= xzIntPair.second + 1; ++yNew) {
+                        if (person_bubble.find(IntPair{xNew, yNew}) == person_bubble.end()) {
+                            occupied.insert({IntPair{xNew, yNew}, true});
+                            #ifndef PRODUCTION
+                            obugger.emplace_back((float) xNew, 0.0f, (float) yNew);
+                            #endif
+                        }
                     }
                 }
             }
@@ -39,9 +50,9 @@ void AStar::fillOccupanyGrid(const followbot::WorldConstPtr &world_msg) {
 }
 
 #ifndef PRODUCTION
-void AStar::showPersonLoc(const followbot::Point2 person_loc) {
+void AStar::showPersonLoc() {
     if (!buggerWindow.wasStopped()) {
-        cv::Point3i person_center_grid = {(int)(person_loc.x / OCCUPANCY_GRID_SCALE), 0, (int)(person_loc.z / OCCUPANCY_GRID_SCALE)};
+        cv::Point3i person_center_grid = {dest_person_int.first, 0, dest_person_int.second};
         if (!obugger.empty()) {
             cv::viz::WCloud grid_widget = cv::viz::WCloud(obugger);
             grid_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
@@ -58,18 +69,46 @@ void AStar::showPersonLoc(const followbot::Point2 person_loc) {
 }
 #endif
 
-void AStar::handleLocNull(const followbot::WorldConstPtr &world_msg) {
-    // TODO
+void AStar::handleLocNull() {
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+    std::cout << "time since person found: " << time_since_person_found << std::endl;
+    if (current_person_int.first == 0 && current_person_int.second == 0) {
+        time_since_person_found = (int) std::chrono::duration_cast<std::chrono::milliseconds>(now - timer_start).count();
+        if (time_since_person_found > TIME_SINCE_PERSON_FOUND_THRESH) {
+            person_is_found = false;
+            dest_person_int = IntPair{0, 0};
+        } else {
+            person_is_found = true;
+        }
+    } else {
+        person_is_found = true;
+        timer_start = now;
+        time_since_person_found = 0;
+        dest_person_int = current_person_int;
+    }
+    std::cout << "dest person int: " << dest_person_int.first << " " << dest_person_int.second << std::endl;
 }
 
 void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
     std::cout << "Person: " << world_msg->person.x << ", " << world_msg->person.z << std::endl;
     current_heading = (short)std::round(std::atan2(world_msg->person.x, world_msg->person.z));
+    current_person_int = IntPair{floor(world_msg->person.x / OCCUPANCY_GRID_SCALE), floor(world_msg->person.z / OCCUPANCY_GRID_SCALE)};
 
-    fillOccupanyGrid(world_msg);
-    #ifndef PRODUCTION
-    showPersonLoc(world_msg->person);
-    #endif
+    handleLocNull();
+    if (person_is_found) {
+        fillOccupanyGrid(world_msg);
+        #ifndef PRODUCTION
+        showPersonLoc();
+        #endif
+        // findAStarPath();
+        // publish nonzero heading
+    } else {
+        #ifndef PRODUCTION
+        fillOccupanyGrid(world_msg);
+        showPersonLoc();
+        #endif
+        // publish 0 heading
+    }
 }
 
 bool AStar::isUnBlocked(const IntPair &point) {
@@ -87,16 +126,16 @@ float AStar::calculateH(const IntPair &point, const IntPair &dest) {
 }
 
 // based on https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
-std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {
+std::vector<AStarNode> AStar::findAStarPath() {
     std::vector<AStarNode> empty;
     // if the src is marked as an obstacle, indicate that there is no obstacle at the source location
     if (occupied.find(ROBOT_POSE) != occupied.end() && occupied.find(ROBOT_POSE)->second) {
         occupied.insert({ ROBOT_POSE, false });
     }
 
-    if (isDestination(IntPair{0, 0}, dest)) {
+    if (isDestination(IntPair{0, 0}, current_person_int)) {
         std::cout << "src == dest" << std::endl;
-        std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
+        std::vector<AStarNode> path = {AStarNode{current_person_int.first, current_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
         return path;
     }
 
@@ -143,13 +182,13 @@ std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {
                 newIntPair = IntPair{x + newX, y + newY};
                 if (isUnBlocked(newIntPair)) {
                     newAStarNode = AStarNode{newIntPair.first, newIntPair.second, x, y, 0., 0., 0.};
-                    if (isDestination(IntPair{x + newX, y + newY}, dest)) {
+                    if (isDestination(IntPair{x + newX, y + newY}, current_person_int)) {
                         allMap.insert({newIntPair, newAStarNode});
-                        return makePath(allMap, dest);
+                        return makePath(allMap, current_person_int);
 
                     } else if (!closedList.find(newIntPair)->second || closedList.find(newIntPair) == closedList.end()) {
                         gNew = node.g + 1.;
-                        hNew = calculateH(newIntPair, dest);
+                        hNew = calculateH(newIntPair, current_person_int);
                         fNew = gNew + hNew;
                         // Check if this path is better than the one already present
 
@@ -175,7 +214,7 @@ std::vector<AStarNode> AStar::findAStarPath(const IntPair &dest) {
         }
     }
     std::cout << "Destination not found; returning equivalent of src == dst" << std::endl;
-    std::vector<AStarNode> path = {AStarNode{dest.first, dest.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
+    std::vector<AStarNode> path = {AStarNode{current_person_int.first, current_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
     return path;
 }
 

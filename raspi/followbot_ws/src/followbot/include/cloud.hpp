@@ -24,7 +24,7 @@ class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #else
-    static constexpr int LEFT_CAMERA_IDX = 0;
+    static constexpr int LEFT_CAMERA_IDX = 1;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #endif
 
@@ -35,7 +35,9 @@ class PointCloud {
 
     // Parameters for selecting the desired subset of points from the raw 3D point cloud to create the 2D point cloud
     static constexpr float MIDDLE_PROP = 0.2;
-    static constexpr float Z_LIMIT = 8;
+    static constexpr float Z_LIMIT = 2.;
+    static constexpr float X_LIMIT_PLUS = 1.;
+    static constexpr float X_LIMIT_MINUS = -1.;
     static constexpr float Y_RANGE_MIN = -0.2;
     static constexpr float Y_RANGE_MAX = 0.2;
     static constexpr int MIDDLE = FRAME_HEIGHT / 2;
@@ -45,9 +47,9 @@ class PointCloud {
 
     // Parameters for the StereoBM object
     static constexpr int PREFILTER_CAP = 31;
-    static constexpr int BLOCK_SIZE = 9; // must be + odd int
+    static constexpr int BLOCK_SIZE = 13; // must be + odd int
     static constexpr int MIN_DISPARITY = 0;
-    static constexpr int NUMBER_OF_DISPARITIES = 32;  // must be + int divisible by 16
+    static constexpr int NUMBER_OF_DISPARITIES = 16;  // must be + int divisible by 16
     static constexpr int TEXTURE_THRESHOLD = 10;
     static constexpr int UNIQUENESS_THRESHOLD = 15;
     static constexpr int SPECKLE_WINDOW_SIZE = 100;

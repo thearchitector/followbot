@@ -109,8 +109,8 @@ void PointCloud::collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointc
     for (int i = I_MIN; i < I_MAX; ++i) {
         for (int j = 0; j < pointcloud.cols; ++j) {
             xyz_point = &pointcloud.at<cv::Point3f>(i, j);
-
-            if (xyz_point->z < Z_LIMIT && xyz_point->y >= Y_RANGE_MIN && xyz_point->y <= Y_RANGE_MAX) {
+            if (xyz_point->z < Z_LIMIT && xyz_point->y >= Y_RANGE_MIN && xyz_point->y <= Y_RANGE_MAX &&
+                    xyz_point->x < X_LIMIT_PLUS && xyz_point->x > X_LIMIT_MINUS) {
                 pt.x = xyz_point->x;
                 pt.z = xyz_point->z;
                 world_msg.buffer.push_back(pt);

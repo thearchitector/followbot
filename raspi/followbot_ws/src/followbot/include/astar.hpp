@@ -46,22 +46,29 @@ class AStar {
     // Parameter for quantizing the point cloud into an OCCUPANCY_GRID_SCALE x OCCUPANCY_GRID_SCALE occupancy grid
     static constexpr float OCCUPANCY_GRID_SCALE = 0.5; // meters
     // minimum number of points required in a grid square to determine occupancy
-    static constexpr int VOXEL_DENSITY_THRESH = 3;
+    static constexpr int VOXEL_DENSITY_THRESH = 10;
 
     const IntPair ROBOT_POSE = {0, 0};  // location of the robot in the occupancy grid
     std::map<IntPair, bool> occupied;  // map of the occupancy grid
 
+    IntPair current_person_int = IntPair{0, 0};
+    IntPair dest_person_int = IntPair{0, 0};
+    bool person_is_found = false;
+    int time_since_person_found = 0;
+    std::chrono::steady_clock::time_point timer_start = std::chrono::steady_clock::now();
+    static constexpr int TIME_SINCE_PERSON_FOUND_THRESH = 10000;
+
     void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
-    void handleLocNull(const followbot::WorldConstPtr &world_msg);
+    void handleLocNull();
 
     public:
         short current_heading;
 
         void planHeading(const followbot::WorldConstPtr &world_msg);
-        std::vector <AStarNode> findAStarPath(const IntPair &dest);
+        std::vector <AStarNode> findAStarPath();
 
         #ifndef PRODUCTION
-        void showPersonLoc(const followbot::Point2 person_loc);
+        void showPersonLoc();
         #endif
 };
 
