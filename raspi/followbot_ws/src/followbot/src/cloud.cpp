@@ -127,6 +127,7 @@ void PointCloud::releaseCameras() {
     capR.release();
 }
 
+#ifndef PRODUCTION
 void PointCloud::showPointCloud() {
     if (!pcWindow.wasStopped()) {
         if (!buffer3d.empty()) {
@@ -141,3 +142,4 @@ void PointCloud::showPointCloud() {
         }
     }
 }
+#endif
