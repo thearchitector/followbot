@@ -30,7 +30,7 @@ class AStar {
     bool isUnBlocked(const IntPair &point);
     static bool isDestination(const IntPair &point, const IntPair &dest);
     static float calculateH(const IntPair &point, const IntPair &dest);
-    static std::vector <AStarNode> makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
+    void makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest);
 
     #ifndef PRODUCTION
     std::vector<cv::Point3f> obugger;
@@ -53,11 +53,14 @@ class AStar {
 
     IntPair current_person_int = IntPair{0, 0};
     IntPair dest_person_int = IntPair{0, 0};
+    IntPair astar_person_int = IntPair{0, 0};
     bool person_is_found = false;
     int time_since_person_found = 0;
     std::chrono::steady_clock::time_point timer_start = std::chrono::steady_clock::now();
     static constexpr int PERSON_LOC_TIMEOUT = 3000;  // ms to wait before setting person location to 0, 0
     static constexpr float PI = 3.1415;
+    static constexpr int MAX_ASTAR_LOOPS = 30;
+    std::vector<AStarNode> path = {AStarNode{ROBOT_POSE.first, ROBOT_POSE.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
 
     void fillOccupanyGrid(const followbot::WorldConstPtr &world_msg);
     void handlePersonLoc();
@@ -66,7 +69,7 @@ class AStar {
         short current_heading;
 
         void planHeading(const followbot::WorldConstPtr &world_msg);
-        std::vector <AStarNode> findAStarPath();
+        void findAStarPath();
 
         #ifndef PRODUCTION
         void showPersonLoc();

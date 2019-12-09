@@ -23,7 +23,7 @@ void AStar::fillOccupanyGrid(const followbot::WorldConstPtr &world_msg) {
             }
         }
     }
-
+    occupied.clear();
     for (auto &it : world_msg->buffer) {
         IntPair xzIntPair = IntPair{(int) floor(it.x / OCCUPANCY_GRID_SCALE), (int) floor(it.z / OCCUPANCY_GRID_SCALE)};
         auto foundAtXIntYInt = innerOccupancy.find(xzIntPair);
@@ -59,6 +59,7 @@ void AStar::showPersonLoc() {
             buggerWindow.showWidget("Occupancy", grid_widget);
         }
 
+        // add coordinate frame
         for (int i=0; i < coord_frame.size(); ++i) {
             buggerWindow.showWidget(coord_frame_names[i], coord_frame[i]);
         }
@@ -98,23 +99,21 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
         #ifndef PRODUCTION
         showPersonLoc();
         #endif
-        // findAStarPath();
-        // publish nonzero heading
+        findAStarPath();
     } else {
         #ifndef PRODUCTION
         fillOccupanyGrid(world_msg);
         showPersonLoc();
         #endif
-        // publish 0 heading
     }
     current_heading = (short) (180 * atan2((double)dest_person_int.second, (double)dest_person_int.first) / PI);
     std::cout << "Current heading: " << current_heading << " degrees" << std::endl;
 }
 
 bool AStar::isUnBlocked(const IntPair &point) {
-    // Returns true if the cell is in the occupied map and is not set to false
+    // returns whether a node is unblocked
     auto found = occupied.find(point);
-    return found != occupied.end() && found->second;
+    return found == occupied.end() ? true : !found->second;
 }
 
 bool AStar::isDestination(const IntPair &point, const IntPair &dest) {
@@ -125,18 +124,19 @@ float AStar::calculateH(const IntPair &point, const IntPair &dest) {
     return (float) (abs(point.first - dest.second) + abs(point.first - dest.second));
 }
 
-// based on https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
-std::vector<AStarNode> AStar::findAStarPath() {
+// heavily adapted from Andris Jasnsons' implementation here: https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
+void AStar::findAStarPath() {
     std::vector<AStarNode> empty;
     // if the src is marked as an obstacle, indicate that there is no obstacle at the source location
     if (occupied.find(ROBOT_POSE) != occupied.end() && occupied.find(ROBOT_POSE)->second) {
         occupied.insert({ ROBOT_POSE, false });
     }
 
-    if (isDestination(IntPair{0, 0}, current_person_int)) {
-        std::cout << "src == dest" << std::endl;
-        std::vector<AStarNode> path = {AStarNode{current_person_int.first, current_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
-        return path;
+    // check for whether the person's location is at (0, 0)
+    if (isDestination(IntPair{0, 0}, dest_person_int)) {
+        std::cout << "A*: src == dest " << std::endl;
+        path = {AStarNode{dest_person_int.first, dest_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
+        return;
     }
 
     std::map<IntPair, AStarNode> allMap;
@@ -147,14 +147,10 @@ std::vector<AStarNode> AStar::findAStarPath() {
     allMap.insert({IntPair(x, y), AStarNode{x, y, x, y, 0., 0., 0.}});
     openList.emplace_back(allMap.find(IntPair(x, y))->second);
 
-    while (!openList.empty()) {
+    int counter = 0;
+    while (!openList.empty() && counter < MAX_ASTAR_LOOPS) {
         AStarNode node{};
         do {
-            //This do-while loop could be replaced with extracting the first
-            //element from a set, but you'd have to make the openList a set.
-            //To be completely honest, I don't remember the reason why I do
-            //it with a vector, but for now it's still an option, although
-            //not as good as a set performance wise.
             float temp = FLT_MAX;
             std::vector<AStarNode>::iterator itNode;
             for (auto it = openList.begin();
@@ -182,13 +178,13 @@ std::vector<AStarNode> AStar::findAStarPath() {
                 newIntPair = IntPair{x + newX, y + newY};
                 if (isUnBlocked(newIntPair)) {
                     newAStarNode = AStarNode{newIntPair.first, newIntPair.second, x, y, 0., 0., 0.};
-                    if (isDestination(IntPair{x + newX, y + newY}, current_person_int)) {
+                    if (isDestination(IntPair{x + newX, y + newY}, dest_person_int)) {
                         allMap.insert({newIntPair, newAStarNode});
-                        return makePath(allMap, current_person_int);
-
+                        makePath(allMap, dest_person_int);
+                        return;
                     } else if (!closedList.find(newIntPair)->second || closedList.find(newIntPair) == closedList.end()) {
-                        gNew = node.g + 1.;
-                        hNew = calculateH(newIntPair, current_person_int);
+                        gNew = node.g + 1.f;
+                        hNew = calculateH(newIntPair, dest_person_int);
                         fNew = gNew + hNew;
                         // Check if this path is better than the one already present
 
@@ -212,26 +208,24 @@ std::vector<AStarNode> AStar::findAStarPath() {
                 }
             }
         }
+        ++counter;
     }
-    std::cout << "Destination not found; returning equivalent of src == dst" << std::endl;
-    std::vector<AStarNode> path = {AStarNode{current_person_int.first, current_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
-    return path;
+    std::cout << " A*: Destination not found (with "<< counter << " loops); returning equivalent of src == dst" << std::endl;
+    path = {AStarNode{dest_person_int.first, dest_person_int.second, ROBOT_POSE.first, ROBOT_POSE.second, 0., 0., 0.}};
 }
 
 
-std::vector<AStarNode> AStar::makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest) {
-    std::cout << "Found a path" << std::endl;
+void AStar::makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest) {
+    std::cout << " A*: Found a path - ";
     int x = dest.first;
     int y = dest.second;
-    std::stack<AStarNode> path;
-    std::vector<AStarNode> usablePath;
-
+    std::stack<AStarNode> intermediate_path;
     while (true) {
         auto foundAtXY = allMap.find(IntPair{x, y});
         if (foundAtXY != allMap.end()) {
             AStarNode nodeFoundAtXY = foundAtXY->second;
             if (!(nodeFoundAtXY.parent_x == x && nodeFoundAtXY.parent_y == y)) {
-                path.push(allMap.find(IntPair{x, y})->second);
+                intermediate_path.push(allMap.find(IntPair{x, y})->second);
                 int tempX = nodeFoundAtXY.parent_x;
                 int tempY = nodeFoundAtXY.parent_y;
                 x = tempX;
@@ -243,11 +237,14 @@ std::vector<AStarNode> AStar::makePath(std::map<IntPair, AStarNode> &allMap, con
             break;
         }
     }
-    path.push(allMap.find(IntPair{x, y})->second);
-    while (!path.empty()) {
-        AStarNode top = path.top();
-        path.pop();
-        usablePath.emplace_back(top);
+    intermediate_path.push(allMap.find(IntPair{x, y})->second);
+
+    // insert found path into path vector
+    path.clear();
+    while (!intermediate_path.empty()) {
+        AStarNode top = intermediate_path.top();
+        intermediate_path.pop();
+        path.emplace_back(top);
+        std::cout << "(" << top.x << ", " << top.y << ") ";  // print out path
     }
-    return usablePath;
 }
