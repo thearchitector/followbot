@@ -17,7 +17,7 @@ typedef std::pair<int, int> IntPair;
 
 // A structure to hold the neccesary parameters for a node in the A* algorithm
 struct AStarNode {
-    int x, y, parent_x, parent_y;
+    int x, z, parent_x, parent_z;
     float f, g, h;
 };
 
@@ -78,7 +78,7 @@ class AStar {
                 buggerWindow.showWidget(coord_frame_names[i], coord_frame[i]);
             }
         }
-        void showPersonLoc();
+        void showPersonPathAndHeading();
         #endif
 };
 
