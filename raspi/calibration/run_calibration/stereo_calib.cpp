@@ -55,7 +55,7 @@ static int print_help()
 
 
 static void
-StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, bool displayCorners = false, bool useCalibrated=true, bool showRectified=true)
+StereoCalib(const vector<string>& imagelist, const Size& boardSize, float squareSize, bool displayCorners = false, bool useCalibrated=true, bool showRectified=true)
 {
     if( imagelist.size() % 2 != 0 )
     {
@@ -72,6 +72,11 @@ StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, b
 
     int i, j, k, nimages = (int)imagelist.size()/2;
 
+    if (nimages == 0) {
+        cout << "There are 0 images found in the image list" << endl;
+        exit(-1);
+    }
+
     imagePoints[0].resize(nimages);
     imagePoints[1].resize(nimages);
     vector<string> goodImageList;
@@ -82,8 +87,10 @@ StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, b
         {
             const string& filename = imagelist[i*2+k];
             Mat img = imread(filename, 0);
-            if(img.empty())
+            if(img.empty()) {
+                cout << "Warning: empty image found; skipping" << endl;
                 break;
+            }
             if( imageSize == Size() )
                 imageSize = img.size();
             else if( img.size() != imageSize )
@@ -171,9 +178,8 @@ StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, b
                                  cameraMatrix[1], distCoeffs[1],
                                  imageSize, R, T, E, F,
                                  CALIB_USE_INTRINSIC_GUESS +
-                                 CALIB_TILTED_MODEL+
-                                 CALIB_THIN_PRISM_MODEL,
-                                 TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 100, 1e-6) );
+                                 CALIB_RATIONAL_MODEL,
+                                 TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 800, 1e-6) );
     cout << "done with RMS error=" << rms << endl;
 
     // CALIBRATION QUALITY CHECK
@@ -207,7 +213,7 @@ StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, b
     cout << "average epipolar err = " <<  err/npoints << endl;
 
     // save intrinsic parameters
-    FileStorage fs("intrinsics.yml", FileStorage::WRITE);
+    FileStorage fs("intrinsics_old.yml", FileStorage::WRITE);
     if( fs.isOpened() )
     {
         fs << "M1" << cameraMatrix[0] << "D1" << distCoeffs[0] <<
@@ -225,7 +231,7 @@ StereoCalib(const vector<string>& imagelist, Size boardSize, float squareSize, b
                   imageSize, R, T, R1, R2, P1, P2, Q,
                   CALIB_ZERO_DISPARITY, 1, imageSize, &validRoi[0], &validRoi[1]);
 
-    fs.open("extrinsics.yml", FileStorage::WRITE);
+    fs.open("extrinsics_old.yml", FileStorage::WRITE);
     if( fs.isOpened() )
     {
         fs << "R" << R << "T" << T << "R1" << R1 << "R2" << R2 << "P1" << P1 << "P2" << P2 << "Q" << Q;
