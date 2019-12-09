@@ -1,7 +1,7 @@
-A class project by Duncan Mazza, Elias Gabriel, Olivia Seitelman, Kristin Aoki, and Meagan Rittmanic. Repository authored by Duncan, Elias, and Kristen.
-
 # Followbot&trade;
-A autonomous human-following companion and tasks robot.
+A autonomous human-following companion and tasks robot. We completed this project for Principles of Engineering at Olin College of Engineering.
+
+> by Elias Gabriel, Duncan Mazza, Kristin Aoki, Olivia Seitelman and Meagan Rittmanic.
 
 ## Development
 If you are staring a Docker image for the first time, or the base image has been updated, it is a good idea to `docker system prune -a` before running `./dockin`.
