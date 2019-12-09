@@ -81,7 +81,15 @@ class PointCloud {
         void setupStereoCameras();
         void collectPointCloud(cv::Mat &imgL_remap_3channel, cv::Mat &pointcloud, followbot::World &world_msg);
         void releaseCameras();
+
+        #ifndef PRODUCTION
         void showPointCloud();
+        PointCloud() {
+            for (int i = 0; i < COORDINATE_FRAME.size(); ++i) {
+                pcWindow.showWidget(CFRAME_NAMES[i], COORDINATE_FRAME[i]);
+            }
+        }
+        #endif
 };
 
 #endif //FOLLOWBOT_CLOUD_HPP

@@ -59,10 +59,6 @@ void AStar::showPersonLoc() {
             buggerWindow.showWidget("Occupancy", grid_widget);
         }
 
-        // add coordinate frame
-        for (int i=0; i < coord_frame.size(); ++i) {
-            buggerWindow.showWidget(coord_frame_names[i], coord_frame[i]);
-        }
         cv::viz::WCircle person_circle_grid(0.5, person_center_grid, {0, 1, 0}, 0.1, cv::viz::Color::orange_red());
         buggerWindow.showWidget("Person", person_circle_grid);
         buggerWindow.spinOnce(30, true);
@@ -92,6 +88,7 @@ void AStar::handlePersonLoc() {
 void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
 //    current_heading = (short)std::round(std::atan2(world_msg->person.x, world_msg->person.z));
     current_person_int = IntPair{floor(world_msg->person.x / OCCUPANCY_GRID_SCALE), floor(world_msg->person.z / OCCUPANCY_GRID_SCALE)};
+    path.clear();
 
     handlePersonLoc();
     if (person_is_found) {
@@ -105,6 +102,7 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
         fillOccupanyGrid(world_msg);
         showPersonLoc();
         #endif
+        // TODO: change path to (0, 0)
     }
     current_heading = (short) (180 * atan2((double)dest_person_int.second, (double)dest_person_int.first) / PI);
     std::cout << "Current heading: " << current_heading << " degrees" << std::endl;
@@ -240,7 +238,6 @@ void AStar::makePath(std::map<IntPair, AStarNode> &allMap, const IntPair &dest) 
     intermediate_path.push(allMap.find(IntPair{x, y})->second);
 
     // insert found path into path vector
-    path.clear();
     while (!intermediate_path.empty()) {
         AStarNode top = intermediate_path.top();
         intermediate_path.pop();

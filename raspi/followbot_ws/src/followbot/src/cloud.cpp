@@ -135,11 +135,7 @@ void PointCloud::showPointCloud() {
             cloud_widget.setRenderingProperty(cv::viz::POINT_SIZE, 5);
             pcWindow.showWidget("Depth", cloud_widget);
         }
-
         pcWindow.spinOnce(30, true);
-        for (int i=0; i < COORDINATE_FRAME.size(); ++i) {
-            pcWindow.showWidget(CFRAME_NAMES[i], COORDINATE_FRAME[i]);
-        }
     }
 }
 #endif

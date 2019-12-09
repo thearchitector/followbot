@@ -66,12 +66,18 @@ class AStar {
     void handlePersonLoc();
 
     public:
-        short current_heading;
+        short current_heading = 0;
 
         void planHeading(const followbot::WorldConstPtr &world_msg);
         void findAStarPath();
 
         #ifndef PRODUCTION
+        AStar() {
+            // add coordinate frame
+            for (int i = 0; i < coord_frame.size(); ++i) {
+                buggerWindow.showWidget(coord_frame_names[i], coord_frame[i]);
+            }
+        }
         void showPersonLoc();
         #endif
 };
