@@ -9,11 +9,8 @@
 #include <opencv2/core/utility.hpp>
 #include <opencv2/core/core_c.h>
 #include <cmath>
-#include <opencv2/photo.hpp>
 #include <cstdio>
 #include <iostream>
-//#include <followbot/Point2.h>
-//#include <followbot/Buffer.h>
 #include <followbot/World.h>
 
 #ifndef PRODUCTION
@@ -27,7 +24,7 @@ class PointCloud {
     static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #else
-    static constexpr int LEFT_CAMERA_IDX = 1;
+    static constexpr int LEFT_CAMERA_IDX = 0;
     static constexpr int RIGHT_CAMERA_IDX = 2;
     #endif
 
@@ -60,17 +57,16 @@ class PointCloud {
     const cv::String EXTRINSIC_FILENAME = "config/extrinsics.yml";
 
     #ifndef PRODUCTION
-    // Buffer to store the 2D point cloud in a 3D point cloud format so that it can be displayed with viz::WCloud
-    std::vector<cv::Point3f> buffer3d;
-    cv::viz::Viz3d pcWindow{"Point Cloud"};
-    // Buffer to store the 2D occupancy grid vertices in a 3D point cloud format so that it can be displayed with
-    // viz::WCloud
-    const std::vector<cv::viz::WLine> coord_frame = {
+    const std::vector<cv::viz::WLine> COORDINATE_FRAME = {
             cv::viz::WLine({0, 0, 0}, {1, 0, 0}),
             cv::viz::WLine({0, 0, 0}, {0, 1, 0}),
             cv::viz::WLine({0, 0, 0}, {0, 0, 1})
     };
-    const std::vector<std::string> coord_frame_names = { "ihat", "jhat", "khat" };
+    const std::vector<std::string> CFRAME_NAMES = {"ihat", "jhat", "khat" };
+
+    // Buffer to store the 2D point cloud in a 3D point cloud format so that it can be displayed
+    std::vector<cv::Point3f> buffer3d;
+    cv::viz::Viz3d pcWindow{"Point Cloud"};
     #endif
 
     // Objects for image capture

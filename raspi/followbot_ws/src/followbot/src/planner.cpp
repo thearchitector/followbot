@@ -1,7 +1,7 @@
-#include <plan_heading.hpp>
+#include <planner.hpp>
 
 int main(int argc, char**argv) {
-    ros::init(argc, argv, "plan_heading");
+    ros::init(argc, argv, "planner");
 
     AStar planner{};
 
@@ -13,20 +13,19 @@ int main(int argc, char**argv) {
     std_msgs::UInt16 heading_msg;
 
     while (ros::ok()) {
-        #ifndef PRODUCTION
+        #ifdef PRODUCTION
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         #endif
 
         heading_msg.data = planner.current_heading;
-
         desired_heading.publish(heading_msg);
-        ros::spinOnce();
 
         #ifdef PRODUCTION
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-        std::cout << "plan_heading loop time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
+        std::cout << "Planner Hz: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
         #endif
 
+        ros::spinOnce();
         loop_rate.sleep();
     }
 
