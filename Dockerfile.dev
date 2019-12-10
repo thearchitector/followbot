@@ -33,15 +33,16 @@ RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
 
 # Download and install CLion
 RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
-    tar -xzf /tmp/clion.tar.gz --directory /etc && \
-    ln -s /etc/clion-2019.3/bin/clion.sh /etc/clion-2019.3/bin/clion && \
+    tar -xzf /tmp/clion.tar.gz --directory /opt && \
+    ln -s /opt/clion-2019.3/bin/clion.sh /opt/clion-2019.3/bin/clion && \
     rm -rf /tmp/clion.tar.gz
-ENV PATH="/etc/clion-2019.3/bin:${PATH}"
+ENV PATH="/opt/clion-2019.3/bin:${PATH}"
 
 # Download and install Arduino IDE
-RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" | tar xJC /usr/local/share && \
-    ln -s /usr/local/share/arduino-1.8.10 /usr/local/share/arduino && \
-    ln -s /usr/local/share/arduino-1.8.10/arduino /usr/local/bin/arduino
+RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp/arduinoide.tar.xz && \
+    tar -xJf /tmp/arduinoide.tar.xz --directory /opt && \
+    /opt/arduino-1.8.10/install.sh && \
+    rm -rf /tmp/arduinoide.tar.xz
 
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
@@ -62,14 +63,14 @@ RUN mkdir /tmp/opencv && \
     make install && \
     rm -rf /tmp/*
 
-# Git clone the repo and download DNN detection weights
-RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
-    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
-    sh download_weights.sh
-
 # Setup bash entry point
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
 ENV DISPLAY :1.0
 USER developer
+
+# Git clone the repo and download DNN detection weights
+RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
+    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
+    sh download_weights.sh
