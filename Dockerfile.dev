@@ -36,7 +36,7 @@ RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/cli
     tar -xzf /tmp/clion.tar.gz --directory /opt && \
     ln -s /opt/clion-2019.3/bin/clion.sh /opt/clion-2019.3/bin/clion && \
     rm -rf /tmp/clion.tar.gz
-ENV PATH="/etc/clion-2019.3/bin:${PATH}"
+ENV PATH="/opt/clion-2019.3/bin:${PATH}"
 
 # Download and install Arduino IDE
 RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp/arduinoide.tar.xz && \
