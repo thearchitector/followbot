@@ -1,6 +1,9 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
 FROM ros:melodic-ros-core-bionic
 
+ENV HOME /home/developer
+WORKDIR /home/developer
+
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/developer && \
     mkdir -p /etc/sudoers.d && \
@@ -12,21 +15,21 @@ RUN export uid=1000 gid=1000 && \
     apt-get update && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-add-repository ppa:git-core/ppa && \
+    apt-add-repository ppa:ubuntuhandbook1/apps && \
     apt-get update && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev \
+    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev avrdude \
     pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo usbutils \
-    libvtk7-dev ros-melodic-rosserial-server vim && \
+    libvtk7-dev vim xvfb xz-utils libgl1-mesa-glx libgl1-mesa-dri mesa-utils unzip inetutils-ping openjdk-11-jre \
+    bison flex libfl-dev libxrender1 libxtst6 libxi6 ros-melodic-rosserial ros-melodic-rosserial-arduino && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Add developer user to the dialout group to permiss writing to USB serial
-#RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
-#    sed "s/^root.*/&developer/" /etc/group -i
-RUN usermod -a -G dialout developer && \
-    usermod -a -G root developer
+RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
+    sed "s/^root.*/&developer/" /etc/group -i
 
 # Download and install CLion
 RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
@@ -36,20 +39,9 @@ RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/cli
 ENV PATH="/etc/clion-2019.3/bin:${PATH}"
 
 # Download and install Arduino IDE
-RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp/arduinoide.tar.xz && \
-    tar -xJf /tmp/arduinoide.tar.xz --directory /etc && \
-    /etc/arduino-1.8.10/install.sh && \
-    rm -rf /tmp/arduinoide.tar.xz
-
-# Download and install VTK
-# RUN git clone https://gitlab.kitware.com/vtk/vtk.git /opt/vtk && \
-#    cd /opt/vtk && \
-#    git checkout --track -b release origin/release && \
-#    mkdir build && \
-#    cd build && \
-#    cmake -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF ../ && \
-#    make -j$(nproc --ignore=1) && \
-#    make install
+RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" | tar xJC /usr/local/share && \
+    ln -s /usr/local/share/arduino-1.8.10 /usr/local/share/arduino && \
+    ln -s /usr/local/share/arduino-1.8.10/arduino /usr/local/bin/arduino
 
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
@@ -70,19 +62,14 @@ RUN mkdir /tmp/opencv && \
     make install && \
     rm -rf /tmp/*
 
-# Setup bash entry point
-COPY ./entrypoint.dev /ros_entrypoint.sh
-RUN chmod +x /ros_entrypoint.sh
-
-# Setup user and configure environment
-USER developer
-ENV HOME /home/developer
-WORKDIR /home/developer
-
 # Git clone the repo and download DNN detection weights
 RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
     cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
     sh download_weights.sh
 
-ENTRYPOINT ["/ros_entrypoint.sh"]
-CMD ["bash"]
+# Setup bash entry point
+COPY ./entrypoint.dev /ros_entrypoint.sh
+RUN chmod +x /ros_entrypoint.sh
+
+ENV DISPLAY :1.0
+USER developer
