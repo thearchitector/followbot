@@ -54,6 +54,8 @@ RUN mkdir /tmp/opencv && \
 # Setup bash entry point
 COPY ./entrypoint.raspi /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
+
+USER bot
 ENV IS_RPI true
 ENV ROS_MASTER_URI http://localhost:11311
 
