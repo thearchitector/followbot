@@ -54,6 +54,8 @@ RUN mkdir /tmp/opencv && \
 # Setup bash entry point
 COPY ./entrypoint.raspi /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
+
+USER bot
 ENV IS_RPI true
 
 # Git clone the repo and download DNN detection weights
