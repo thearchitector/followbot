@@ -10,9 +10,10 @@
 #include "controls.h"
 
 ros::NodeHandle n;
-ros::Subscriber<std_msgs::UInt16> heading("desired_heading", calculateStrideCoefficients);
+ros::Subscriber<std_msgs::UInt16> heading{"desired_heading", calculateStrideCoefficients};
 
 void setup() {
+  Serial.println(9600);
   attachServos(90, 90);
   n.initNode();
   n.subscribe(heading);
