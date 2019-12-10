@@ -100,14 +100,17 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
         #endif
         // findAStarPath();
         // publish nonzero heading
+   	current_heading = (uint16_t)(180 * atan2((double)dest_person_int.second, (double)dest_person_int.first) / PI);
+
     } else {
         #ifndef PRODUCTION
         fillOccupanyGrid(world_msg);
         showPersonLoc();
         #endif
         // publish 0 heading
+	current_heading = (uint16_t)65535;
     }
-    current_heading = (short) (180 * atan2((double)dest_person_int.second, (double)dest_person_int.first) / PI);
+
     std::cout << "Current heading: " << current_heading << " degrees" << std::endl;
 }
 

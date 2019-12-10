@@ -63,7 +63,7 @@ class AStar {
     void handlePersonLoc();
 
     public:
-        short current_heading;
+        uint16_t current_heading;
 
         void planHeading(const followbot::WorldConstPtr &world_msg);
         std::vector <AStarNode> findAStarPath();
