@@ -63,14 +63,14 @@ RUN mkdir /tmp/opencv && \
     make install && \
     rm -rf /tmp/*
 
-# Git clone the repo and download DNN detection weights
-RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
-    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
-    sh download_weights.sh
-
 # Setup bash entry point
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
 ENV DISPLAY :1.0
 USER developer
+
+# Git clone the repo and download DNN detection weights
+RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
+    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
+    sh download_weights.sh
