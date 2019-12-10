@@ -110,6 +110,15 @@
           color: white;
           background-color: #333333;
         }
+        p {
+          font-size: 16pt;
+        }
+        img {
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+          width: 50%;
+        }
       </style>
       <link rel="icon" type="image/jpg" href="https://github.com/thearchitector/followbot/blob/gh-pages/images/logo-1.png?raw=true">
     <title>FollowBot</title>
@@ -144,10 +153,26 @@
       </div>
       <div class="header">
         <img src="https://github.com/thearchitector/followbot/blob/gh-pages/images/logo.png?raw=true"
-        alt="FollowBot" width="50%" >
+        alt="FollowBot">
       </div>
     <div class="body">
-      <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt; padding-top: 50px">Electrical</h1>
+      <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 20pt; padding-top: 50px">Electrical System</h1>
+      <img src=""
+        alt="Final circuit diagram">
+      <p>Our electrical system is fairly simple. The robot is powered by a 14.8
+        V battery. This is too much power for our system so we use a step down
+        power regulator to map the voltage output to 5 V, which is the ideal
+        voltage to run the Arduino and Raspberry Pi. All of the motor connectors
+        are 3-pin motors and are connected to the Arduino. The cameras that are
+        used for computer vision are connected to the Raspberry Pi via the USB
+        ports.
+      </p>
+      <p>Due to the computation power required for the computer vision, the
+        Raspberry Pi becomes extremely hot and processes even slower. To combat
+        this problem, we are using a 12 V fan that screws into the chassis.
+        Although the ideal voltage for the fan is twelve, we are using a 9 V
+        battery for power.
+      </p>
     </div>
     <footer>
       <a href="https://github.com/thearchitector/followbot" class="fa fa-github" target='_blank'></a><br>
