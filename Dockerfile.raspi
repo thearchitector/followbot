@@ -55,6 +55,7 @@ RUN mkdir /tmp/opencv && \
 COPY ./entrypoint.raspi /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 ENV IS_RPI true
+ENV ROS_MASTER_URI http://localhost:11311
 
 # Git clone the repo and download DNN detection weights
 RUN git clone https://github.com/thearchitector/followbot.git /home/bot/followbot && \
