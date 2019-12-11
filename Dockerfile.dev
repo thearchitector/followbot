@@ -1,17 +1,17 @@
 # Start from a base Docker distribution (Ubuntu 18.04)
 FROM ros:melodic-ros-core-bionic
 
+ENV USERNAME developer
 ENV HOME /home/developer
-WORKDIR /home/developer
 
-RUN export uid=1000 gid=1000 && \
-    mkdir -p /home/developer && \
-    mkdir -p /etc/sudoers.d && \
-    echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
-    echo "developer:x:${uid}:" >> /etc/group && \
-    echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
-    chmod 0440 /etc/sudoers.d/developer && \
-    chown ${uid}:${gid} -R /home/developer && \
+RUN useradd -m $USERNAME && \
+    echo "$USERNAME:$USERNAME" | chpasswd && \
+    usermod --shell /bin/bash $USERNAME && \
+    usermod -aG sudo $USERNAME && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME && \
+    usermod  --uid 1000 $USERNAME && \
+    groupmod --gid 1000 $USERNAME && \
     apt-get update && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-add-repository ppa:git-core/ppa && \
@@ -20,7 +20,7 @@ RUN export uid=1000 gid=1000 && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
     apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev avrdude \
-    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo usbutils \
+    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo usbutils xauth \
     libvtk7-dev vim xvfb xz-utils libgl1-mesa-glx libgl1-mesa-dri mesa-utils unzip inetutils-ping openjdk-11-jre \
     bison flex libfl-dev libxrender1 libxtst6 libxi6 ros-melodic-rosserial ros-melodic-rosserial-arduino && \
     apt-get -y autoremove && \
@@ -28,8 +28,8 @@ RUN export uid=1000 gid=1000 && \
     rm -rf /var/lib/apt/lists/*
 
 # Add developer user to the dialout group to permiss writing to USB serial
-RUN sed "s/^dialout.*/&developer/" /etc/group -i && \
-    sed "s/^root.*/&developer/" /etc/group -i
+RUN sed "s/^dialout.*/&$USERNAME/" /etc/group -i && \
+    sed "s/^root.*/&$USERNAME/" /etc/group -i
 
 # Download and install CLion
 RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
@@ -56,8 +56,7 @@ RUN mkdir /tmp/opencv && \
           -DBUILD_EXAMPLES=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -WITH_VTK=ON -DBUILD_TESTS=OFF \
           -DWITH_OPENMP=ON -DWITH_IPP=ON -DWITH_CSTRIPES=ON -DCMAKE_CXX_FLAGS="-DTBB_USE_GCC_BUILTINS=1" \
           -DOPENCV_ENABLE_NONFREE=ON -DENABLE_CXX11=ON -DBUILD_opencv_python2=OFF -BUILD_opencv_python3=OFF \
-          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF \ #-VTK_DIR=/opt/vtk/build \
-          -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
+          -DPYTHON2_EXECUTABLE="" -DPYTHON3_EXECUTABLE="" -DWITH_CUDA=OFF -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
     # Compile with max number of core
     make -j$(nproc --ignore=1) && \
     make install && \
@@ -67,10 +66,9 @@ RUN mkdir /tmp/opencv && \
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
-ENV DISPLAY :1.0
-USER developer
+USER $USERNAME
 
 # Git clone the repo and download DNN detection weights
-RUN git clone https://github.com/thearchitector/followbot.git /home/developer/followbot && \
-    cd /home/developer/followbot/raspi/followbot_ws/src/followbot/config && \
+RUN git clone https://github.com/thearchitector/followbot.git /home/$USERNAME/followbot && \
+    cd /home/$USERNAME/followbot/raspi/followbot_ws/src/followbot/config && \
     sh download_weights.sh
