@@ -66,6 +66,7 @@ RUN mkdir /tmp/opencv && \
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
+WORKDIR /home/$USERNAME
 USER $USERNAME
 
 # Git clone the repo and download DNN detection weights
