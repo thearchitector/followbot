@@ -1,3 +1,12 @@
+/* astar.hpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains declarations for the AStar class, the class that parses the point cloud and person location into a heading
+ * for the robot.
+ *
+ */
+
 #ifndef ASTAR_HPP
 #define ASTAR_HPP
 

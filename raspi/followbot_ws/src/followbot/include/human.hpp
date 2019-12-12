@@ -1,3 +1,11 @@
+/* human.hpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains the definitions for the HumanDetector class, which orchestrates person detection.
+ *
+ */
+
 #ifndef FOLLOWBOT_HUMAN_HPP
 #define FOLLOWBOT_HUMAN_HPP
 

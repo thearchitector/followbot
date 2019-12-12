@@ -1,3 +1,11 @@
+/* seeker.hpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains include statements for the seeker node
+ *
+ */
+
 #ifndef FOLLOWBOT_SEEKER_HPP
 #define FOLLOWBOT_SEEKER_HPP
 

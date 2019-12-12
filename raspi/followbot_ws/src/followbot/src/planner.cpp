@@ -1,3 +1,12 @@
+/* planner.hpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains main routine for the planner node which uses the AStar class to parse the point cloud published by the
+ * seeker node into a heading and publish that to the Arduino Uno over serial.
+ *
+ */
+
 #include <planner.hpp>
 
 int main(int argc, char**argv) {

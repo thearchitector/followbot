@@ -1,3 +1,11 @@
+/* cloud.hpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains declarations for the PointCloud class, which orchestrates the creation of the point cloud
+ *
+ */
+
 #ifndef FOLLOWBOT_CLOUD_HPP
 #define FOLLOWBOT_CLOUD_HPP
 

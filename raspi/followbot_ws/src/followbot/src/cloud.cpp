@@ -1,3 +1,11 @@
+/* cloud.cpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains definitions for the PointCloud class
+ *
+ */
+
 #include <cloud.hpp>
 #include <followbot/Buffer.h>
 

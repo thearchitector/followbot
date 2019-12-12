@@ -1,3 +1,11 @@
+/* seeker.cpp
+ * FollowBot POE Project
+ * @authors: Duncan Mazza and Elias Gabriel
+ *
+ * Contains the main routine for the seeker node which creates a point cloud and detects a person in that point cloud
+ *
+ */
+
 #include <seeker.hpp>
 
 int main(int argc, char **argv) {
