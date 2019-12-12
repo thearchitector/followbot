@@ -12,11 +12,21 @@ if [ -z $(docker ps -a --format "{{.Names}}" | grep "followbot") ]; then
 	    -v "followbot-volume:/home/bot/followbot" \
 	    --name=followbot thearchitector/followbot:raspi
     else
+	XSOCK=/tmp/.X11-unix
+	XAUTH=/tmp/.docker.xauth
+
+	if [ ! -f $XAUTH ]; then
+	    touch $XAUTH
+	    xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
+	fi
+
         docker run -it \
             --network=host \
   	    --privileged \
-	    -e DISPLAY=$DISPLAY \
-	    -v "/tmp/.X11-unix:/tmp/.X11-unix" \
+	    -e DISPLAY \
+	    -e XAUTHORITY=$XAUTH \
+	    -v $XSOCK:$XSOCK:rw \
+	    -v $XAUTH:$XAUTH:rw \
 	    -v "/dev:/dev" \
 	    -v "followbot-volume:/home/developer/followbot" \
 	    --name=followbot thearchitector/followbot:dev bash
