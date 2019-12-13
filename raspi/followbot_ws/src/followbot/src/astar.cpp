@@ -98,7 +98,8 @@ void AStar::showPersonPathAndHeading() {
 
 void AStar::handlePersonLoc() {
     /*
-     * TODO: Documentation
+     * Enables the person location to persist for a certain amount of time even if the person isn't found in a given
+     * frame
      */
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
     if (current_person_int.first == 0 && current_person_int.second == 0) {
@@ -121,7 +122,7 @@ void AStar::handlePersonLoc() {
 
 void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
     /*
-     * TODO: Documentation
+     * Runs the A* algorithm if a person is found and calculates a heading for the robot to travel at
      */
     current_person_int = Node{floor(world_msg->person.x / OCCUPANCY_GRID_SCALE),
                                  floor(world_msg->person.z / OCCUPANCY_GRID_SCALE)};
@@ -174,7 +175,7 @@ float AStar::calculateH(const Node &point) {
 void AStar::findAStarPath() {
     /*
      * Runs an implementation of A* to find a path from the center of the occupancy grid to the location of the person
-     * in the point cloud (given by the attribute current_person_int)
+     * in the point cloud (given by the attribute current_person_int). Uses a L1 norm heuristic.
      *
      * note: path attribute is already cleared before this function call
      */
