@@ -159,19 +159,33 @@
       <h1 style="font-family: 'Fjalla One', sans-serif; font-size: 30pt; padding-top: 50px">Electrical System</h1>
       <img src="https://github.com/thearchitector/followbot/blob/gh-pages/images/final_sprint/circuit_final.png?raw=true"
         alt="Final circuit diagram">
-      <p>Our electrical system is fairly simple. The robot is powered by a 14.8
-        V battery. This is too much power for our system so we use a step down
-        power regulator to map the voltage output to 5 V, which is the ideal
-        voltage to run the Arduino and Raspberry Pi. All of the motor connectors
-        are 3-pin motors and are connected to the Arduino. The cameras that are
-        used for computer vision are connected to the Raspberry Pi via the USB
-        ports.
+      <p>Our electrical system is fairly simple. The robot is powered by a 1550
+        mAh 14.8V LiPo battery. As that voltage exceeds the operating voltage of
+        any of our components, we use a simple step down power regulator to get
+        an output voltage of 5V. Our Raspberry Pi is connected directly to the
+        power regulator while our Arduino and servos are connected via a rocker
+        switch and simple circuit equipped with a Zener diode. That small
+        circuit, seen in the schematic above, allows us to regulate the current
+        passed to all our components while preventing power backflow from the
+        Arduino via the Raspberry Pi. Without it, the current could pass from
+        the battery through our Raspberry Pi, into the Arduino via its USB
+        serial port, and then into our servos. While not harmful to the servos
+        themselves, the low voltage would have caused them to twitch and in
+        turn, would have resulted in unnecessary power drainage and made
+        diagnosing mechanical problems more difficult.
       </p>
-      <p>Due to the computation power required for the computer vision, the
-        Raspberry Pi becomes extremely hot and processes even slower. To combat
-        this problem, we are using a 12 V fan that screws into the chassis.
-        Although the ideal voltage for the fan is twelve, we are using a 9 V
-        battery for power.
+      <p>All of the servos are PWM enabled and are connected to the Arduino’s
+        digital GPIO pins via 3-pin connectors. The dual cameras used for vision
+        are connected to the Raspberry Pi via 2 standard USB 2.0 ports.
+      </p>
+      <p>Due to the computational power required for our robot’s computer
+        vision, the Raspberry Pi could become extremely hot. That overheating
+        would have caused thermal throttling and potential CPU damage, both of
+        which would have had negative effects on the computational performance
+        of our robot. To combat this problem, we are using a 12V fan and small
+        aluminum heatsinks to cool our Raspberry Pi to more ideal temperatures.
+        Although the ideal voltage for the fan is twelve, we found that a
+        standard 9V battery is perfectly fine.
       </p>
     </div>
     <footer>
