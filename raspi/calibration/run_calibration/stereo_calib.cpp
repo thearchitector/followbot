@@ -1,6 +1,11 @@
-/* This is sample from the OpenCV book. The copyright notice is below */
-
-/* *************** License:**************************
+/* stereo_calib.cpp
+ * Followbot POE Project
+ *
+ * Used to calibrate the stereo cameras
+ *
+ * This is sample from the OpenCV book. The copyright notice is below
+ *
+ *************** License:**************************
    Oct. 3, 2008
    Right to use this code in any way you want without warranty, support or any guarantee of it working.
 
@@ -19,7 +24,8 @@
      Online docs:   http://docs.opencv.org
      Q&A forum:     http://answers.opencv.org
      GitHub:        https://github.com/opencv/opencv/
-   ************************************************** */
+ **************************************************
+ */
 
 #include "opencv2/calib3d.hpp"
 #include "opencv2/imgcodecs.hpp"

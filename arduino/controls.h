@@ -1,11 +1,10 @@
 /* controls.h
- *
  * FollowBot POE Project
- * 
- * This header file contains all the constants, buildtime, and runtime variables necessary
- * to compile and execute the robot controls.
- * 
  * @authors: Elias
+ *
+ * This header file contains all the constants, buildtime, and runtime variables necessary to compile and execute the
+ * robot controls.
+ *
  */
 
 #ifndef controls_h

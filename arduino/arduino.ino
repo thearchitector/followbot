@@ -1,8 +1,9 @@
-/* arduino_run.ino
-
-   FollowBot POE Project
-
-   @authors: Duncan, Elias
+/* arduino.ino
+ * FollowBot POE Project
+ * @authors: Duncan, Elias
+ *
+ * Main routine for the Aduino Uno motor controller funcitonality
+ *
 */
 
 #include <ros.h>
