@@ -130,7 +130,7 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
     handlePersonLoc();
     if (person_is_found) {
         fillOccupanyGrid(world_msg);
-//        findAStarPath();
+        findAStarPath();
         #ifndef PRODUCTION
         showPersonPathAndHeading();
         #endif
@@ -141,7 +141,7 @@ void AStar::planHeading(const followbot::WorldConstPtr &world_msg) {
         showPersonPathAndHeading();
         #endif
     }
-    current_heading = (short) (180 * atan2((double) dest_person_int.second, (double) dest_person_int.first) / PI);
+    current_heading = (short) (180 * atan2((double) path.end()[-2].second, (double) path.end()[-2].first) / PI);
     std::cout << "Current heading: " << current_heading << " degrees" << std::endl;
 }
 
@@ -150,29 +150,31 @@ bool AStar::isUnBlocked(const Node &point) {
      * Returns whether a node is unblocked
      */
     auto found = occupied.find(point);
-    return found == occupied.end() ? true : !found->second;
+    if (found == occupied.end()) {
+        return true;
+    } else {
+        return !found->second;
+    }
 }
 
 bool AStar::isDestination(const Node point) {
     /*
      * Returns whether a point is the destination
      */
-    return point == ROBOT_POSE;
+    return point == dest_person_int;
 }
 
 float AStar::calculateH(const Node &point) {
     /*
      * Calculates a heuristic value using a Manhattan distance metric for a provided point in the occupancy map
      */
-    return (float) (abs(point.first - dest_person_int.first) + abs(point.first - dest_person_int.second));
+    return (float) (abs(point.first - dest_person_int.first) + abs(point.second - dest_person_int.second));
 }
 
 void AStar::findAStarPath() {
     /*
      * Runs an implementation of A* to find a path from the center of the occupancy grid to the location of the person
-     * in the point cloud (given by the attribute current_person_int).
-     *
-     * TODO: fix infinite loop (method is currently not called to avoid this issue)
+     * in the point cloud (given by the attribute current_person_int)
      *
      * note: path attribute is already cleared before this function call
      */
@@ -183,7 +185,7 @@ void AStar::findAStarPath() {
     }
 
     // check for whether the person's location is at (0, 0)
-    if (isDestination(dest_person_int)) {
+    if (dest_person_int == ROBOT_POSE) {
         std::cout << "A*: src == dest (here) " << std::endl;
         path = {{ROBOT_POSE.first, ROBOT_POSE.second}};
         return;
@@ -200,8 +202,8 @@ void AStar::findAStarPath() {
     std::map<Node, float> fMap;  // stores the f-cost at each keyed location
     fMap.insert({{ROBOT_POSE.first, ROBOT_POSE.second}, 0});  // initialize fMap at src
 
-    int x = 0;
-    int z = 0;
+    int x = ROBOT_POSE.first;
+    int z = ROBOT_POSE.second;
     int counter = 0;
     while (!openList.empty() && counter < MAX_ASTAR_LOOPS) {
         // find the unblocked node with the lowest f in the open list and pop it off the open list
@@ -228,28 +230,41 @@ void AStar::findAStarPath() {
         for (int deltaX = -1; deltaX <= 1; ++deltaX) {  // loop through each adjacent node
             for (int deltaY = -1; deltaY <= 1; ++deltaY) {
                 newNode = Node{x + deltaX, z + deltaY};
-                if (isUnBlocked(newNode)) {  // if the adjacent node is unblocked
-                    // create an AStarNode object out of the node
-                    if (isDestination(newNode)) {
-                        // terminate algorithm if the adjacent node is the destination
-                        cameFrom.insert({newNode, currentNode});
-                        makePath(cameFrom);
-                        return;
-                    } else {
-                        float g = gMap.find({currentNode.first, currentNode.second})->second;
-                        float gNew = g + (deltaX == 0 || deltaY == 0 ? 1.f : SQRT_2);  // calculate step cost
-                        auto g_at_neighbor = gMap.find(newNode);
-                        if (gNew < g_at_neighbor->second || g_at_neighbor == gMap.end()) {  // this is the best path
-                            // seen yet - record it
+                if (newNode != currentNode) {
+                    if (isUnBlocked(newNode)) {  // if the adjacent node is unblocked
+                        // create an AStarNode object out of the node
+                        if (isDestination(newNode)) {
+                            // terminate algorithm if the adjacent node is the destination
                             cameFrom.insert({newNode, currentNode});
-                            gMap.insert({newNode, gNew});  // update g at newNode
-                            fMap.insert({{newNode.first, newNode.second}, gNew + calculateH(newNode)});
-                        }
-                        auto open_map_at_neighbor = openMap.find(newNode);
-                        if (open_map_at_neighbor != openMap.end() || !open_map_at_neighbor->second) {
-                            // if the neighbor is not already open
-                            openMap.insert({newNode, true});
-                            openList.push_back(newNode);
+                            makePath(cameFrom);
+                            return;
+                        } else {
+                            float g = gMap.find({currentNode.first, currentNode.second})->second;
+                            float gNew = g + (deltaX == 0 || deltaY == 0 ? 1.f : SQRT_2);  // calculate step cost
+                            auto g_at_neighbor = gMap.find(newNode);
+                            if (g_at_neighbor == gMap.end()) {  // this is the best path
+                                // seen yet - record it
+                                cameFrom.insert({newNode, currentNode});
+                                gMap.insert({newNode, gNew});  // update g at newNode
+                                fMap.insert({{newNode.first, newNode.second}, gNew + calculateH(newNode)});
+                            } else {
+                                if (gNew < g_at_neighbor->second) {  // this is the best path
+                                    // seen yet - record it
+                                    cameFrom.insert({newNode, currentNode});
+                                    gMap.insert({newNode, gNew});  // update g at newNode
+                                    fMap.insert({{newNode.first, newNode.second}, gNew + calculateH(newNode)});
+                                }
+                            }
+                            auto open_map_at_neighbor = openMap.find(newNode);
+                            if (open_map_at_neighbor == openMap.end()) {
+                                openMap.insert({newNode, true});
+                                openList.push_back(newNode);
+                            } else {
+                                if (!open_map_at_neighbor->second) {
+                                    openMap.insert({newNode, true});
+                                    openList.push_back(newNode);
+                                }
+                            }
                         }
                     }
                 }
@@ -273,6 +288,7 @@ void AStar::makePath(std::map<Node, Node> &comeFrom) {
     while (true) {
         std::cout << "(" << x << ", " << z << ") ";  // print out path
         if (x == ROBOT_POSE.first && z == ROBOT_POSE.second) {
+            path.emplace_back(ROBOT_POSE.first, ROBOT_POSE.second);
             return;
         }
         auto foundAtXY = comeFrom.find(Node{x, z});
