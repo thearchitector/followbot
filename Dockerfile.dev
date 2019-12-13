@@ -2,7 +2,7 @@
 FROM ros:melodic-ros-core-bionic
 
 ENV USERNAME developer
-ENV HOME /home/developer
+ENV HOME /home/$USERNAME
 
 RUN useradd -m $USERNAME && \
     echo "$USERNAME:$USERNAME" | chpasswd && \
@@ -12,37 +12,36 @@ RUN useradd -m $USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME && \
     usermod  --uid 1000 $USERNAME && \
     groupmod --gid 1000 $USERNAME && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends software-properties-common && \
-    apt-add-repository ppa:git-core/ppa && \
-    apt-add-repository ppa:ubuntuhandbook1/apps && \
+    echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" >> /etc/apt/source.list && \
+    echo "deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" >> /etc/apt/source.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys e1dd270288b4e6030699e45fa1715d88e1df1f24 && \
     apt-get update && \
     apt-get -y --no-install-recommends upgrade && \
     # Install a whole bunch of dependencies
-    apt-get -y --no-install-recommends install build-essential cmake git libgtk-3-dev libxt-dev avrdude \
-    pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev curl sudo usbutils xauth \
-    libvtk7-dev vim xvfb xz-utils libgl1-mesa-glx libgl1-mesa-dri mesa-utils unzip inetutils-ping openjdk-11-jre \
-    bison flex libfl-dev libxrender1 libxtst6 libxi6 ros-melodic-rosserial ros-melodic-rosserial-arduino && \
+    apt-get -y --no-install-recommends install build-essential git libgtk-3-dev libavcodec-dev \
+    libavformat-dev libswscale-dev libtbb-dev curl usbutils xauth libvtk7-dev vim \
+    ros-melodic-rosserial-arduino && \
     apt-get -y autoremove && \
     apt-get -y clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/*
 
 # Add developer user to the dialout group to permiss writing to USB serial
 RUN sed "s/^dialout.*/&$USERNAME/" /etc/group -i && \
     sed "s/^root.*/&$USERNAME/" /etc/group -i
 
 # Download and install CLion
-RUN curl -L "https://download.jetbrains.com/cpp/CLion-2019.3.tar.gz" -o /tmp/clion.tar.gz && \
-    tar -xzf /tmp/clion.tar.gz --directory /opt && \
-    ln -s /opt/clion-2019.3/bin/clion.sh /opt/clion-2019.3/bin/clion && \
-    rm -rf /tmp/clion.tar.gz
-ENV PATH="/opt/clion-2019.3/bin:${PATH}"
+#ENV CLION_VERSION 2019.3.1
+#RUN curl -L "https://download.jetbrains.com/cpp/CLion-$CLION_VERSION.tar.gz" -o /tmp/clion.tar.gz && \
+#    tar -xzf /tmp/clion.tar.gz --directory /opt && \
+#    ln -s /opt/clion-$CLION_VERSION/bin/clion.sh /opt/clion-$CLION_VERSION/bin/clion && \
+#ENV PATH="/opt/clion-$CLION_VERSION/bin:${PATH}"
 
 # Download and install Arduino IDE
 RUN curl -L "https://downloads.arduino.cc/arduino-1.8.10-linux64.tar.xz" -o /tmp/arduinoide.tar.xz && \
     tar -xJf /tmp/arduinoide.tar.xz --directory /opt && \
     /opt/arduino-1.8.10/install.sh && \
-    rm -rf /tmp/arduinoide.tar.xz
+    rm -rf /tmp/*
 
 # Build and install OpenCV
 RUN mkdir /tmp/opencv && \
@@ -66,8 +65,8 @@ RUN mkdir /tmp/opencv && \
 COPY ./entrypoint.dev /ros_entrypoint.sh
 RUN chmod +x /ros_entrypoint.sh
 
-WORKDIR /home/$USERNAME
 USER $USERNAME
+WORKDIR /home/$USERNAME/followbot
 
 # Git clone the repo and download DNN detection weights
 RUN git clone https://github.com/thearchitector/followbot.git /home/$USERNAME/followbot && \
