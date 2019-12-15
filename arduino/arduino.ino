@@ -14,11 +14,11 @@ ros::Subscriber<std_msgs::UInt16> heading("desired_heading", calculateStrideCoef
 
 void setup() {
   attachServos(90, 90);
-  n.initNode();
-  n.subscribe(heading);
+//  n.initNode();
+//  n.subscribe(heading);
 }
 
 void loop() {
-  moveAtHeading();
-  n.spinOnce();
+//  moveAtHeading();
+//  n.spinOnce();
 }
