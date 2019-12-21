@@ -62,15 +62,15 @@ def collect_images():
     xml_text = ['<?xml version="1.0"?><opencv_storage><imagelist>', '', '</imagelist></opencv_storage>']
 
     # uncomment if 720x1280 resolution is desired
-    # capL.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    # capL.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-    # capR.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    # capR.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    capL.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    capL.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    capR.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    capR.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     print("Now collecting dataset. Press 'n' to take a picture; otherwise, a picture will automatically be taken every "
           "{} second(s)".format(DELAY))
 
-    time.sleep(1)
+    time.sleep(5)
     for i in range(0, NUM_IMGS_TO_COLLECT):
         t = time.time()
         while (True):

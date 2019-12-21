@@ -92,9 +92,10 @@ StereoCalib(const vector<string>& imagelist, const Size& boardSize, float square
         for( k = 0; k < 2; k++ )
         {
             const string& filename = imagelist[i*2+k];
+            cout << filename << endl;
             Mat img = imread(filename, 0);
             if(img.empty()) {
-                cout << "Warning: empty image found; skipping" << endl;
+                cout << "Warning: empty image found; skipping " << endl;
                 break;
             }
             if( imageSize == Size() )
