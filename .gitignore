@@ -3,3 +3,4 @@ raspi/followbot_ws/devel
 **/*/*.weights
 /**/*/cmake-build-debug
 /**/*/.idea
+/**/*/calib_folder
